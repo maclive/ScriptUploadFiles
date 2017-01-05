@@ -1,6 +1,6 @@
 <?php if(!isset($conn)) die('<title>Access Denied</title><i>This page cannot be accessed directly'); ?>
 <?php 
-define('url_json_file',base64_decode('aHR0cDovL21hZ2RpZWlkLmNvbS91cC91cGRhdGUvdXBkYXRlLmpzb24='));
+define('url_json_file',base64_decode('aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL29uZXhpdGUvU3VVcGRhdGUvbWFzdGVyL3VwZGF0ZS5qc29u'));
 define('tmpZip_file','../tmp.zip');/*مكان تخزيا الملف المؤقت*/
 define('extract_dir','../');/*مسار فك الضغط*/
 
