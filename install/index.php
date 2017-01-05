@@ -114,7 +114,7 @@ Sql_query("CREATE TABLE IF NOT EXISTS `files` (
   `uploadedIP` int(11) UNSIGNED NOT NULL,
   `last_access` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;");
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8  AUTO_INCREMENT=1 ;");
 
 /*-- Table structure for table `folders`*/
 
@@ -126,7 +126,7 @@ Sql_query("CREATE TABLE IF NOT EXISTS `folders` (
   `accessPassword` varchar(32) NOT NULL,
   `date_added` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;");
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8  AUTO_INCREMENT=1 ;");
 
 /*-- Table structure for table `stats`*/
 
@@ -140,7 +140,7 @@ Sql_query("CREATE TABLE IF NOT EXISTS `stats` (
   `date` int(11) NOT NULL,
   `ip` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;");
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8  AUTO_INCREMENT=1 ;");
 
 /*-- Table structure for table `reports`*/
 
@@ -153,7 +153,7 @@ Sql_query("CREATE TABLE IF NOT EXISTS `reports` (
   `status` int(1) NOT NULL,
   `reason` int(2) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;");
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8  AUTO_INCREMENT=1 ;");
 
 /*-- Table structure for table `settings`*/
 
@@ -162,7 +162,7 @@ Sql_query("CREATE TABLE IF NOT EXISTS `settings` (
   `value` text NOT NULL,
   `parameter` varchar(255) NOT NULL,
   PRIMARY KEY (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;");
 
 /*-- Table structure for table `users`*/
 
@@ -179,7 +179,7 @@ Sql_query("CREATE TABLE IF NOT EXISTS `users` (
   `end_plan` int(11) NOT NULL,
   `last_ip` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;");
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8  AUTO_INCREMENT=1 ;");
 
 
 /*-- Table structure for table `comments`*/
@@ -192,18 +192,18 @@ Sql_query("CREATE TABLE IF NOT EXISTS `comments` (
   `status` int(1) NOT NULL DEFAULT '0',
   `comment` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8  AUTO_INCREMENT=1 ;");
 
 /*-- Table structure for table `plans`*/
 
 Sql_query("CREATE TABLE IF NOT EXISTS `plans` (
-  `name` varchar(100) CHARACTER SET latin1 COLLATE latin1_bin NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8  COLLATE utf8 _bin NOT NULL,
   `gold` text NOT NULL,
   `free` text NOT NULL,
   `premium` text NOT NULL,
   `register` text NOT NULL,
   PRIMARY KEY (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;");
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ;");
 
 /*-- Dumping data for table `plans`*/
 
@@ -240,6 +240,17 @@ if(num_rows(Sql_query("SHOW COLUMNS FROM `users` LIKE 'end_plan';"))==0)
 
 Sql_query("UPDATE `files` SET `last_access` = '$date'");
 
+
+Sql_query("ALTER DATABASE ".dbname." CHARACTER SET utf8 COLLATE utf8_bin;");
+Sql_query("ALTER TABLE `files` CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;");
+Sql_query("ALTER TABLE `users` CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;");
+Sql_query("ALTER TABLE `reports` CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;");
+Sql_query("ALTER TABLE `stats` CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;");
+Sql_query("ALTER TABLE `plans` CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;");
+Sql_query("ALTER TABLE `comments` CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;");
+Sql_query("ALTER TABLE `settings` CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;");
+Sql_query("ALTER TABLE `folders` CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;");
+
 /*--update 0.9 and older --*/
 /*
 Sql_query("ALTER TABLE `files` CHANGE `uploadedIP` `uploadedIP` BIGINT NOT NULL;");
@@ -256,7 +267,7 @@ if(num_rows(Sql_query("SHOW COLUMNS FROM `stats` LIKE 'country_code';"))==0)
 			Sql_query( "UPDATE `stats` SET `country` =  '".GetCountryCode($row['country'],'en')."' WHERE `id`= '".$row['id']."'" ) ;	
 		
 	@mysqli_free_result($result);
-	Sql_query("ALTER TABLE `stats` CHANGE `country` `country_code` VARCHAR(2) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;");
+	Sql_query("ALTER TABLE `stats` CHANGE `country` `country_code` VARCHAR(2) CHARACTER SET utf8  COLLATE utf8 _swedish_ci NOT NULL;");
 }
 
 
@@ -451,6 +462,7 @@ define('DirectoryChanged',false);
 .'$_plans          '."= array('0'=>'free','1'=>'premium','2'=>'gold','3'=>'register');\r\n"	
 .'$currentpage     '."= 1 ;\r\n"
 .'$totalpages      '."= 1 ;\r\n
+
 ?>";
 fwrite($fp,$content);
 fclose($fp);}
