@@ -295,7 +295,7 @@ $totalpages  = ($totalpages < 1) ? 1 :$totalpages;
 
 $offset = ($currentpage - 1) * rowsperpage;
 
-if ($result=Sql_query("SELECT DISTINCT `file_id` FROM `stats`"))
+if ($result=Sql_query("SELECT DISTINCT `file_id` FROM `stats` ORDER BY $order_str  LIMIT $offset, ".rowsperpage))
   while($row = mysqli_fetch_assoc($result))
   {
 	 $file_name  = Sql_Get_Filename($row["file_id"]);
@@ -307,7 +307,7 @@ if ($result=Sql_query("SELECT DISTINCT `file_id` FROM `stats`"))
 		        <td></span><input value="'.$row["file_id"].'" type="checkbox"  name="stats[]" class="checkbox" onclick="calcItems()" /></td>
 				<td><a href="javascript:void(0)" onclick="ShowFileInfoModal('.$file_id.','.$_crypt_id.',1)">'.icon($file_name).' '.$file_name.'</a></td>  
 				<td><table id="statsTable" class="table table-striped">';
-		if ($_result=Sql_query("SELECT * FROM `stats` WHERE `file_id`='$file_id' ORDER BY $order_str LIMIT $offset, ".rowsperpage)) /*LIMIT $offset, ".rowsperpage*/
+		if ($_result=Sql_query("SELECT * FROM `stats` WHERE `file_id`='$file_id' LIMIT 15")) /*LIMIT $offset, ".rowsperpage*/
   while($_row = mysqli_fetch_assoc($_result))
   {
 		  $html.= '<tr>
