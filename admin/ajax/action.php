@@ -307,7 +307,7 @@ if ($result=Sql_query("SELECT DISTINCT `file_id` FROM `stats`"))
 		        <td></span><input value="'.$row["file_id"].'" type="checkbox"  name="stats[]" class="checkbox" onclick="calcItems()" /></td>
 				<td><a href="javascript:void(0)" onclick="ShowFileInfoModal('.$file_id.','.$_crypt_id.',1)">'.icon($file_name).' '.$file_name.'</a></td>  
 				<td><table id="statsTable" class="table table-striped">';
-		if ($_result=Sql_query("SELECT * FROM `stats` WHERE `file_id`='$file_id' ORDER BY $order_str LIMIT 15")) /*LIMIT $offset, ".rowsperpage*/
+		if ($_result=Sql_query("SELECT * FROM `stats` WHERE `file_id`='$file_id' ORDER BY $order_str LIMIT $offset, ".rowsperpage)) /*LIMIT $offset, ".rowsperpage*/
   while($_row = mysqli_fetch_assoc($_result))
   {
 		  $html.= '<tr>
@@ -918,8 +918,9 @@ if(num_rows($sql)>0) {
     $ext       = strtolower(pathinfo($row["filename"], PATHINFO_EXTENSION));
 	$data['_filename']   = (!is_file('../..'.$folder.'/'.$row["filename"]) ) ? icon($row["filename"]).' '.$lang[46] : icon($row["filename"]).' '.$row["originalFilename"];
 	$data['_thumbnail']  = (!ext_is_image('../..'.$folder.'/'.$row["filename"]) ) ? '' : $folder .'/_thumbnail/'. get_thumbnail($row['filename']) ;
-    $data['_media']      = (in_array($ext, array("mp3", "ogg", "wav"))) ? true : false ;
-	
+    $data['_media']      = (in_array($ext, array("mp3", "ogg", "wav" , "mp4" , "webm" , "ogv" ))) ? true : false ;
+	$data['_audio']      = (in_array($ext, array("mp3", "ogg", "wav"  ))) ? true : false ;
+	$data['_video']      = (in_array($ext, array("mp4" , "webm" , "ogv" ))) ? true : false ;
         $data['_file']       = $row["filename"];
 		$data['_username']   = '<mark>'.Sql_Get_Username($row["userId"]).'</mark>';
 		$data['_date']       = date('Y-m-d H:i:s',$row['uploadedDate']);
