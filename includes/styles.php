@@ -5,6 +5,11 @@ define('PlanId',0 );
 define('UserID',0 );
 require_once ('functions.php');
 $conn=mysqliconnect();
+// Change character set to utf8
+//$conn ? mysqli_set_charset($conn,"utf8") : '';
+/*
+Sql_query("SET NAMES 'utf8'");
+Sql_query("SET CHARACTER SET utf8");*/
 Loadconfig();
 require_once ('csscolorgenerator.php');
 //require_once ('connect.php');
@@ -54,7 +59,7 @@ div.background{background-color:'.BodyColor.';}
 .corneRribbon-inner{background-color: '.PanelColor.';}
 /*.corneRribbon-inner:before,.corneRribbon-inner:after{border-color: #'.PanelColorBorder.';}*/
 .box > .icon > .image {background: '.PanelColor.';}
-#file-count,#user-count,#download-count{color: '.CodeColor.';}
+#file-count,#user-count,#download-count,.modal-header a{color: '.CodeColor.';}
 #plans .panel.panel-success>.panel-heading {color: #fff;background-color: '.PanelColor.';border-color: '.PanelColor.';}
 #plans .panel.panel-success {border-color: '.PanelColor.';}
 #plans .panel.panel-info>.panel-heading {color: #fff;background-color: '.CodeColor.';border-color: '.CodeColor.';}

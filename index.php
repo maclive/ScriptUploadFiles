@@ -149,7 +149,7 @@ else
 ((IsAdmin || statistics)  && (isGet('download') || isGet('files'))) ? require_once ('./modals/stats.php')  : '';
 (isGet('files')) ? require_once ('./modals/fileinfo.php')  : '';
  echo defined('SuccessfullyDeleted') ? '<div id="topalert" style="display:none;">'.SuccessfullyDeleted.'</div>' : '';
-(siteclose)  ? require_once ('./modals/siteclose.php') : '';
+(siteclose && ! isset($_GET['login']))  ? require_once ('./modals/siteclose.php') : '';
 (IsLogin)    ? require_once ('./modals/logout.php')    : '';
 (GetIsEmpty) ? require_once ('./modals/links.php')     : '';
 /*(GetIsEmpty) ? require_once ('./modals/upload.php')    : '';*/
@@ -162,7 +162,7 @@ else
 <script type="text/javascript">
 var IsLogin     = Boolean('<?php echo (bool)IsLogin ?>'),
     IsAdmin     = Boolean('<?php echo (bool)IsAdmin ?>'),
-    IsClose     = Boolean('<?php echo (bool)siteclose ?>'),
+    IsClose     = Boolean('<?php echo (bool)(siteclose && !isset($_GET['login'])) ?>'),
 	IsRtL       = Boolean('<?php echo (bool)IsRtL() ?>'),
 	IsDirect    = Boolean('<?php echo (bool)directdownload ?>'),
 	IsThumbnail = Boolean('<?php echo (bool)thumbnail ?>'),
