@@ -1,6 +1,6 @@
 <?php if(!isset($conn)) die('<title>Access Denied</title><i>This page cannot be accessed directly'); ?>  
 <?php 
-$info             = IsGet('download') ? Sql_Get_info(protect(base64_decode($_GET['download']))) : array('status'=>false);
+$info             = IsGet('download') ? Sql_Get_info(protect(Decrypt($_GET['download']))) : array('status'=>false);
 $publicity        = Sql_Get_publicity($ads_page); 
 $ads_google       = ($ads_page == 'ads_google')  ? true : false ;
 $ads_download     = ($ads_page == 'ads_download')? true : false ;

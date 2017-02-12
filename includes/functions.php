@@ -19,6 +19,16 @@ function isGet($parameter)
 	return isset($_GET[$parameter]) ?  true : false ;
 }
 
+function Encrypt($str)
+{
+	return base64_encode($str);
+}
+
+function Decrypt($str)
+{
+	return base64_decode($str);
+}
+
 function split_text($string, $nb_caracs, $separator='...'){
     // strip tags to avoid breaking any html
     $string = strip_tags($string);
@@ -496,8 +506,8 @@ function Get_Page_Title() {
 	global $lang;
 	if(isset($_GET['download']))
 	{
-		//$id   = (is_numeric($_GET['download'])) ? (int)$_GET['download'] : protect(base64_decode($_GET['download']));
-		$id        =  protect(base64_decode($_GET['download']));
+		//$id   = (is_numeric($_GET['download'])) ? (int)$_GET['download'] : protect(Decrypt($_GET['download']));
+		$id        =  protect(Decrypt($_GET['download']));
 		$confirm   = (isset($_GET['confirm'])) ? true : false ;
 		$notfound  = (isset($_GET['notfound'])) ? true : false ;
 		$_Filename = Sql_Get_originalFilename($id);
@@ -926,7 +936,7 @@ if(num_rows($qry)>0)
     {
 	$row=mysqli_fetch_assoc($qry);	
 	return array('status' => true,
-	             'content' => base64_decode($row['value']) ,
+	             'content' => Decrypt($row['value']) ,
 				 'title'=>$row['parameter'] 			 
 				 );
 	} 
@@ -1131,6 +1141,26 @@ $user = fetch_assoc(Sql_query("SELECT `username` FROM `users` WHERE  `id`= '$id'
 return ($user=='') ?  '/' : $user ;
 }
 
+function Sql_Get_Top_Downloads()
+{
+$data = [];	
+if ($result=Sql_query("SELECT `id` , `originalFilename` , `totalDownload` FROM `files` WHERE `isPublic` = '1' ORDER BY `totalDownload` desc LIMIT 1, ".rowsperpage)){
+  while($row = mysqli_fetch_assoc($result))
+  {
+
+	  $_file_id   = $row["id"];
+	  $data['file_'.$_file_id]['Filename']  = $row['originalFilename'] ;
+	  $data['file_'.$_file_id]['Downloads'] = (int)$row['totalDownload'] ;
+	  $data['file_'.$_file_id]['Url']       = '/?download='.Encrypt($_file_id)  ;
+
+  }} 
+
+if($result)
+mysqli_free_result($result);
+return $data ;
+}
+	
+
 function Sql_Get_User_Plan_id($id)
 {
 $id = (int)$id; 
@@ -1193,7 +1223,7 @@ function resetPassword($code)
 	global $lang;
 	$pass = GenerateRandomString();
 	$md5p = md5($pass);
-	$code = base64_decode(protect($code));
+	$code = Decrypt(protect($code));
 	
 	if(num_rows(Sql_query("SELECT 1 FROM `users` WHERE `last_visit`='$code'"))>0)
 	{
@@ -1418,8 +1448,8 @@ function getUpdate($_url_json_file)
 
 function delete_file($id,$deleteHash,$directory='..')
 {
-	//$id  = (is_numeric($id)) ? (int)$id : protect(base64_decode($id));
-	$id  = protect(base64_decode($id));
+	//$id  = (is_numeric($id)) ? (int)$id : protect(Decrypt($id));
+	$id  = protect(Decrypt($id));
 	$info = Sql_Get_info($id);
     if( $info['status'] && $info['deleteHash'] == $deleteHash )
 	{
@@ -1460,7 +1490,7 @@ function delete_file_older_than($isMember = false , $days=30 ,$directory='..')
 
 function delete_file_without_confirmation($id,$directory='..')
 {
-	//$id  = (is_numeric($id)) ? (int)$id : protect(base64_decode($id));
+	//$id  = (is_numeric($id)) ? (int)$id : protect(Decrypt($id));
 	$id  = (int)$id;
 	$info = Sql_Get_info($id);
     if( $info['status'])
@@ -1505,10 +1535,10 @@ function sqlUpdate($_url_json_sql)
      foreach ($results['settings']['mysqli'] as $key => $value) 
 	 {
 		 $result = $lang[179] ;
-		 if(Sql_query(base64_decode($value)))
+		 if(Sql_query(Decrypt($value)))
 			 $result = $lang[178] ;
 		 
-		 $_get_update_infos.= '<li>'.$lang[79]." -> ".base64_decode($value)." -> $result</li>";
+		 $_get_update_infos.= '<li>'.$lang[79]." -> ".Decrypt($value)." -> $result</li>";
 		 
 	 }
               
@@ -1610,8 +1640,8 @@ function is_image( $filename )
 function forceView($id)
 {	
 @ini_set('memory_limit', '32M'); //max size 32m
-//$id  = (is_numeric($id)) ? (int)$id : protect(base64_decode($id));
-$id    = protect(base64_decode($id));
+//$id  = (is_numeric($id)) ? (int)$id : protect(Decrypt($id));
+$id    = protect(Decrypt($id));
 $info  = Sql_Get_info($id);
 
 $file  = ($info['status'])     ?  '.'.$info["fullpath"]  : '' ; 
@@ -1621,7 +1651,7 @@ $file  = ($info['status'] && ($info['password']!==''))  ?  './assets/css/images/
 
 if(!ext_is_image($file)) return ;
 
-$referrer = isset($_GET['referrer']) &&  !empty($_GET['referrer']) ? protect(base64_decode($_GET['referrer'])) : '' ;
+$referrer = isset($_GET['referrer']) &&  !empty($_GET['referrer']) ? protect(Decrypt($_GET['referrer'])) : '' ;
 
 ($info['status'] && $info['public'] && (empty($info['password'])) ) ? Sql_Update_Count_Access( $info["id"] ) : '';
 ($info['status'] && $info['public'] && (empty($info['password'])) ) ? Sql_Insert_Stat( $info["id"] , $referrer) : '';
@@ -1660,8 +1690,8 @@ function forceDownload($id)
 {
 
 
-//$id  = (is_numeric($id)) ? (int)$id : protect(base64_decode($id));
-$id     = protect(base64_decode($id));
+//$id  = (is_numeric($id)) ? (int)$id : protect(Decrypt($id));
+$id     = protect(Decrypt($id));
 $string = (isset($_GET['unq'])) ? protect($_GET['unq'])	: '' ;
 	 	
 (!isset($_SESSION['settings']['files'][$id])) ? exit(header("HTTP/1.0 404 Not Found")) : '';
@@ -1679,7 +1709,7 @@ $filesize = ($info['status'])    ?  '.'.$info["size"]  : '' ;
 $orgfilename = ($info['status']) ?  $info['orgfilename'] : ''; 
 $fileSize = ($info['status'])    ?  $info['size'] : filesize($filename); 
 
-( !file_exists($filename) ) ? exit(header("Location:./?download=".base64_encode($id))) : '';
+( !file_exists($filename) ) ? exit(header("Location:./?download=".Encrypt($id))) : '';
 
 if( function_exists('ini_get') && function_exists('ini_set') && @ini_get('zlib.output_compression') )
 	@ini_set('zlib.output_compression', 'Off');

@@ -981,3 +981,17 @@ margin-bottom: 10px;
 	word-wrap: break-word;
 	white-space: normal;
 }
+/*
+.video-wrap{
+  width: 680px;
+  height: 382px;
+}
+.mejs-container{
+  width: 100% !important;
+  height: 100% !important;
+}
+.mejs-layers .mejs-layer{    
+  width: 100% !important;
+  height: 100% !important;    
+}
+*/

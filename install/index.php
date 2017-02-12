@@ -250,6 +250,8 @@ Sql_query("ALTER TABLE `plans` CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;")
 Sql_query("ALTER TABLE `comments` CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;");
 Sql_query("ALTER TABLE `settings` CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;");
 Sql_query("ALTER TABLE `folders` CONVERT TO CHARACTER SET utf8 COLLATE utf8_bin;");
+//Sql_query("ALTER TABLE <table-name> CHARACTER SET utf8 COLLATE utf8_bin;");
+
 
 /*--update 0.9 and older --*/
 /*

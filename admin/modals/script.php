@@ -361,6 +361,7 @@ $('#FileInfosModal').on('hide.bs.modal', function (e) { if(IsDirect) $('#player'
 function FileInfoModal(id)
 {
 	$('#showfile_'+id).click();
+	if(IsDirect) $('#player').trigger('pause');
 	DisablingButton(id,rowsperpage);
 }
 	
@@ -421,10 +422,21 @@ if (typeof(FilesTotal)==='undefined') FilesTotal = 1;
 			
 			var strSRC =  _path_ +data._url;
 			$('#media').show();
-			$("#player").html('<source src="'+strSRC+'"></source>');	
-			$('#player').load();
-			if(!IsIeBrowser)
-			$('audio').audioPlayer();
+			
+			if(data._audio)
+			{
+				$("#DivPlayer").html('<audio id="player" src="'+strSRC+'" style="width: 100%!important;"></audio>');	
+				/*<audio style="width: 100%;" id="player" controls><source src="'+strSRC+'"></source></audio>*/
+			}
+			
+			if(data._video)
+			{
+				$("#DivPlayer").html('<video id="player" src="'+strSRC+'" style="width: 100%!important; height: 100%!important;"></video>');
+				/*<video style="width: 100%;" id="player" controls><source src="'+strSRC+'"></source></video>');	*/
+			}
+			//$('#player').load();
+		$('video,audio').mediaelementplayer({});
+			
 		}
 			
 			

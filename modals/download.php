@@ -3,10 +3,10 @@
   <table class="table table-hover">
     <tbody>	
 <?php 
-//$DownloadID    = protect(base64_decode($_GET['download']));
+//$DownloadID    = protect(Decrypt($_GET['download']));
 //$info  = Sql_Get_info($DownloadID);
-//$DownloadID   = (is_numeric($_GET['download'])) ? (int)$_GET['download'] : protect(base64_decode($_GET['download']));
-$_crypt_id  = "'".base64_encode($DownloadID)."'";
+//$DownloadID   = (is_numeric($_GET['download'])) ? (int)$_GET['download'] : protect(Decrypt($_GET['download']));
+$_crypt_id  = "'".Encrypt($DownloadID)."'";
 
 $Continue   = false;
 
@@ -14,7 +14,7 @@ function isPublic($status){global $lang;  return ($status)? '<code>'.$lang[176].
 
 $confirm  = (isset($_GET['confirm'])) ? true : false ;
 $notfound = (isset($_GET['notfound'])) ? true : false ;
-$referrer = (isset($_SERVER['HTTP_REFERER'])) ? base64_encode($_SERVER['HTTP_REFERER']) : "";
+$referrer = (isset($_SERVER['HTTP_REFERER'])) ? Encrypt($_SERVER['HTTP_REFERER']) : "";
 $string   = (!isset($_SESSION['settings']['files'][$DownloadID])) ? GenerateRandomString() : $_SESSION['settings']['files'][$DownloadID];
 (!isset($_SESSION['settings']['files'][$DownloadID])) ? $_SESSION['settings']['files'][$DownloadID]	= $string : '';
 			

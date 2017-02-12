@@ -50,6 +50,7 @@ $_folder         = Get_folderName_By_FolderId(Get_folderId_by_Filename($_UploadF
 $passwordfile    = (isset($_POST['passwordfile'])) ? protect($_POST['passwordfile']) : '';
 $code            = (isset($_POST['code'])) ? $_POST['code'] : '' ;
 $ispublic        = (isset($_POST['ispublic']) && IsLogin ) ? (int)$_POST['ispublic'] : 1 ;
+$ThumbnailDir    = (thumbnail) ? '../..'.uploadDir.'/_thumbnail/'.get_thumbnail($_UploadFileName) : ''; 
 
 (defined('HashCode') && HashCode !== $code )            ? IePrintArray(array('success' => false, 'msg' => $lang[103].' / HashCode'  )) : '' ; 
 ($_new_ext !== $_old_ext)                               ? IePrintArray(array('success' => false, 'msg' => $lang[120] )) : '' ;  
@@ -69,8 +70,10 @@ if(thumbnail)
 		 WriteHtaccessThumbnailFolder('../..'.uploadDir.'/_thumbnail');
 	 }
 		 
+	 (file_exists($ThumbnailDir)) ? unlink($ThumbnailDir) : '';
+	 
 	 $tg = new thumbnailGenerator;
-	 $tg->generate('../..'.uploadDir.'/'.$Upload->getFileName(), 100, 100, '../..'.uploadDir.'/_thumbnail/'.$Upload->getFileName());
+	 $tg->generate('../..'.uploadDir.'/'.$Upload->getFileName(), 100, 100, $ThumbnailDir );
 	}
 	
 	(function_exists('ini_set') && function_exists('ini_get')) ? @ini_set('max_execution_time', @ini_get('max_execution_time')) : '';
@@ -301,7 +304,7 @@ if ($result=Sql_query("SELECT DISTINCT `file_id` FROM `stats` ORDER BY $order_st
 	 $file_name  = Sql_Get_Filename($row["file_id"]);
 	 $_filename_ = "'".$file_name."'";
 	 $file_id    = $row["file_id"];
-	 $_crypt_id  = "'".base64_encode($file_id)."'";
+	 $_crypt_id  = "'".Encrypt($file_id)."'";
 	 
 		   $html.= '<tr id="file_'.$file_id.'">
 		        <td></span><input value="'.$row["file_id"].'" type="checkbox"  name="stats[]" class="checkbox" onclick="calcItems()" /></td>
@@ -375,7 +378,7 @@ if ($result=Sql_query($sql))
      $file_id    = $row["file_id"];
 	 $file_name  =Sql_Get_Filename($file_id);
 	 $_filename_ ="'".$file_name."'";
-	 $_crypt_id  = "'".base64_encode($file_id)."'";
+	 $_crypt_id  = "'".Encrypt($file_id)."'";
 	 
 		  $html.= ($row["status"]) ? '<tr id="file_'.$row["id"].'">' : '<tr id="file_'.$row["id"].'" class="active">';
 		  $html.=
@@ -491,7 +494,7 @@ if ($result=Sql_query($sql))
   {
 	$file_name  = Sql_Get_Filename($row["file_id"]);
 	$file_id    = $row["file_id"];
-	$_crypt_id  = "'".base64_encode($file_id)."'";
+	$_crypt_id  = "'".Encrypt($file_id)."'";
 	$_comment_= "'".$row["comment"]."'";
 		  $html.= '<tr id="file_'.$row["id"].'">
 		  	    <td><input value="'.$row["id"].'" type="checkbox"  name="comments[]" class="checkbox" onclick="calcItems()" /></td>
@@ -646,7 +649,7 @@ if ($result=Sql_query($sql))
   {
 	  $_fileName_ = "'".$row["filename"]."'";
 	  $_file_id   = $row["id"];
-	  $_crypt_id  = "'".base64_encode($_file_id)."'";
+	  $_crypt_id  = "'".Encrypt($_file_id)."'";
 	  $folder     = Sql_Get_folder($row['folderId']);
 	  $count++;
 	  
@@ -880,7 +883,7 @@ AJAX_check();
 
 $page_name = protect($_POST['page_name']) ;
 $title     = protect($_POST['title']);
-$content   = base64_encode($_POST['content']);
+$content   = Encrypt($_POST['content']);
 
 
 Sql_query("UPDATE `settings` SET `value` = '$content', `parameter` = '$title' WHERE `name` = '$page_name';");

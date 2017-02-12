@@ -1,9 +1,13 @@
 <?php
+// Report all errors
+/*error_reporting(E_ALL);*/
 /*------------ini-------------------*/
 $conn=mysqliconnect();
 LoadUserSettings();
 Loadconfig();
 CheckConnect();
+// Change character set to utf8
+//$conn ? mysqli_set_charset($conn,"utf8") : '';
 
 /*
 days_older_parameter
@@ -45,7 +49,7 @@ define('QUERY',isset($_SERVER['QUERY_STRING'])?$_SERVER['QUERY_STRING']:'');
 
 define('SERVER_HOST',  siteURL() );
 define('GetIsEmpty' , ( IsGet('plans') || IsGet('about') || IsGet('register') ||  IsGet('forgot') || IsGet('files') || IsGet('login') || IsGet('profile') || IsGet('authorized') || IsGet('contact') || IsGet('download') ) ? false : true );
-$DownloadID = IsGet('download') ? protect(base64_decode($_GET['download'])) : 0 ;
+$DownloadID = IsGet('download') ? protect(Decrypt($_GET['download'])) : 0 ;
 $info       = IsGet('download') ? Sql_Get_info($DownloadID) : array('status'=>false,'public'=>'0','user_id'=>UserID);
 
 /*----------------------------------*/

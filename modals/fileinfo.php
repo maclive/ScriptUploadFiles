@@ -38,9 +38,7 @@
 	  <tr id="media">
         <th><?php echo $lang[209]?></th>
         <td>
-		  <audio id="player" controls>
-            <source id="fileInfo_media" src="" /> 
-	      </audio>
+		  <div id="DivPlayer"></div>
 		</td>
       </tr>
 	  <?php } ?>

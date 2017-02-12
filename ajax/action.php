@@ -50,9 +50,9 @@ elseif(isset($_GET['_index']) )
 if(isset($_GET['download']))
 {
 
-//$DownloadID       = (is_numeric($_GET['download'])) ? (int)$_GET['download'] : protect(base64_decode($_GET['download']));
-//$DownloadID       =  protect(base64_decode($_GET['download']));
-$referrer = (isset($_GET['referrer']) &&  !empty($_GET['referrer'])) ? protect(base64_decode($_GET['referrer'])) : '' ;/*stripslashes*/
+//$DownloadID       = (is_numeric($_GET['download'])) ? (int)$_GET['download'] : protect(Decrypt($_GET['download']));
+//$DownloadID       =  protect(Decrypt($_GET['download']));
+$referrer = (isset($_GET['referrer']) &&  !empty($_GET['referrer'])) ? protect(Decrypt($_GET['referrer'])) : '' ;/*stripslashes*/
 $string   = (isset($_GET['unq'])) ? protect($_GET['unq']) : '' ;
 	 
 (!isset($_SESSION['settings']['files'][$DownloadID])) ? PrintArray(array('success_msg' => $lang[90])) : '';
@@ -73,7 +73,7 @@ $filesize = ($info['status']) ? $info["size"] : 0 ;
 ( $filename == "" )            ? PrintArray(array('success_msg' => $lang[115])) : ''; 
 ( ! file_exists( $filename ) ) ? PrintArray(array('success_msg' => $lang[46]))  : ''; 
 	
-	PrintArray(array('success_msg' =>    '<a  href="?file='.base64_encode($info["id"]).'&unq='.$string.'&'.szParameter.'='.$filesize.'"><i class="glyphicon glyphicon-download-alt"></i> '.$info["filename"].'</a>'       ));
+	PrintArray(array('success_msg' =>    '<a  href="?file='.Encrypt($info["id"]).'&unq='.$string.'&'.szParameter.'='.$filesize.'"><i class="glyphicon glyphicon-download-alt"></i> '.$info["filename"].'</a>'       ));
 }
 
 
@@ -82,6 +82,7 @@ $filesize = ($info['status']) ? $info["size"] : 0 ;
 (isset($_GET['getextensions']) ) ? PrintArray(array('value' => extensionsStr(false))) : '';
 (isset($_GET['totalpages']) && IsLogin ) ? PrintArray(array('value' => Sql_totalpages())) : '';
 (isset($_GET['getspace']) && IsLogin ) ? PrintArray(array('free' => PercentageFree , 'used'=> PercentageUsed)) : '';
+(isset($_GET['top_downloads']) ) ? PrintArray(Sql_Get_Top_Downloads()) : '';
 /******************************************************/
 
 
@@ -273,7 +274,6 @@ if (!$result)
 	 
 		 
 	 $tg = new thumbnailGenerator;
-	 
 	 $ThumbnailDir = ($tg->generate($filename, 100, 100, '..'.$ThumbnailDir)) ? $ThumbnailDir : '';
 	
 	} 
@@ -302,7 +302,7 @@ if (!$result)
 					  'DeleteId' => $RandomString ,
 					  'DownloadId' => $String ,
 					  'ID'=> $id ,
-					  'cryptID'=> base64_encode($id ),
+					  'cryptID'=> Encrypt($id ),
 					  'UploadDir'=> uploadDir ,
 					  'ThumbnailDir'=> $ThumbnailDir , 
 					  'footerInfo'=> FooterInfo('..'.folderupload) ) ) ;
@@ -427,7 +427,7 @@ else
 $time    = 	timestamp();
 $ip      = 	iplong();
 Sql_query("UPDATE `users` SET `last_visit` = '$time' , `last_ip` ='$ip' WHERE `email`='$email';");	
-$code    =	base64_encode($time);
+$code    =	Encrypt($time);
 $message = siteurl.'/index.php?reset='.$code;
 $subject = $lang[41].' - ( '.SiteName().' )';;
 // Always set content-type when sending HTML email
@@ -558,7 +558,7 @@ PrintArray($data);
 
 if (isset($_GET['comments'])){
 	
-$file_id = protect(base64_decode($_GET['comments']));
+$file_id = protect(Decrypt($_GET['comments']));
 // find out total pages
 $total = num_rows(Sql_query("SELECT * FROM `comments` WHERE `status` = '1' AND `file_id`='$file_id'"));
 $totalpages = ceil( $total / rowsperpage);
@@ -612,7 +612,7 @@ if (isset($_GET['addcomment'])){
 	if(EnableCaptcha && $_POST['captcha']!==$_SESSION['settings']['code']){$data['error_msg']=error($lang[90]);}
 	else
 	{
-	   $file_id = protect(base64_decode($_POST['file_id']));
+	   $file_id = protect(Decrypt($_POST['file_id']));
 	   $comment = protect($_POST['comment']);
 	   Sql_query("INSERT INTO `comments` (`file_id`, `user_id`, `date`, `status`, `comment`) VALUES ('$file_id', '".UserID."', '".timestamp()."', '1', '$comment');");	
 	   $data['success_msg']=success($lang[178]);
@@ -646,7 +646,7 @@ if ($result=Sql_query($sql))
       $_originalFilename = "'".$row["originalFilename"]."'";
 	  $_Filename         = "'".$row["filename"]."'";
 	  $_file_id          = $row["id"];
-	  $_crypt_id         = "'".base64_encode($_file_id)."'";
+	  $_crypt_id         = "'".Encrypt($_file_id)."'";
 	  $_deleteHash       = "'".$row["deleteHash"]."'";
 	  $folder            = Sql_Get_folder($row['folderId']);
 	  $_thumbnaildir     = (ext_is_image('..'.$folder.'/'.$row["filename"])) ? ($folder.'/_thumbnail/'.get_thumbnail($row["filename"])):'';
@@ -670,10 +670,10 @@ if ($result=Sql_query($sql))
 					 data-folder="'.$folder.'" 
 					 data-filename="'.$row["filename"].'" 
 					 data-orgfilename="'.$row["originalFilename"].'" 
-					 data-downurl="/?download='.base64_encode($_file_id).'"
+					 data-downurl="/?download='.Encrypt($_file_id).'"
 					 data-downtotal="'.$row["totalDownload"].'" 
 					 data-deletehash="'.$_deleteHash.'" 
-					 data-cryptid="'.base64_encode($_file_id).'" 
+					 data-cryptid="'.Encrypt($_file_id).'" 
 					 data-thumbnaildir="'. $_thumbnaildir .'"
 					 href="javascript:void(0)" onclick="FileInfoModal('.$count.')">'.$row["filename"].'</a>
 				</td>
