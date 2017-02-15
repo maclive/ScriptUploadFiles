@@ -197,7 +197,7 @@ Sql_query("CREATE TABLE IF NOT EXISTS `comments` (
 /*-- Table structure for table `plans`*/
 
 Sql_query("CREATE TABLE IF NOT EXISTS `plans` (
-  `name` varchar(100) CHARACTER SET utf8  COLLATE utf8 _bin NOT NULL,
+  `name` varchar(100) NOT NULL,
   `gold` text NOT NULL,
   `free` text NOT NULL,
   `premium` text NOT NULL,
