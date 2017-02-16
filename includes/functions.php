@@ -73,6 +73,14 @@ function mysqliconnect($database = true)
 	return	$database ? @mysqli_connect(dbhost, dbuser, dbpass, dbname) :  @mysqli_connect(dbhost, dbuser, dbpass);
 }
 
+
+function Sql_mode($STRICT_TRANS_TABLES='NO_ENGINE_SUBSTITUTION')
+{
+	global $conn;
+	return $conn ? Sql_query("SET SESSION sql_mode = '$STRICT_TRANS_TABLES'") : false; 
+}
+
+
 function mysqliClose_freeVars()
 { 
     global $conn;

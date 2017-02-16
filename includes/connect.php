@@ -6,6 +6,7 @@ $conn=mysqliconnect();
 LoadUserSettings();
 Loadconfig();
 CheckConnect();
+Sql_mode();
 // Change character set to utf8
 //$conn ? mysqli_set_charset($conn,"utf8") : '';
 

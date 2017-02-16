@@ -86,7 +86,7 @@ $BodyColor    = protect($_POST['BodyColor']);
 $conn =  mysqliconnect(false);
 Sql_query("CREATE DATABASE IF NOT EXISTS ".dbname);
 $conn = mysqliconnect();
-
+Sql_mode();
 //Sql_query("DROP TABLE IF EXISTS `users`");
 Sql_query("DROP TABLE IF EXISTS `settings`");
 //Sql_query("DROP TABLE IF EXISTS `files`");
