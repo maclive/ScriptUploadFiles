@@ -450,10 +450,14 @@ function unlinkRecursive($dir, $RemoveRootToo)
 }
 function folderSize ($dir)
 {
-    $size = 0;
-    foreach (glob(rtrim($dir, '/').'/*', GLOB_NOSORT) as $each) {
+    $size  = 0;
+	/*Return files as they appear in the directory (no sorting). When this flag is not used, the pathnames are sorted alphabetically */
+	$files = glob(rtrim($dir, '/').'/*', GLOB_NOSORT);
+	if (is_array($files)) 
+    foreach ($files as $each) {
         $size += is_file($each) ? filesize($each) : folderSize($each);
     }
+	unset($files);
     return $size;
 }
 
