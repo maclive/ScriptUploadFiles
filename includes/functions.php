@@ -1151,7 +1151,7 @@ return ($user=='') ?  '/' : $user ;
 
 function Sql_Get_Top_Downloads()
 {
-$data = [];	
+$data = array();
 if ($result=Sql_query("SELECT `id` , `originalFilename` , `totalDownload` FROM `files` WHERE `isPublic` = '1' ORDER BY `totalDownload` desc LIMIT 1, ".rowsperpage)){
   while($row = mysqli_fetch_assoc($result))
   {
