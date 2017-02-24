@@ -1,6 +1,6 @@
 <?php if(!isset($conn)) die('<title>Access Denied</title><i>This page cannot be accessed directly'); ?>
 
-<form id="profile_form" role="form" onsubmit="return false;">
+<form id="profile_form" role="form" onsubmit="return false;" class="<?php echo ClassAnimated ?> zoomIn">
 	   	
   <ul class="nav nav-tabs">
 	<li class="active"><a data-toggle="tab" href="#profilehome"><?php echo $lang[105] ?></a></li>

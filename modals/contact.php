@@ -1,6 +1,5 @@
 <?php if(!isset($conn)) die('<title>Access Denied</title><i>This page cannot be accessed directly'); ?>
-
-	   <form id="contact_form" role="form" onsubmit="return false;">
+	   <form id="contact_form" role="form" onsubmit="return false;" class="<?php echo ClassAnimated ?> zoomIn">
 	   
 	   <div class="form-group" id="ContactResults"> </div>
 	   

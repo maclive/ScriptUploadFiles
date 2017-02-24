@@ -25,7 +25,7 @@
 					<table class="table table-striped">
 					  <tr><th><?php echo $lang[199] ?></th><th><?php echo $lang[5] ?></th><th><?php echo $lang[200] ?></th></tr>
 					  <tr><td>jQuery.js</td><td>1.11.3</td><td>jQuery Foundation, Inc</td></tr>
-					  <tr><td>Chart.js</td><td>2.4.0</td><td>Nick Downie</td></tr>
+					  <tr><td>Chart.js</td><td>2.5.0</td><td>Nick Downie</td></tr>
 					  <tr><td>Simple Ajax Uploader.js</td><td>2.5.5</td><td>LPology, LLC</td></tr>
 					  <tr><td>bootpag.js</td><td>1.0.7</td><td>botmonster@7items.com</td></tr>
 					  <tr><td>Summernote.js</td><td>0.8.2</td><td>Alan Hong</td></tr>
@@ -40,7 +40,7 @@
 					  <tr><td>bootstrap-toggle.js</td><td>2.2.0</td><td>Min Hur</td></tr>
 					  <tr><td>bootstrap-colorselector.js</td><td>0.2.0</td><td>Flaute</td></tr>
 					  <tr><td>bootstrap-show-password.js</td><td>1.0.3</td><td>zhixin wen</td></tr>
-					  <tr><td>bootstrap-countUp.js</td><td>1.7.1</td><td>@inorganik</td></tr>
+					  <tr><td>bootstrap-countUp.js</td><td>1.8.1</td><td>@inorganik</td></tr>
 					  <tr><td>sticky.js</td><td>1.0.4</td><td>Anthony Garand</td></tr>
 					  <tr><td>hi-base64.js</td><td>0.2.0</td><td>emn178@gmail.com</td></tr>
 					  <tr><td>HTML5 Shiv.js</td><td>3.7.3</td><td>@afarkas @jdalton @jon_neal @rem</td></tr>

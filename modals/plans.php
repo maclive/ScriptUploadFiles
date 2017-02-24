@@ -59,7 +59,7 @@ while($row = mysqli_fetch_assoc($result))
 }
 ?>
 
-    <div class="row" id="plans">
+    <div class="row <?php echo ClassAnimated ?> swing" id="plans">
         <div class="col-xs-12 col-md-3">
             <div class="panel panel-default">
                 <div class="panel-heading">

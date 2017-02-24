@@ -9,12 +9,14 @@ define('animated',true);
 define('EnableLogo',false);
 define('UpdateBrowser',true); // ie8=< message
 define('EnableCaptcha',false);
-define('EnableComments',true);
+define('EnableComments',false);
 define('DirectoryChanged',false);
-/*define('MainTitle','اكتب هنا اسم موقعك');*/
 
+/*define('MainTitle','اكتب هنا اسم موقعك');*/
 $supportedLangs  = array('ar','en','') ;
 $_plans          = array('0'=>'free','1'=>'premium','2'=>'gold','3'=>'register');
 $currentpage     = 1 ;
 $totalpages      = 1 ;
+
+
 ?>

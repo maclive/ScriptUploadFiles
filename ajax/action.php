@@ -78,11 +78,11 @@ $filesize = ($info['status']) ? $info["size"] : 0 ;
 
 
 /******************************************************/
-(isset($_GET['total_stats']) ) ? PrintArray(array('downloads' => Sql_Get_Downloads_Count(true), 'users' => Sql_Get_Users_Count() ,'files' => Sql_Get_Files_Count(true) )) : '';
-(isset($_GET['getextensions']) ) ? PrintArray(array('value' => extensionsStr(false))) : '';
+(isset($_GET['total_stats']) )           ? PrintArray(array('downloads' => Sql_Get_Downloads_Count(true), 'users' => Sql_Get_Users_Count() ,'files' => Sql_Get_Files_Count(true) )) : '';
+(isset($_GET['getextensions']) )         ? PrintArray(array('value' => extensionsStr(false))) : '';
 (isset($_GET['totalpages']) && IsLogin ) ? PrintArray(array('value' => Sql_totalpages())) : '';
-(isset($_GET['getspace']) && IsLogin ) ? PrintArray(array('free' => PercentageFree , 'used'=> PercentageUsed)) : '';
-(isset($_GET['top_downloads']) ) ? PrintArray(Sql_Get_Top_Downloads()) : '';
+(isset($_GET['getspace']) && IsLogin )   ? PrintArray(array('free' => PercentageFree , 'used'=> PercentageUsed)) : '';
+(isset($_GET['top_downloads']) )         ? PrintArray(Sql_Get_Top_Downloads()) : '';
 /******************************************************/
 
 
