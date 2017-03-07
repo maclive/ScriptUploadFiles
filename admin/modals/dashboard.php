@@ -65,7 +65,7 @@
         </li>
        
 		<li class="col-xs-12 col-md-3">
-		      <a class="btn btn-lg btn-primary btn-block" href="javascript:void(0)">
+		      <a class="btn btn-lg btn-primary btn-block" href="./">
 		      <i class="glyphicon glyphicon-hdd pull-left"></i><span><span id="t_size"><?php echo t_size ?></span><br><small class="text-color"><?php echo $lang[42]?></small></span></a>
         </li>
 		
@@ -100,32 +100,32 @@
 	
 	  <tr>
         <td>upload_max_filesize</td>
-		<td><?php echo function_exists('ini_get') ? (@ini_get('upload_max_filesize')) : '' ?></td>
+		<td><?php echo function_exists('ini_get') ? FileSizeConvert(return_bytes(@ini_get('upload_max_filesize'))) : '' ?></td>
       </tr>
 	  
 	   <tr>
         <td>post_max_size</td>
-		<td><?php echo function_exists('ini_get') ? (@ini_get('post_max_size')) : '' ?></td>
+		<td><?php echo function_exists('ini_get') ? FileSizeConvert(return_bytes(@ini_get('post_max_size'))) : '' ?></td>
       </tr>
 	  
 	  <tr>
         <td>memory_limit</td>
-		<td><?php echo function_exists('ini_get') ? (@ini_get('memory_limit')) : '' ?></td>
+		<td><?php echo function_exists('ini_get') ? (@ini_get('memory_limit').' '.$lang[216]) : '' ?></td>
       </tr>
 	  
 	   <tr>
         <td>max_execution_time</td>
-		<td><?php echo function_exists('ini_get') ? (@ini_get('max_execution_time')) : '' ?></td>
+		<td><?php echo function_exists('ini_get') ? (@ini_get('max_execution_time').' '.$lang[216]) : '' ?></td>
       </tr>
 	  
 	  <tr>
         <td>max_input_time</td>
-		<td><?php echo function_exists('ini_get') ? (@ini_get('max_input_time')) : '' ?></td>
+		<td><?php echo function_exists('ini_get') ? (@ini_get('max_input_time').' '.$lang[216]) : '' ?></td>
       </tr>
 	  
 	   <tr>
         <td>max_file_uploads</td>
-		<td><?php echo function_exists('ini_get') ? (@ini_get('max_file_uploads')) : '' ?></td>
+		<td><?php echo function_exists('ini_get') ? (@ini_get('max_file_uploads').' '.$lang[109]) : '' ?></td>
       </tr>
 	  
 	   <tr>

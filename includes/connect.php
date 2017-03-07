@@ -36,8 +36,8 @@ days_older_parameter
 (!isset($_SESSION['settings']['HashCode'])) ? $_SESSION['settings']['HashCode'] = GenerateRandomString(30) : '' ;
 
 (!defined('FolderUploadId')) ? define('FolderUploadId',$_SESSION['settings']['default_folder_id']) : '';
-(!defined('HashCode')) ? define('HashCode',$_SESSION['settings']['HashCode']) : '';
-(!defined('display_ads')) ? define('display_ads',true) : '';
+(!defined('HashCode'))       ? define('HashCode',$_SESSION['settings']['HashCode']) : '';
+(!defined('display_ads'))    ? define('display_ads',true) : '';
 
 define('ClassAnimated', animated ? 'animated' : '' ) ;
 
@@ -50,8 +50,9 @@ define('QUERY',isset($_SERVER['QUERY_STRING'])?$_SERVER['QUERY_STRING']:'');
 
 define('SERVER_HOST',  siteURL() );
 define('GetIsEmpty' , ( IsGet('plans') || IsGet('about') || IsGet('register') ||  IsGet('forgot') || IsGet('files') || IsGet('login') || IsGet('profile') || IsGet('authorized') || IsGet('contact') || IsGet('download') ) ? false : true );
+
 $DownloadID = IsGet('download') ? protect(Decrypt($_GET['download'])) : 0 ;
 $info       = IsGet('download') ? Sql_Get_info($DownloadID) : array('status'=>false,'public'=>'0','user_id'=>UserID);
-
+(function_exists('ini_set'))    ? @ini_set('memory_limit', '-1') : '';
 /*----------------------------------*/
 ?>

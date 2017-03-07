@@ -77,6 +77,7 @@ if(thumbnail)
 	}
 	
 	(function_exists('ini_set') && function_exists('ini_get')) ? @ini_set('max_execution_time', @ini_get('max_execution_time')) : '';
+	(function_exists('ini_set') && function_exists('ini_get')) ? @ini_set('memory_limit', @ini_get('memory_limit')) : '';
 	
 if (!$result) 
     IePrintArray(array('success' => false, 'msg' => $Upload->getErrorMsg() )) ;   
