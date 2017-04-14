@@ -159,7 +159,8 @@
 		  <option value="#3c3d41" data-color="#3c3d41"></option>   
 		  <option value="#4A4F54" data-color="#4A4F54"></option>  
 		  <option value="#4a5164" data-color="#4a5164"></option> 
-		  <option value="<?php echo PanelColor ?>" data-color="<?php echo PanelColor ?>" selected="selected"></option>     		  
+		  <option value="#797979" data-color="#797979"></option> 
+		  <!--  <option value="<?php echo PanelColor ?>" data-color="<?php echo PanelColor ?>" selected="selected"></option>  -->   		  
         </select>
 	  </span>
 	</div>
@@ -173,7 +174,8 @@
 		  <option value="#5ABBAC" data-color="#5ABBAC"></option>
 		  <option value="#C95555" data-color="#C95555"></option>
 		  <option value="#4d759b" data-color="#4d759b"></option>
-		  <option value="<?php echo CodeColor ?>" data-color="<?php echo CodeColor ?>" selected="selected"></option>
+		  <option value="#427FED" data-color="#427FED"></option>
+		  <!--  <option value="<?php echo CodeColor ?>" data-color="<?php echo CodeColor ?>" selected="selected"></option>-->
         </select>
 	  </span>
 	</div>
@@ -187,7 +189,7 @@
 		  <option value="#ebebec" data-color="#ebebec"></option>
 		  <option value="#e5e5e5" data-color="#e5e5e5"></option>
 		  <option value="#ece9e0" data-color="#ece9e0"></option>
-		  <option value="<?php echo BodyColor ?>" data-color="<?php echo BodyColor ?>" selected="selected"></option>
+		  <!-- <option value="<?php echo BodyColor ?>" data-color="<?php echo BodyColor ?>" selected="selected"></option> -->
         </select>
 	  </span>
 	</div>
