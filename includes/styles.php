@@ -59,7 +59,9 @@ div.background{background-color:'.BodyColor.';}
 .corneRribbon-inner{background-color: '.PanelColor.';}
 /*.corneRribbon-inner:before,.corneRribbon-inner:after{border-color: #'.PanelColorBorder.';}*/
 .box > .icon > .image {background: '.PanelColor.';}
-#file-count,#user-count,#download-count,.modal-header a{color: '.CodeColor.';}
+a hr {border-top: 1px solid'.CodeColor.';}
+.cpanelBtn{background-color: #'.PanelColorBorder.';border-color: #'.PanelColorBorder.';}
+#file-count,#user-count,#download-count,.cpanelIcon,.modal-header a{color: '.CodeColor.';}
 #plans .panel.panel-success>.panel-heading {color: #fff;background-color: '.PanelColor.';border-color: '.PanelColor.';}
 #plans .panel.panel-success {border-color: '.PanelColor.';}
 #plans .panel.panel-info>.panel-heading {color: #fff;background-color: '.CodeColor.';border-color: '.CodeColor.';}

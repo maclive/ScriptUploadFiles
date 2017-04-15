@@ -981,6 +981,9 @@ margin-bottom: 10px;
 	word-wrap: break-word;
 	white-space: normal;
 }
+a hr {
+    margin: 1px;
+}
 /*
 .video-wrap{
   width: 680px;

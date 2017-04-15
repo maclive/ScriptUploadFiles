@@ -264,6 +264,7 @@ $lang[245] =  'التحميلات';
 $lang[246] =  'المرفوعات';
 $lang[247] =  'الاعضاء المسجلين';  
 $lang[248] =  'متعدد';  
+$lang[249] =  'سطر';  
 }
 
 /*---------------------------english -------------------*/
@@ -299,7 +300,6 @@ $lang[25] =  'Allowed Extensions';
 $lang[26] =  'Delete Url';
 $lang[27] =  'Logout';
 $lang[28] =  'Statistics';
-$lang[29] =  'Settings';
 $lang[29] =  'Settings';
 $lang[30] =  'Profile';
 $lang[31] =  'Download file';
@@ -520,5 +520,6 @@ $lang[245] =  'Downloads';
 $lang[246] =  'Uploads';
 $lang[247] =  'Registered Users';  
 $lang[248] =  'multiple';  
+$lang[249] =  'Lines';  
 }
 ?>

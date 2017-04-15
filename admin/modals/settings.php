@@ -1,11 +1,20 @@
 <?php if(!isset($conn)) die('<title>Access Denied</title><i>This page cannot be accessed directly'); ?>
  
  <!-- SettingsModal -->
-       
-	<form id="settings_form" role="form" onsubmit="return false;">	
-	 <div class="form-group" id="SettingsResults"> </div> 
-
-
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#setting" data-toggle="tab"><?php echo $lang[29] ?></a></li>
+	  <li><a href="#maxi" data-toggle="tab"><?php echo $lang[24] ?></a></li>
+      <li><a href="#terms" data-toggle="tab"><?php echo $lang[152].' ...' ?></a></li>
+	  <li><a href="#style" data-toggle="tab"><?php echo $lang[70] ?></a></li>
+	  <li><a href="#closesite" data-toggle="tab"><?php echo $lang[64] ?></a></li>
+    </ul>
+    
+	<form id="settings_form" role="form" onsubmit="return false;" class="tab-content">
+	
+	 <div id="SettingsResults"> </div>
+	 
+      <div class="well tab-pane active in" id="setting">
+	
 	<div class="input-group">
       <span class="input-group-addon hidden-sml"><?php echo $lang[72] ?></span>
         <input name="sitename" type="text"  maxlength="255" class="form-control" value="<?php echo sitename ?>" style="text-align: left;direction: ltr;" placeholder="<?php echo $lang[72] ?>">
@@ -17,8 +26,8 @@
     </div>
 
     <div class="input-group">
-      <span class="input-group-addon hidden-sml"><?php echo $lang[72] ?></span>
-        <input name="siteurl" type="text" maxlength="255" class="form-control" value="<?php echo siteurl ?>" style="text-align: left;direction: ltr;" placeholder="<?php echo $lang[72] ?>">
+      <span class="input-group-addon hidden-sml"><?php echo $lang[18] ?></span>
+        <input name="siteurl" type="text" maxlength="255" class="form-control" value="<?php echo siteurl ?>" style="text-align: left;direction: ltr;" placeholder="<?php echo $lang[18] ?>">
     </div>
 	 <div class="input-group">
       <span class="input-group-addon hidden-sml"><?php echo $lang[40] ?></span>
@@ -50,42 +59,7 @@
       </select>
     </div>
 	
-	 <div class="input-group">
-      <span class="input-group-addon hidden-sml"><?php echo $lang[24] ?></span>
-        <input type="text"  name="maxsize" maxlength="255" class="form-control" value="<?php echo nbrOnly(maxsize) ?>" placeholder="<?php echo $lang[24] ?>">
-	  <?php echo OptionSizeHtml('format_maxsize',(maxsize))?>
-    </div>
-	
-	 <div class="input-group">
-      <span class="input-group-addon hidden-sml"><?php echo $lang[173] ?></span>
-        <input type="text"  name="userspacemax" maxlength="255" class="form-control" value="<?php echo nbrOnly(userspacemax) ?>" placeholder="<?php echo $lang[173] ?>">
-	  <?php echo OptionSizeHtml('format_userspacemax',(userspacemax))?>
-    </div>
-	
-	 <div class="input-group">
-      <span class="input-group-addon hidden-sml"><?php echo $lang[234] ?></span>
-        <input type="text"  name="speed" maxlength="255" class="form-control" value="<?php echo nbrOnly(speed) ?>" placeholder="<?php echo $lang[234] ?>">
-	  <?php echo OptionSizeHtml('format_speed',(speed))?>
-    </div>
-	
-	 <div class="input-group">
-      <span class="input-group-addon hidden-sml" ><?php echo $lang[236] ?></span>
-        <input type="text"  name="days_older" value="<?php echo days_older ?>" class="form-control" placeholder="<?php echo $lang[236].' 30 '.$lang[222].' ...' ?>">
-	  <span style="min-width: 60px;" class="input-group-addon hidden-sml" ><?php echo $lang[222] ?></span>
-    </div>
 	 
-	 <div class="input-group">
-      <span class="input-group-addon hidden-sml"><?php echo $lang[78] ?></span>
-        <input type="text"  name="Interval" value="<?php echo Interval ?>" class="form-control" placeholder="<?php echo $lang[78] ?>">
-	  <span style="min-width: 60px;"class="input-group-addon hidden-sml"><?php echo $lang[216] ?></span>
-    </div>
-	
-	<div class="input-group">
-      <span class="input-group-addon" ><?php echo $lang[237] ?></span>
-        <input type="text"  name="maxUploads" value="<?php echo maxUploads ?>" class="form-control" placeholder="<?php echo $lang[237] ?>">
-	  <span style="min-width: 60px;" class="input-group-addon" ><?php echo function_exists('ini_get') ? ini_get('max_file_uploads') : '' ?></span>
-    </div>
-	
 	 <div class="input-group">
       <span class="input-group-addon"><?php echo $lang[172] ?></span>
         <input type="text"  class="form-control hidden-sml" placeholder="<?php echo $lang[172] ?>" disabled>
@@ -129,12 +103,7 @@
 		<span class="input-group-addon" style="min-width: 15px;text-align: left;"><input name="statistics" class="settings" type="checkbox" <?php if(statistics) echo ' checked' ?>></span>
     </div>
 	
-	 <div class="input-group">
-      <span class="input-group-addon hidden-sml"> <?php echo $lang[64] ?> </span>
-         <textarea maxlength="21844" class="editor form-control" rows="5" id="closemsg" name="closemsg"  placeholder="<?php echo $lang[64] ?>"><?php echo closemsg ?></textarea>
-		 <span class="input-group-addon" style="min-width: 15px;text-align: left;"><input id="siteclose" name="siteclose" class="settings" type="checkbox" <?php if(siteclose) echo ' checked' ?>></span>
-    </div>
-	
+
 	 <div class="input-group">
       <span class="input-group-addon hidden-sml"><?php echo $lang[67] ?></span>
         <input type="text"  maxlength="30" name="prefixname" value="<?php echo prefixname ?>" class="form-control" style="text-align: left;direction: ltr; " placeholder="<?php echo $lang[67] ?>">
@@ -145,10 +114,72 @@
         <input type="text" maxlength="1000" name="extensions" value="<?php echo extensions ?>" class="form-control" placeholder="<?php echo $lang[25] ?>" data-role="tagsinput" >
     </div>
 
-	 <div class="input-group">
-      <span class="input-group-addon hidden-sml"><?php echo $lang[69] ?></span>
-        <input type="text"  name="rowsperpage" value="<?php echo rowsperpage ?>" class="form-control" placeholder="<?php echo $lang[69] ?>">
+	</div> <!-- tab-settings -->
+	
+	
+	<div class="well tab-pane fade" id="maxi">
+	
+	
+	<div class="input-group">
+      <span class="input-group-addon hidden-sml"><?php echo $lang[24] ?></span>
+        <input type="text"  name="maxsize" maxlength="255" class="form-control" value="<?php echo nbrOnly(maxsize) ?>" placeholder="<?php echo $lang[24] ?>">
+	  <?php echo OptionSizeHtml('format_maxsize',(maxsize))?>
     </div>
+	
+	 <div class="input-group">
+      <span class="input-group-addon hidden-sml"><?php echo $lang[173] ?></span>
+        <input type="text"  name="userspacemax" maxlength="255" class="form-control" value="<?php echo nbrOnly(userspacemax) ?>" placeholder="<?php echo $lang[173] ?>">
+	  <?php echo OptionSizeHtml('format_userspacemax',(userspacemax))?>
+    </div>
+	
+	 <div class="input-group">
+      <span class="input-group-addon hidden-sml"><?php echo $lang[234] ?></span>
+        <input type="text"  name="speed" maxlength="255" class="form-control" value="<?php echo nbrOnly(speed) ?>" placeholder="<?php echo $lang[234] ?>">
+	  <?php echo OptionSizeHtml('format_speed',(speed))?>
+    </div>
+	
+	 <div class="input-group">
+      <span class="input-group-addon hidden-sml" ><?php echo $lang[236] ?></span>
+        <input type="text"  name="days_older" value="<?php echo days_older ?>" class="form-control" placeholder="<?php echo $lang[236].' 30 '.$lang[222].' ...' ?>">
+	  <span style="min-width: 60px;" class="input-group-addon" ><?php echo $lang[222] ?></span>
+    </div>
+	 
+	 <div class="input-group">
+      <span class="input-group-addon hidden-sml"><?php echo $lang[78] ?></span>
+        <input type="text"  name="Interval" value="<?php echo Interval ?>" class="form-control" placeholder="<?php echo $lang[78] ?>">
+	  <span style="min-width: 60px;"class="input-group-addon"><?php echo $lang[216] ?></span>
+    </div>
+	
+	<div class="input-group">
+      <span class="input-group-addon hidden-sml" ><?php echo $lang[237] ?></span>
+        <input type="text"  name="maxUploads" value="<?php echo maxUploads ?>" class="form-control" placeholder="<?php echo $lang[237] ?>">
+	  <span style="min-width: 60px;" class="input-group-addon" ><?php echo function_exists('ini_get') ? ini_get('max_file_uploads') : '' ?></span>
+    </div>
+	
+	<div class="input-group">
+      <span class="input-group-addon hidden-sml"><?php echo $lang[69] ?></span>
+        <input type="text"  name="rowsperpage" value="<?php echo rowsperpage ?>" class="form-control" placeholder="<?php echo $lang[249] ?>">
+		<span style="min-width: 60px;" class="input-group-addon"><?php echo $lang[216] ?></span>
+    </div>
+	
+	</div> <!-- tab-maxi -->
+	
+	
+	
+	
+	
+	<div class="well tab-pane fade" id="closesite">
+	
+	<div class="input-group">
+      <span class="input-group-addon hidden-sml"> <?php echo $lang[64] ?> </span>
+         <textarea maxlength="21844" class="editor form-control" rows="5" id="closemsg" name="closemsg"  placeholder="<?php echo $lang[64] ?>"><?php echo closemsg ?></textarea>
+		 <span class="input-group-addon" style="min-width: 15px;text-align: left;"><input id="siteclose" name="siteclose" class="settings" type="checkbox" <?php if(siteclose) echo ' checked' ?>></span>
+    </div>
+	
+	</div> <!-- tab-closesite -->
+	
+	
+	<div class="well tab-pane fade" id="style">
 	
 	<div class="input-group">
       <span class="input-group-addon hidden-sml"><?php echo $lang[191] ?> - Panel</span>
@@ -193,6 +224,10 @@
         </select>
 	  </span>
 	</div>
+	
+	</div> <!-- tab-style -->
+	
+	<div class="well tab-pane fade" id="terms">
   
   	<div class="input-group">
       <span class="input-group-addon hidden-sml"><?php echo $lang[152] ?></span>
@@ -205,8 +240,11 @@
 	    <textarea maxlength="21844" class="editor form-control" rows="5" name="privacy" id="privacy" placeholder="<?php echo $lang[153] ?>"><?php echo privacy ?></textarea>
     </div>
 	
+	</div> <!-- tab-terms -->
+	
+	</form> <!-- tab-content -->
 
-  </form>
+
 	<br>
   <div class="form-group">
      <button id="btn" type="submit" class="btn btn-primary btn-block" onclick="request('settings','SettingsResults','settings_form');"><?php echo $lang[71] ?></button>

@@ -32,41 +32,41 @@
  <ul class="ds-btn">
    <div class="row">
         <li class="col-xs-12 col-md-3">
-             <a class="btn btn-lg btn-primary btn-block" href="./?users">
-             <i class="glyphicon glyphicon-user pull-left"></i><span><span id="t_users"><?php echo t_users ?></span><br><small class="text-color"><?php echo $lang[73]?></small></span></a>   
+             <a class="cpanelBtn btn btn-lg btn-primary btn-block" href="./?users">
+             <i class="cpanelIcon glyphicon glyphicon-user pull-left"></i><span><span id="t_users"><?php echo t_users ?></span><hr><small class="text-color"><?php echo $lang[73]?></small></span></a>   
         </li>
 		
 		<li class="col-xs-12 col-md-3">
-             <a class="btn btn-lg btn-primary btn-block" href="./?files">
-             <i class="glyphicon glyphicon-file pull-left"></i><span><span id="t_files"><?php echo t_files ?></span><br><small class="text-color"><?php echo $lang[109]?></small></span></a> 
+             <a class="cpanelBtn btn btn-lg btn-primary btn-block" href="./?files">
+             <i class="cpanelIcon glyphicon glyphicon-file pull-left"></i><span><span id="t_files"><?php echo t_files ?></span><hr><small class="text-color"><?php echo $lang[109]?></small></span></a> 
         </li>
 		
 		<li class="col-xs-12 col-md-3">
-             <a class="btn btn-lg btn-primary btn-block" href="./?reports">
-             <i class="glyphicon glyphicon-flag pull-left"></i><span><span id="t_reports"><?php echo t_reports ?></span><br><small class="text-color"><?php echo $lang[101]?></small></span></a> 
+             <a class="cpanelBtn btn btn-lg btn-primary btn-block" href="./?reports">
+             <i class="cpanelIcon glyphicon glyphicon-flag pull-left"></i><span><span id="t_reports"><?php echo t_reports ?></span><hr><small class="text-color"><?php echo $lang[101]?></small></span></a> 
         </li>
 		
         <li class="col-xs-12 col-md-3">
-            <a class="btn btn-lg btn-primary btn-block" href="./?folders">
-            <i class="glyphicon glyphicon-folder-close pull-left"></i><span><span id="t_folders"><?php echo t_folders ?></span><br><small class="text-color"><?php echo $lang[74]?></small></span></a>    
+            <a class="cpanelBtn btn btn-lg btn-primary btn-block" href="./?folders">
+            <i class="cpanelIcon glyphicon glyphicon-folder-close pull-left"></i><span><span id="t_folders"><?php echo t_folders ?></span><hr><small class="text-color"><?php echo $lang[74]?></small></span></a>    
         </li>
 		
 		
 	</div>
 	<div class="row">
         <li class="col-xs-12 col-md-3">
-             <a class="btn btn-lg btn-primary btn-block" href="./?statistics">
-             <i class="glyphicon glyphicon-stats pull-left"></i><span><span id="t_statistics"><?php echo t_statistics ?></span><br><small class="text-color"><?php echo $lang[28]?></small></span></a> 
+             <a class="cpanelBtn btn btn-lg btn-primary btn-block" href="./?statistics">
+             <i class="cpanelIcon glyphicon glyphicon-stats pull-left"></i><span><span id="t_statistics"><?php echo t_statistics ?></span><hr><small class="text-color"><?php echo $lang[28]?></small></span></a> 
         </li>
 		
 		<li class="col-xs-12 col-md-3">
-		      <a class="btn btn-lg btn-primary btn-block" href="./?comments">
-		      <i class="glyphicon glyphicon-comment pull-left"></i><span><span id="t_comments"><?php echo t_comments ?></span><br><small class="text-color"><?php echo $lang[240]?></small></span></a>
+		      <a class="cpanelBtn btn btn-lg btn-primary btn-block" href="./?comments">
+		      <i class="cpanelIcon glyphicon glyphicon-comment pull-left"></i><span><span id="t_comments"><?php echo t_comments ?></span><hr><small class="text-color"><?php echo $lang[240]?></small></span></a>
         </li>
        
 		<li class="col-xs-12 col-md-3">
-		      <a class="btn btn-lg btn-primary btn-block" href="./">
-		      <i class="glyphicon glyphicon-hdd pull-left"></i><span><span id="t_size"><?php echo t_size ?></span><br><small class="text-color"><?php echo $lang[42]?></small></span></a>
+		      <a class="cpanelBtn btn btn-lg btn-primary btn-block" href="./">
+		      <i class="cpanelIcon glyphicon glyphicon-hdd pull-left"></i><span><span id="t_size"><?php echo t_size ?></span><hr><small class="text-color"><?php echo $lang[42]?></small></span></a>
         </li>
 		
 		<li class="col-xs-12 col-md-3">
@@ -89,7 +89,7 @@
      <div class="col-xs-12">
 	 
 	 <div class="table-responsive">
-	 <table class="table">
+	 <table class="table table-striped">
     <thead>
       <tr>
         <th>#</th>
@@ -100,52 +100,52 @@
 	
 	  <tr>
         <td>upload_max_filesize</td>
-		<td><?php echo function_exists('ini_get') ? FileSizeConvert(return_bytes(@ini_get('upload_max_filesize'))) : '' ?></td>
+		<td><code><?php echo function_exists('ini_get') ? FileSizeConvert(return_bytes(@ini_get('upload_max_filesize'))) : '' ?></code></td>
       </tr>
 	  
 	   <tr>
         <td>post_max_size</td>
-		<td><?php echo function_exists('ini_get') ? FileSizeConvert(return_bytes(@ini_get('post_max_size'))) : '' ?></td>
+		<td><code><?php echo function_exists('ini_get') ? FileSizeConvert(return_bytes(@ini_get('post_max_size'))) : '' ?></code></td>
       </tr>
 	  
 	  <tr>
         <td>memory_limit</td>
-		<td><?php echo function_exists('ini_get') ? (@ini_get('memory_limit').' '.$lang[216]) : '' ?></td>
+		<td><code><?php echo function_exists('ini_get') ? (@ini_get('memory_limit').' '.$lang[216]) : '' ?></code></td>
       </tr>
 	  
 	   <tr>
         <td>max_execution_time</td>
-		<td><?php echo function_exists('ini_get') ? (@ini_get('max_execution_time').' '.$lang[216]) : '' ?></td>
+		<td><code><?php echo function_exists('ini_get') ? (@ini_get('max_execution_time').' '.$lang[216]) : '' ?></code></td>
       </tr>
 	  
 	  <tr>
         <td>max_input_time</td>
-		<td><?php echo function_exists('ini_get') ? (@ini_get('max_input_time').' '.$lang[216]) : '' ?></td>
+		<td><code><?php echo function_exists('ini_get') ? (@ini_get('max_input_time').' '.$lang[216]) : '' ?></code></td>
       </tr>
 	  
 	   <tr>
         <td>max_file_uploads</td>
-		<td><?php echo function_exists('ini_get') ? (@ini_get('max_file_uploads').' '.$lang[109]) : '' ?></td>
+		<td><code><?php echo function_exists('ini_get') ? (@ini_get('max_file_uploads').' '.$lang[109]) : '' ?></code></td>
       </tr>
 	  
 	   <tr>
         <td>phpversion</td>
-		<td><?php echo function_exists('phpversion') ? phpversion() : '' ?></td>
+		<td><code><?php echo function_exists('phpversion') ? phpversion() : '' ?></code></td>
       </tr>
 	  
 	  <tr>
         <td>mysqlversion</td>
-		<td><?php echo mysqlversion() ?></td>
+		<td><code><?php echo mysqlversion() ?></code></td>
       </tr>
 	  
 	   <tr>
         <td><?php echo $lang[243] ?></td>
-		<td><?php echo function_exists('disk_free_space') ? FileSizeConvert(@disk_free_space("/")):'-' ?></td>
+		<td><code><?php echo function_exists('disk_free_space') ? FileSizeConvert(@disk_free_space("/")):'-' ?></code></td>
       </tr>
 	  
 	  <tr>
         <td><?php echo $lang[242] ?></td>
-		<td><?php echo function_exists('disk_total_space') ? FileSizeConvert(@disk_total_space("/")):'-' ?></td>
+		<td><code><?php echo function_exists('disk_total_space') ? FileSizeConvert(@disk_total_space("/")):'-' ?></code></td>
       </tr>
 	  
 	   <tr>
