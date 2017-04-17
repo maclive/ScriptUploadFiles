@@ -258,6 +258,7 @@ $("#EditPlanResults").html("");
 
 (data.directdownload=='1') ? $('#plan_directdownload').prop('checked', true) : $('#plan_directdownload').prop('checked', false);
 (data.statistics=='1') ? $('#plan_statistics').prop('checked', true) : $('#plan_statistics').prop('checked', false); 
+(data.deletelink=='1') ? $('#plan_deletelink').prop('checked', true) : $('#plan_deletelink').prop('checked', false); 
 (data.thumbnail=='1') ? $('#plan_thumbnail').prop('checked', true) : $('#plan_thumbnail').prop('checked', false);
 (data.display_ads=='1') ? $('#plan_display_ads').prop('checked', true) : $('#plan_display_ads').prop('checked', false); 
 (data.multiple=='1') ? $('#plan_multiple').prop('checked', true) : $('#plan_multiple').prop('checked', false); 

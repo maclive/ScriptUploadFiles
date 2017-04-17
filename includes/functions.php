@@ -1375,7 +1375,7 @@ return (preg_match('/(?i)msie [5-8]/',$_SERVER['HTTP_USER_AGENT'])) ? true : fal
 function translate()
 {
 global $lang;
-return array('free'=>$lang[226],'premium'=>$lang[227],'gold'=>$lang[228],'register'=>$lang[55],'maxUploads'=>$lang[237],'days_older'=>$lang[236],'maxsize'=>$lang[24],'extensions'=>$lang[25],'Interval'=>$lang[78],'directdownload'=>$lang[51],'statistics'=>$lang[28],'userspacemax'=>$lang[173],'thumbnail'=>$lang[172],'display_ads'=>$lang[183],'price'=>$lang[231],'enable_userfolder'=>$lang[65],'speed'=>$lang[234],'multiple'=>$lang[248]);
+return array('free'=>$lang[226],'premium'=>$lang[227],'gold'=>$lang[228],'register'=>$lang[55],'deletelink'=>$lang[26],'maxUploads'=>$lang[237],'days_older'=>$lang[236],'maxsize'=>$lang[24],'extensions'=>$lang[25],'Interval'=>$lang[78],'directdownload'=>$lang[51],'statistics'=>$lang[28],'userspacemax'=>$lang[173],'thumbnail'=>$lang[172],'display_ads'=>$lang[183],'price'=>$lang[231],'enable_userfolder'=>$lang[65],'speed'=>$lang[234],'multiple'=>$lang[248]);
 }
 function LoadUserSettings()
 {

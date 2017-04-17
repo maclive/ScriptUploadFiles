@@ -105,6 +105,12 @@
     </div>
 	
 	<div class="input-group">
+      <span class="input-group-addon"> <?php echo $lang[26] ?></span>
+        <input type="text"  class="form-control hidden-sml" placeholder="<?php echo $lang[26] ?>" disabled>
+		<span class="input-group-addon" style="min-width: 15px;text-align: left;"><input name="deletelink" class="settings" type="checkbox" <?php if(deletelink) echo ' checked' ?>></span>
+    </div>
+	
+	<div class="input-group">
       <span class="input-group-addon"> <?php echo $lang[248] ?></span>
         <input type="text"  class="form-control hidden-sml" placeholder="<?php echo $lang[248] ?>" disabled>
 		<span class="input-group-addon" style="min-width: 15px;text-align: left;"><input name="multiple" class="settings" type="checkbox" <?php if(multiple) echo ' checked' ?>></span>

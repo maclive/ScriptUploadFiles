@@ -102,6 +102,16 @@
 		<span class="input-group-addon" style="min-width: 15px;text-align: left;"><input class="settings" id="plan_directdownload" name="directdownload" type="checkbox"></span>
     </div>
 	
+	
+	
+	
+	
+	<div class="input-group">
+      <span class="input-group-addon"> <?php echo $lang[26] ?></span>
+        <input type="text"  class="form-control"  placeholder="<?php echo $lang[26] ?>" disabled>
+		<span class="input-group-addon" style="min-width: 15px;text-align: left;"><input class="settings" id="plan_deletelink" name="deletelink" type="checkbox"></span>
+    </div>
+	
 	<div class="input-group">
       <span class="input-group-addon"> <?php echo $lang[28] ?></span>
         <input type="text"  class="form-control"  placeholder="<?php echo $lang[28] ?>" disabled>

@@ -212,6 +212,7 @@ $enable_userfolder  = isPost('enable_userfolder') ?  1 : 0 ;
 $statistics         = isPost('statistics') ?  1 : 0 ;
 $thumbnail          = isPost('thumbnail') ?  1 : 0 ;
 $multiple           = isPost('multiple') ?  1 : 0 ;
+$deletelink         = isPost('deletelink') ?  1 : 0 ;
 
 $folderupload = protect($_POST['folderupload']);
 $prefixname = protect($_POST['prefixname']);
@@ -257,6 +258,7 @@ Sql_query("UPDATE `settings` SET `value` = '$speed' WHERE `name` = 'speed';");
 Sql_query("UPDATE `settings` SET `value` = '$days_older' WHERE `name` = 'days_older';"); 
 Sql_query("UPDATE `settings` SET `value` = '$maxUploads' WHERE `name` = 'maxUploads';"); 
 Sql_query("UPDATE `settings` SET `value` = '$multiple' WHERE `name` = 'multiple';"); 
+Sql_query("UPDATE `settings` SET `value` = '$deletelink' WHERE `name` = 'deletelink';"); 
 
 
 Sql_query("UPDATE `folders` SET `folderName` = '$folderupload', `date_added` = '".timestamp()."' WHERE `id` = '".(int)Get_folderId_By_UserId(0)."';");
@@ -993,6 +995,7 @@ $statistics         = isPost('statistics') ?  1 : 0 ;
 $thumbnail          = isPost('thumbnail') ?  1 : 0 ;
 $display_ads        = isPost('display_ads') ?  1 : 0 ;
 $multiple           = isPost('multiple') ?  1 : 0 ;
+$deletelink         = isPost('deletelink') ?  1 : 0 ;
 
 $price              = isPost('price') ? protect($_POST['price']) : '';
 $extensions         = protect($_POST['extensions']);
@@ -1020,6 +1023,7 @@ Sql_query("UPDATE `plans` SET `$plan` = '$days_older' WHERE `name` = 'days_older
 Sql_query("UPDATE `plans` SET `$plan` = '$maxUploads' WHERE `name` = 'maxUploads';");
 Sql_query("UPDATE `plans` SET `$plan` = '$display_ads' WHERE `name` = 'display_ads';");
 Sql_query("UPDATE `plans` SET `$plan` = '$multiple' WHERE `name` = 'multiple';");
+Sql_query("UPDATE `plans` SET `$plan` = '$deletelink' WHERE `name` = 'deletelink';");
 PrintArray(array('success_msg' => $lang[178]));
 }
 

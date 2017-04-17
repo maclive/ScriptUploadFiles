@@ -52,6 +52,7 @@
       </tr>
 	  
 	  
+	  <?php if(deletelink){ ?>
       <tr>
         <td class="col-md-2 hidden-sml singleline" id="label_delete"><?php echo $lang[26] ?>:</td>
         <td class="col-md-10">
@@ -63,7 +64,7 @@
             </div>
 		</td>
       </tr>
-	  
+	  <?php } ?> 
 	  
       <tr>
         <td class="col-md-2 hidden-sml singleline" id="label_downloadlink"><?php echo $lang[184] ?>:</td>

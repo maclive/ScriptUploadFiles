@@ -29,6 +29,7 @@ define('thumbnail','1');
 define('days_older','30');
 define('maxUploads','1');
 define('multiple','1');
+define('deletelink','1');
 
 //define('dbprefix','db_');
 (!defined('dbhost')) ? define('dbhost','localhost'): '';

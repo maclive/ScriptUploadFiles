@@ -56,9 +56,10 @@ $register  = isPost('register') ?  1 : 0 ;
 $authorized  = isPost('authorized') ?  1 : 0 ;
 $directdownload  = isPost('directdownload') ?  1 : 0 ;
 $enable_userfolder =  isPost('enable_userfolder') ?  1 : 0 ;
-$statistics  = isPost('statistics') ?  1 : 0 ;
-$thumbnail =  isPost('thumbnail') ?  1 : 0 ;
-$multiple  = isPost('multiple') ?  1 : 0 ;
+$statistics   = isPost('statistics') ?  1 : 0 ;
+$thumbnail    = isPost('thumbnail') ?  1 : 0 ;
+$multiple     = isPost('multiple') ?  1 : 0 ;
+$deletelink   = isPost('deletelink') ?  1 : 0 ;
 
 $folderupload = protect($_POST['folderupload']);
 $prefixname   = protect($_POST['prefixname']);
@@ -220,6 +221,7 @@ Sql_query("INSERT INTO `plans` (`name`, `gold`, `free`, `premium`, `register`) V
 ('speed', '', '', '', ''),
 ('maxUploads', '', '', '', ''),
 ('multiple', '', '', '', ''),
+('deletelink', '', '', '', ''),
 ('enable_userfolder', '', '', '', '');");
 
 
@@ -318,7 +320,8 @@ Sql_query("INSERT INTO `settings` (`name`, `value`) VALUES ('speed', '$speed');"
 Sql_query("INSERT INTO `settings` (`name`, `value`) VALUES ('days_older', '$days_older');");
 Sql_query("INSERT INTO `settings` (`name`, `value`) VALUES ('maxUploads', '$maxUploads');");
 Sql_query("INSERT INTO `settings` (`name`, `value`) VALUES ('multiple', '$multiple');");
-
+Sql_query("INSERT INTO `settings` (`name`, `value`) VALUES ('deletelink', '$deletelink');");
+ 
 //Sql_query("INSERT INTO `folders` (`userId`, `folderName`, `isPublic`, `accessPassword`, `date_added`) VALUES ( '0', '$folderupload', '1', '', '$date');");
 
 /*-- Dumping data for table `users`*/
@@ -887,6 +890,11 @@ $.ajax({
 	 <div class="input-group">
       <span class="input-group-addon"><input name="directdownload" type="checkbox" <?php if(directdownload) echo ' checked' ?>> <?php echo $lang[51] ?></span>
         <input type="text"  class="form-control" placeholder="<?php echo $lang[51] ?>" disabled>
+    </div>
+	
+	<div class="input-group">
+      <span class="input-group-addon"><input name="deletelink" type="checkbox" <?php if(deletelink) echo ' checked' ?>> <?php echo $lang[26] ?></span>
+        <input type="text"  class="form-control" placeholder="<?php echo $lang[26] ?>" disabled>
     </div>
 	
     <div class="input-group">
