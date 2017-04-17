@@ -18,7 +18,7 @@ if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
 
 // get the current page or set a default
 
-$currentpage = (isset($_GET['currentpage']) && is_numeric($_GET['currentpage']))  ? (int) $_GET['currentpage'] : 1;
+$currentpage = (isGet('currentpage') && is_numeric($_GET['currentpage']))  ? (int) $_GET['currentpage'] : 1;
 
 (!isset($_SESSION['login'])) ? PrintArray(array('error_msg'=> '<'.$lang[98].'>')) : '';
 (!IsLogin)                   ? PrintArray(array('error_msg'=> $lang[98])) : '';
@@ -31,7 +31,7 @@ $html      ='';
 
 //*********************************************		
 
-if(isset($_GET['updatefile']))
+if(isGet('updatefile'))
 {
 AJAX_check();	
 /*
@@ -47,9 +47,9 @@ $orgfilename     = protect($Upload->getFileName());
 $_new_ext        = strtolower(substr(strrchr($orgfilename,"."),1));	
 $_old_ext        = strtolower(substr(strrchr($_UploadFileName,"."),1));
 $_folder         = Get_folderName_By_FolderId(Get_folderId_by_Filename($_UploadFileName));
-$passwordfile    = (isset($_POST['passwordfile'])) ? protect($_POST['passwordfile']) : '';
-$code            = (isset($_POST['code'])) ? $_POST['code'] : '' ;
-$ispublic        = (isset($_POST['ispublic']) && IsLogin ) ? (int)$_POST['ispublic'] : 1 ;
+$passwordfile    = (isPost('passwordfile')) ? protect($_POST['passwordfile']) : '';
+$code            = (isPost('code')) ? $_POST['code'] : '' ;
+$ispublic        = (isPost('ispublic') && IsLogin ) ? (int)$_POST['ispublic'] : 1 ;
 $ThumbnailDir    = (thumbnail) ? '../..'.uploadDir.'/_thumbnail/'.get_thumbnail($_UploadFileName) : ''; 
 
 (defined('HashCode') && HashCode !== $code )            ? IePrintArray(array('success' => false, 'msg' => $lang[103].' / HashCode'  )) : '' ; 
@@ -92,7 +92,7 @@ if (!$result)
 //*********************************************	
 
 	
-if (isset($_GET['folders']))
+if (isGet('folders'))
 {	
     AJAX_check();
 	/*
@@ -115,7 +115,7 @@ foreach($dirs as $x => $file) {
 	
 */
 
-if(isset($_GET['order']))
+if(isGet('order'))
 {
 	AJAX_check();
 	$order = protect($_GET['order']);
@@ -176,7 +176,7 @@ PrintArray($data) ;
 //*********************************************	
 
 	
-if (isset($_GET['settings']))
+if (isGet('settings'))
 {	
 
 AJAX_check();
@@ -192,7 +192,7 @@ $BodyColor    = protect($_POST['BodyColor']);
 $PanelColor   = protect($_POST['PanelColor']);
 $CodeColor    = protect($_POST['CodeColor']);
 
-if (isset($_POST['siteclose']))
+if (isPost('siteclose'))
 {
 $siteclose = 1;	
 $closemsg = $_POST['closemsg'];
@@ -205,13 +205,13 @@ $closemsg = $_POST['closemsg'];
 
 
 
-$register           = isset($_POST['register']) ?  1 : 0 ;
-$authorized         = isset($_POST['authorized']) ?  1 : 0 ;
-$directdownload     = isset($_POST['directdownload']) ?  1 : 0 ;
-$enable_userfolder  = isset($_POST['enable_userfolder']) ?  1 : 0 ;
-$statistics         = isset($_POST['statistics']) ?  1 : 0 ;
-$thumbnail          = isset($_POST['thumbnail']) ?  1 : 0 ;
-$multiple           = isset($_POST['multiple']) ?  1 : 0 ;
+$register           = isPost('register') ?  1 : 0 ;
+$authorized         = isPost('authorized') ?  1 : 0 ;
+$directdownload     = isPost('directdownload') ?  1 : 0 ;
+$enable_userfolder  = isPost('enable_userfolder') ?  1 : 0 ;
+$statistics         = isPost('statistics') ?  1 : 0 ;
+$thumbnail          = isPost('thumbnail') ?  1 : 0 ;
+$multiple           = isPost('multiple') ?  1 : 0 ;
 
 $folderupload = protect($_POST['folderupload']);
 $prefixname = protect($_POST['prefixname']);
@@ -273,11 +273,11 @@ PrintArray(array('success_msg' => $lang[178]));
 	
 //*********************************************		
 	
-if (isset($_GET['statistics']))
+if (isGet('statistics'))
 {	
 
 
-if(isset($_GET['order']))
+if(isGet('order'))
 {
 	AJAX_check();
 	$order = protect($_GET['order']);
@@ -345,9 +345,9 @@ PrintArray($data) ;
 }
 
 
-if (isset($_GET['reports'])){	
+if (isGet('reports')){	
  
-if(isset($_GET['order']))
+if(isGet('order'))
 {
 	AJAX_check();
 	$order = protect($_GET['order']);
@@ -408,7 +408,7 @@ PrintArray($data) ;
 }
 
 //*********************************************	
-if (isset($_GET['plans'])){	 
+if (isGet('plans')){	 
 
 $translate = translate();
 $result = Sql_query("SELECT * FROM `plans`");
@@ -452,7 +452,7 @@ mysqli_close($conn);
 PrintArray($data) ;
 }	
 //*********************************************	
-if(isset($_GET['commentstatus']))
+if(isGet('commentstatus'))
 {
 AJAX_check();	
 $comment_id = (int)$_GET['commentstatus'];
@@ -462,9 +462,9 @@ Sql_query("UPDATE `comments` SET `status` = '$status' WHERE `id` = '$comment_id'
 PrintArray(array('icon' => glyphiconOK($status,true) ));
 }	
 //*********************************************	
-if (isset($_GET['comments'])){	 
+if (isGet('comments')){	 
 
-if(isset($_GET['order']))
+if(isGet('order'))
 {
 	AJAX_check();
 	$order = protect($_GET['order']);
@@ -523,9 +523,9 @@ PrintArray($data) ;
 
 //*********************************************
 	
-if (isset($_GET['users'])){	 
+if (isGet('users')){	 
 
-if(isset($_GET['order']))
+if(isGet('order'))
 {
 	AJAX_check();
 	$order = protect($_GET['order']);
@@ -581,10 +581,10 @@ PrintArray($data) ;
 }
 
 //*********************************************
-if (isset($_GET['files']) || isset($_GET['search'])){	 
+if (isGet('files') || isGet('search')){	 
 
 
-if(isset($_GET['order']))
+if(isGet('order'))
 {
 	AJAX_check();
 	$order = protect($_GET['order']);
@@ -599,7 +599,7 @@ else
 
 
 
-if(isset($_GET['search']))
+if(isGet('search'))
 {
 AJAX_check();	
 $search_param = $_POST['search_param'];
@@ -688,12 +688,12 @@ PrintArray($data) ;
 }
 
 
-if(isset($_GET['delete_selected']))
+if(isGet('delete_selected'))
 {
 	
 	AJAX_check();
 	
-	if(isset($_POST['files']))
+	if(isPost('files'))
 	{
 	$result=array();	
      foreach ($_POST['files'] as $id) {
@@ -712,7 +712,7 @@ if(isset($_GET['delete_selected']))
 	PrintArray(array('success_msg' => $result ,'success_totalpages' => ceil(num_rows(Sql_query("SELECT 1 FROM `files`"))/rowsperpage) ));	
 	}
 	
-	if(isset($_POST['users']))
+	if(isPost('users'))
 	{
 	 $result=array();		
      foreach ($_POST['users'] as $id) {
@@ -721,7 +721,7 @@ if(isset($_GET['delete_selected']))
 	PrintArray(array('success_msg' => $result ,'success_totalpages' =>   ceil(num_rows(Sql_query("SELECT 1 FROM `users`"))/rowsperpage) ));	
 	}
 	
-	if(isset($_POST['comments']))
+	if(isPost('comments'))
 	{
 	 $result=array();		
      foreach ($_POST['comments'] as $id) {
@@ -731,7 +731,7 @@ if(isset($_GET['delete_selected']))
 	}
 	
 	
-	if(isset($_POST['reports']))
+	if(isPost('reports'))
 	{
 	 $result=array();		
      foreach ($_POST['reports'] as $id) {
@@ -740,7 +740,7 @@ if(isset($_GET['delete_selected']))
 	PrintArray(array('success_msg' => $result ,'success_totalpages' =>  ceil(num_rows(Sql_query("SELECT 1 FROM `reports`"))/rowsperpage)   ));	
 	}
 	
-	if(isset($_POST['stats']))
+	if(isPost('stats'))
 	{
 	$result=array();		
      foreach ($_POST['stats'] as $id) {
@@ -749,7 +749,7 @@ if(isset($_GET['delete_selected']))
 	PrintArray(array('success_msg' => $result ,'success_totalpages' =>  ceil(num_rows(Sql_query("SELECT DISTINCT `file_id` FROM `stats`"))/rowsperpage)   ));	
 	}
 	
-	if(isset($_POST['folders']))
+	if(isPost('folders'))
 	{
 	$result=array();		
      foreach ($_POST['folders'] as $id) {
@@ -763,38 +763,38 @@ if(isset($_GET['delete_selected']))
 }
 
 
-if(isset($_GET['delete_comment_id']))
+if(isGet('delete_comment_id'))
 {
 	AJAX_check();
     Sql_Delete_Comment($_GET['delete_comment_id']) ? PrintArray(array('success_msg' => $lang[178])) : PrintArray(array('success_msg' => $lang[179])) ;
 }
 
-if(isset($_GET['delete_user_id']))
+if(isGet('delete_user_id'))
 {
 	AJAX_check();
     Sql_Delete_User($_GET['delete_user_id']) ? PrintArray(array('success_msg' => $lang[178])) : PrintArray(array('success_msg' => $lang[179])) ;
 }
 
-if(isset($_GET['delete_stat_id']))
+if(isGet('delete_stat_id'))
 {
 	AJAX_check();
     Sql_Delete_Stat_File_Id($_GET['delete_stat_id']) ? PrintArray(array('success_msg' => $lang[178])) : PrintArray(array('success_msg' => $lang[179])) ;	
 }
 
-if(isset($_GET['delete_report_id']))
+if(isGet('delete_report_id'))
 {
 	AJAX_check();
     Sql_Delete_Report($_GET['delete_report_id']) ? PrintArray(array('success_msg' => $lang[178])) : PrintArray(array('success_msg' => $lang[179]));	
 }
 
-if(isset($_GET['accept_report_id']))
+if(isGet('accept_report_id'))
 {
 	AJAX_check();
     Sql_Update_Report($_GET['accept_report_id']) ? PrintArray(array('success_msg' => $lang[178])) : PrintArray(array('success_msg' => $lang[179])) ;
 }
 
 
-if(isset($_GET['delete_folder']))
+if(isGet('delete_folder'))
 {
 	AJAX_check();
 	if(Sql_Delete_Folder($_GET['folder_id']))
@@ -804,7 +804,7 @@ if(isset($_GET['delete_folder']))
 		PrintArray(array('success_msg' => $lang[179]));	
 }
 
-  if(isset($_GET['delete_file_id']))
+  if(isGet('delete_file_id'))
 {
 	AJAX_check();
     $info = Sql_Get_info($_GET['delete_file_id'],'../..');
@@ -825,7 +825,7 @@ if(isset($_GET['delete_folder']))
 
 
 
-if(isset($_GET['getpublicity']))
+if(isGet('getpublicity'))
 {
 	AJAX_check();
 	$name = protect($_GET['getpublicity']);
@@ -838,7 +838,7 @@ if(isset($_GET['getpublicity']))
 
 
 
-if(isset($_GET['userinfo']))
+if(isGet('userinfo'))
 {
 AJAX_check();
 $id = (int)$_GET['userinfo'];
@@ -860,7 +860,7 @@ PrintArray($data) ;
 
 
 
-if(isset($_GET['planinfo']))
+if(isGet('planinfo'))
 {
 //AJAX_check();
 $translate = translate();
@@ -878,12 +878,12 @@ PrintArray($data) ;
 
 
 
-if(isset($_GET['publicity']))
+if(isGet('publicity'))
 {
 AJAX_check();
 
 $page_name = protect($_POST['page_name']) ;
-$title     = protect($_POST['title']);
+$title     = isPost('title') ? protect($_POST['title']) : '';
 $content   = Encrypt($_POST['content']);
 
 
@@ -891,7 +891,7 @@ Sql_query("UPDATE `settings` SET `value` = '$content', `parameter` = '$title' WH
 PrintArray(array('success_msg' => $lang[178]));
 }
 
-if(isset($_GET['folderinfo']))
+if(isGet('folderinfo'))
 {
 AJAX_check();
 $id = (int)$_GET['folderinfo'];
@@ -910,7 +910,7 @@ PrintArray($data) ;
 
 }
 
-if(isset($_GET['fileinfo']))
+if(isGet('fileinfo'))
 {
 AJAX_check();
 $id = (int)$_GET['fileinfo'];
@@ -944,7 +944,7 @@ PrintArray($data) ;
 
 }
 
-if (isset($_GET['editfolder']))
+if (isGet('editfolder'))
 {	
 AJAX_check();
 $folderName = protect($_POST['folderName']);
@@ -952,7 +952,7 @@ $accessPassword = protect($_POST['password']);
 $folder_id = (int)$_POST['folder_id'];
 $_folder_old = Get_folderName_By_FolderId( $folder_id );
 $userId = protect(Sql_Get_Username_id($_POST['username']));
-$ispublic = isset($_POST['ispublic']) ? 1 : 0 ;
+$ispublic = isPost('ispublic') ? 1 : 0 ;
 
 rename('../..'.$_folder_old,'../..'.$folderName);
 
@@ -962,7 +962,7 @@ else
 	PrintArray(array('success_msg' => $lang[179]));	
 }
 
-if (isset($_GET['edituser']))
+if (isGet('edituser'))
 {	
 AJAX_check();
 $username = protect($_POST['username']);
@@ -974,8 +974,8 @@ $password = ($password !== '') ? " `password` = '".md5($password)."' , " : $pass
 $email = protect($_POST['email']);
 $user_id = (int)$_POST['user_id'];
 $plan_id= (int)$_POST['plan_id'];
-$level = isset($_POST['level']) ? 1 : 0 ;
-$status = isset($_POST['status']) ? 2 : 1 ;
+$level = isPost('level') ? 1 : 0 ;
+$status = isPost('status') ? 2 : 1 ;
 
 if(Sql_query("UPDATE `users` SET `username` = '$username' , $password `email` = '$email' , `plan_id` = '$plan_id' , `level` = '$level' , `status` = $status  WHERE `id` = '$user_id'"))
 	PrintArray(array('success_msg' => $lang[178]));
@@ -983,27 +983,27 @@ else
 	PrintArray(array('success_msg' => $lang[179]));	
 }
 
-if(isset($_GET['editplan']))
+if(isGet('editplan'))
 {
 AJAX_check();
 $plan = protect($_POST['plan_id']);
-$directdownload     = isset($_POST['directdownload']) ?  1 : 0 ;
-$enable_userfolder  = isset($_POST['enable_userfolder']) ?  1 : 0 ;
-$statistics         = isset($_POST['statistics']) ?  1 : 0 ;
-$thumbnail          = isset($_POST['thumbnail']) ?  1 : 0 ;
-$display_ads        = isset($_POST['display_ads']) ?  1 : 0 ;
-$multiple           = isset($_POST['multiple']) ?  1 : 0 ;
+$directdownload     = isPost('directdownload') ?  1 : 0 ;
+$enable_userfolder  = isPost('enable_userfolder') ?  1 : 0 ;
+$statistics         = isPost('statistics') ?  1 : 0 ;
+$thumbnail          = isPost('thumbnail') ?  1 : 0 ;
+$display_ads        = isPost('display_ads') ?  1 : 0 ;
+$multiple           = isPost('multiple') ?  1 : 0 ;
 
-$price              = isset($_POST['price']) ? protect($_POST['price']) : '';
+$price              = isPost('price') ? protect($_POST['price']) : '';
 $extensions         = protect($_POST['extensions']);
 
 $Interval           = (int)$_POST['Interval'];
 $maxUploads         = !empty($_POST['maxUploads']) ? (int)$_POST['maxUploads'] : '';
-$days_older         = isset($_POST['days_older']) ? (int)$_POST['days_older'] : '';
+$days_older         = isPost('days_older') ? (int)$_POST['days_older'] : '';
 
-$maxsize            = (isset($_POST['maxsize']) && $_POST['maxsize']!=='') ? protect($_POST['maxsize'].$_POST['format_maxsize']) : '';
-$userspacemax       = (isset($_POST['userspacemax']) && $_POST['userspacemax']!=='') ? protect($_POST['userspacemax'].$_POST['format_userspacemax']) : '';
-$speed              = (isset($_POST['speed']) && $_POST['speed']!=='') ? protect($_POST['speed'].$_POST['format_speed']) : '';
+$maxsize            = (isPost('maxsize') && $_POST['maxsize']!=='') ? protect($_POST['maxsize'].$_POST['format_maxsize']) : '';
+$userspacemax       = (isPost('userspacemax') && $_POST['userspacemax']!=='') ? protect($_POST['userspacemax'].$_POST['format_userspacemax']) : '';
+$speed              = (isPost('speed') && $_POST['speed']!=='') ? protect($_POST['speed'].$_POST['format_speed']) : '';
 
 /*SELECT 1 FROM `settings` WHERE `name` = 'language';*/
 Sql_query("UPDATE `plans` SET `$plan` = '$Interval' WHERE `name` = 'Interval';");

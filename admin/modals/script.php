@@ -43,16 +43,16 @@
 	   chart_uploads_labels='<?php echo $chart_uploads_labels?>',
 	   chart_uploads_data   ='<?php echo $chart_uploads_data?>',
 	   IsRtL            = Boolean('<?php echo (bool)IsRtL() ?>'),
-	   IsGetDownload    = Boolean('<?php echo (bool)(isset($_GET['download'])) ?>'),
-	   IsGetFiles       = Boolean('<?php echo (bool)(isset($_GET['files'])) ?>'),
-	   IsGetUsers       = Boolean('<?php echo (bool)(isset($_GET['users'])) ?>'),
-	   IsGetFolders     = Boolean('<?php echo (bool)(isset($_GET['folders'])) ?>'),
-	   IsGetReports     = Boolean('<?php echo (bool)(isset($_GET['reports'])) ?>'),
-	   IsGetStatistics  = Boolean('<?php echo (bool)(isset($_GET['statistics'])) ?>'),
-	   IsGetSettings    = Boolean('<?php echo (bool)(isset($_GET['settings'])) ?>'),
-	   IsGetPublicity   = Boolean('<?php echo (bool)(isset($_GET['publicity'])) ?>'),
-	   IsGetPlans       = Boolean('<?php echo (bool)(isset($_GET['plans'])) ?>'),
-	   IsGetComments    = Boolean('<?php echo (bool)(isset($_GET['comments'])) ?>'),
+	   IsGetDownload    = Boolean('<?php echo (bool)(isGet('download')) ?>'),
+	   IsGetFiles       = Boolean('<?php echo (bool)(isGet('files')) ?>'),
+	   IsGetUsers       = Boolean('<?php echo (bool)(isGet('users')) ?>'),
+	   IsGetFolders     = Boolean('<?php echo (bool)(isGet('folders')) ?>'),
+	   IsGetReports     = Boolean('<?php echo (bool)(isGet('reports')) ?>'),
+	   IsGetStatistics  = Boolean('<?php echo (bool)(isGet('statistics')) ?>'),
+	   IsGetSettings    = Boolean('<?php echo (bool)(isGet('settings')) ?>'),
+	   IsGetPublicity   = Boolean('<?php echo (bool)(isGet('publicity')) ?>'),
+	   IsGetPlans       = Boolean('<?php echo (bool)(isGet('plans')) ?>'),
+	   IsGetComments    = Boolean('<?php echo (bool)(isGet('comments')) ?>'),
 	   AdminGetIsEmpty  = Boolean('<?php echo (bool)(AdminGetIsEmpty) ?>'),
 	   LoadJsCheckbox   = true,
       _maxVisible = 10,
@@ -459,6 +459,14 @@ $('#page_name').on('change', function () {
 			 $('#publicity_title').val(data.title);
 			 $('#publicity_content').summernote('enable');
 			 $("#publicity_title").removeAttr('disabled');
+			 if(page_name=='ads_google')
+			 {
+				$('#publicity_title').val('');
+				$("#publicity_title").attr('disabled','disabled');
+				
+			 }
+				 
+			 
 			 
 		 }
 		

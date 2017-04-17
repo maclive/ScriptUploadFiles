@@ -3,6 +3,7 @@
  <!-- SettingsModal -->
     <ul class="nav nav-tabs">
       <li class="active"><a href="#setting" data-toggle="tab"><?php echo $lang[29] ?></a></li>
+	  <li><a href="#permissions" data-toggle="tab"><?php echo $lang[250] ?></a></li>
 	  <li><a href="#maxi" data-toggle="tab"><?php echo $lang[24] ?></a></li>
       <li><a href="#terms" data-toggle="tab"><?php echo $lang[152].' ...' ?></a></li>
 	  <li><a href="#style" data-toggle="tab"><?php echo $lang[70] ?></a></li>
@@ -59,6 +60,19 @@
       </select>
     </div>
 	
+	 <div class="input-group">
+      <span class="input-group-addon hidden-sml"><?php echo $lang[67] ?></span>
+        <input type="text"  maxlength="30" name="prefixname" value="<?php echo prefixname ?>" class="form-control" style="text-align: left;direction: ltr; " placeholder="<?php echo $lang[67] ?>">
+    </div>
+	
+	 <div class="input-group">
+      <span class="input-group-addon hidden-sml"><?php echo $lang[25] ?></span>
+        <input type="text" maxlength="1000" name="extensions" value="<?php echo extensions ?>" class="form-control" placeholder="<?php echo $lang[25] ?>" data-role="tagsinput" >
+    </div>
+
+	</div> <!-- tab-settings -->
+	
+		<div class="well tab-pane fade" id="permissions">
 	 
 	 <div class="input-group">
       <span class="input-group-addon"><?php echo $lang[172] ?></span>
@@ -103,18 +117,7 @@
 		<span class="input-group-addon" style="min-width: 15px;text-align: left;"><input name="statistics" class="settings" type="checkbox" <?php if(statistics) echo ' checked' ?>></span>
     </div>
 	
-
-	 <div class="input-group">
-      <span class="input-group-addon hidden-sml"><?php echo $lang[67] ?></span>
-        <input type="text"  maxlength="30" name="prefixname" value="<?php echo prefixname ?>" class="form-control" style="text-align: left;direction: ltr; " placeholder="<?php echo $lang[67] ?>">
-    </div>
-	
-	 <div class="input-group">
-      <span class="input-group-addon hidden-sml"><?php echo $lang[25] ?></span>
-        <input type="text" maxlength="1000" name="extensions" value="<?php echo extensions ?>" class="form-control" placeholder="<?php echo $lang[25] ?>" data-role="tagsinput" >
-    </div>
-
-	</div> <!-- tab-settings -->
+    </div> <!-- tab-permissions -->
 	
 	
 	<div class="well tab-pane fade" id="maxi">

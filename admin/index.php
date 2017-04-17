@@ -7,7 +7,7 @@ require_once ('../includes/connect.php');
 CheckConnect();
 require_once ('../includes/lang.php');
 
-if (isset($_GET['clearfilter'])) 
+if (isGet('clearfilter')) 
 {
 	unset($_SESSION['login']['filter']);
 	exit(header('Location: ./' ));	
@@ -16,7 +16,7 @@ if (isset($_GET['clearfilter']))
 
 // get the current page or set a default
 
-$currentpage = (isset($_GET['currentpage']) && is_numeric($_GET['currentpage']))  ? (int) $_GET['currentpage'] : 1;
+$currentpage = (isGet('currentpage') && is_numeric($_GET['currentpage']))  ? (int) $_GET['currentpage'] : 1;
 
 //print_r($_GET['files']);
 
@@ -27,32 +27,32 @@ $order_comment= (isset($_SESSION['login']['filter']['order_comment']))? $_SESSIO
 $order_report = (isset($_SESSION['login']['filter']['order_report'])) ? $_SESSION['login']['filter']['order_report'] : '';	
 $order_folder = (isset($_SESSION['login']['filter']['order_folder'])) ? $_SESSION['login']['filter']['order_folder'] : '';	
 
-define('AdminGetIsEmpty' , ( isset($_GET['comments']) || isset($_GET['users']) || isset($_GET['plans']) || isset($_GET['folders']) ||  isset($_GET['reports']) || isset($_GET['statistics']) || isset($_GET['update']) || isset($_GET['settings']) || isset($_GET['files']) || isset($_GET['publicity']) ) ? false : true );
+define('AdminGetIsEmpty' , ( isGet('comments') || isGet('users') || isGet('plans') || isGet('folders') ||  isGet('reports') || isGet('statistics') || isGet('update') || isGet('settings') || isGet('files') || isGet('publicity') ) ? false : true );
 
 function TitleHeader()
 {
 	global $lang,$order_file,$order_user,$search_param,$order_report,$order_folder,$order_comment;
 	
 
-if(isset($_GET['users'])) 
+if(isGet('users')) 
 		 $title= $lang[73];
-     elseif(isset($_GET['folders'])) 
+     elseif(isGet('folders')) 
 	     $title= $lang[74]; 
-	 elseif(isset($_GET['reports'])) 
+	 elseif(isGet('reports')) 
 	     $title= $lang[101]; 
-	 elseif(isset($_GET['statistics'])) 
+	 elseif(isGet('statistics')) 
 	     $title= $lang[28]; 	
-     elseif(isset($_GET['update'])) 
+     elseif(isGet('update')) 
 	     $title= $lang[133]; 
-	 elseif(isset($_GET['settings'])) 
+	 elseif(isGet('settings')) 
 	     $title= $lang[29];  
-	 elseif(isset($_GET['files']))  
+	 elseif(isGet('files'))  
          $title= $lang[48]; 
-	 elseif(isset($_GET['publicity']))  
+	 elseif(isGet('publicity'))  
          $title= $lang[183]; 
-	elseif(isset($_GET['comments'])) 
+	elseif(isGet('comments')) 
 	     $title= $lang[240] ;	
-	elseif(isset($_GET['plans'])) 
+	elseif(isGet('plans')) 
 	     $title= $lang[230] ;			 
 	 else 
 		 $title= $lang[21]; 
@@ -89,17 +89,17 @@ define('t_files'     ,num_rows(Sql_query("SELECT * FROM `files` $search_param"))
 define('t_size'      ,FileSizeConvert(folderSize( '..'.folderupload )) );
 define('t_reports_o' ,num_rows(Sql_query("SELECT * FROM `reports` WHERE `status` = '0'")) );
 define('t_comments_o',num_rows(Sql_query("SELECT * FROM `comments` WHERE `status` = '0'")) );
-if(isset($_GET['users']))  
+if(isGet('users'))  
 	$totalpages = ceil(t_users / rowsperpage);  
-elseif(isset($_GET['folders']))  
+elseif(isGet('folders'))  
 	$totalpages = ceil(t_folders/ rowsperpage) ;
-elseif(isset($_GET['reports']))  
+elseif(isGet('reports'))  
 	$totalpages = ceil(t_reports/ rowsperpage) ;
-elseif(isset($_GET['statistics']))  
+elseif(isGet('statistics'))  
 	$totalpages = ceil(t_statistics/rowsperpage);   
-elseif(isset($_GET['files']))  
+elseif(isGet('files'))  
 	$totalpages = ceil(t_files/ rowsperpage) ;
-elseif(isset($_GET['comments']))  
+elseif(isGet('comments'))  
 	$totalpages = ceil(t_comments/ rowsperpage) ;	
 else 
     $totalpages = 1 ;	
@@ -138,7 +138,7 @@ print '<pre style="text-align: left;direction: ltr; ">' . print_r(get_defined_va
   <?php }?>  
   -->
   
-  <?php if(isset($_GET['comments']) || isset($_GET['settings']) || isset($_GET['publicity']) || isset($_GET['plans']) || isset($_GET['users']) || isset($_GET['folders']) || isset($_GET['reports']) ) { ?>  
+  <?php if(isGet('comments') || isGet('settings') || isGet('publicity') || isGet('plans') || isGet('users') || isGet('folders') || isGet('reports') ) { ?>  
   <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-tagsinput.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-select.min.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/summernote.min.css">
@@ -212,7 +212,7 @@ print '<pre style="text-align: left;direction: ltr; ">' . print_r(get_defined_va
   <?php }?>  
   -->
   <script src="../assets/js/global.min.js" type="text/javascript"></script>
-  <?php if(isset($_GET['files']) || isset($_GET['reports']) || isset($_GET['statistics']) ) { ?>  
+  <?php if(isGet('files') || isGet('reports') || isGet('statistics') ) { ?>  
   <script src="../assets/js/simpleajaxuploader.min.js" type="text/javascript"></script>
   <script src="../assets/js/bootstrap-toggle.min.js" type="text/javascript"></script>
   <?php } ?>
@@ -226,7 +226,7 @@ print '<pre style="text-align: left;direction: ltr; ">' . print_r(get_defined_va
 	<script src="../assets/js/countup.min.js" type="text/javascript"></script> 
   <?php } ?>
   
-  <?php if(isset($_GET['comments']) || isset($_GET['settings']) || isset($_GET['publicity']) || isset($_GET['plans']) || isset($_GET['users']) || isset($_GET['folders']) || isset($_GET['reports'])  ) { ?>  
+  <?php if(isGet('comments') || isGet('settings') || isGet('publicity') || isGet('plans') || isGet('users') || isGet('folders') || isGet('reports')  ) { ?>  
   <script src="../assets/js/bootstrap-tagsinput.min.js" type="text/javascript"></script>
   <script src="../assets/js/summernote.min.js" type="text/javascript"></script>
   <script src="../assets/js/bootstrap-select.min.js" type="text/javascript"></script>
@@ -256,25 +256,25 @@ print '<pre style="text-align: left;direction: ltr; ">' . print_r(get_defined_va
 	
 
 <?php
-if(isset($_GET['users'])) 
+if(isGet('users')) 
 	require_once ('./modals/users.php'); 
-elseif(isset($_GET['folders'])) 
+elseif(isGet('folders')) 
     require_once ('./modals/folders.php'); 
-elseif(isset($_GET['reports'])) 
+elseif(isGet('reports')) 
     require_once ('./modals/reports.php'); 
-elseif(isset($_GET['statistics'])) 
+elseif(isGet('statistics')) 
 	require_once ('./modals/statistics.php');  
-elseif(isset($_GET['update'])) 
+elseif(isGet('update')) 
 	require_once ('./modals/update.php');  
-elseif(isset($_GET['settings'])) 
+elseif(isGet('settings')) 
 	require_once ('./modals/settings.php');  	
-elseif(isset($_GET['files']))  
+elseif(isGet('files'))  
 	require_once ('./modals/files.php');
-elseif(isset($_GET['publicity']))  
+elseif(isGet('publicity'))  
 	require_once ('./modals/postedit.php');	
-elseif(isset($_GET['plans']) ) 	
+elseif(isGet('plans') ) 	
 	require_once ('./modals/plans.php');
-elseif(isset($_GET['comments']) ) 	
+elseif(isGet('comments') ) 	
 	require_once ('./modals/comments.php');			
 else 
 	require_once ('./modals/dashboard.php');
@@ -295,7 +295,7 @@ require_once ('../modals/fileinfo.php');
 require_once ('../modals/logout.php');
 require_once ('../modals/upload.php');  
 require_once ('./modals/edituser.php');
-(isset($_GET['plans'])) ? require_once ('./modals/editplan.php') : '';
+(isGet('plans')) ? require_once ('./modals/editplan.php') : '';
 require_once ('./modals/ipinfo.php');
 require_once ('./modals/editfolder.php');
 require_once ('./modals/script.php');  

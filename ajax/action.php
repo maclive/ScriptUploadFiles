@@ -13,47 +13,47 @@ require_once ( '../includes/uploader.php'); //dirname(__FILE__) .
 
  // get the current page or set a default
  
-$currentpage = (isset($_GET['currentpage']) && is_numeric($_GET['currentpage'])) ? (int) $_GET['currentpage'] : 1;
+$currentpage = (isGet('currentpage') && is_numeric($_GET['currentpage'])) ? (int) $_GET['currentpage'] : 1;
 
 
-if(isset($_GET['load'])) 
+if(isGet('load')) 
 {
 AJAX_check();	
-if(isset($_GET['title']))
+if(isGet('title'))
 	die(get_main_title('__')) ;		
 
-if(isset($_GET['_download']))
+if(isGet('_download'))
 	exit(require_once ('../modals/download.php'));
-elseif(isset($_GET['_files']) && IsLogin )
+elseif(isGet('_files') && IsLogin )
     exit(require_once ('../modals/files.php'));
-elseif(isset($_GET['_about']))
+elseif(isGet('_about'))
     exit(require_once ('../modals/about.php'));
-elseif(isset($_GET['_profile']) && IsLogin )	
+elseif(isGet('_profile') && IsLogin )	
 	exit(require_once ('../modals/profile.php'));
-elseif(isset($_GET['_authorized']) && !IsLogin && authorized ) 
+elseif(isGet('_authorized') && !IsLogin && authorized ) 
 	exit(require_once ('../modals/authorization.php'));
-elseif(isset($_GET['_login']) && !IsLogin  ) 
+elseif(isGet('_login') && !IsLogin  ) 
 	exit(require_once ('../modals/login.php'));
-elseif(isset($_GET['_register']) && !IsLogin && register ) 	
+elseif(isGet('_register') && !IsLogin && register ) 	
 	exit(require_once ('../modals/register.php')) ;
-elseif(isset($_GET['_forgot']) && !IsLogin ) 
+elseif(isGet('_forgot') && !IsLogin ) 
 	exit(require_once ('../modals/forgot.php')) ;
-elseif(isset($_GET['_contact']) ) 	
+elseif(isGet('_contact') ) 	
 	exit(require_once ('../modals/contact.php'));
-elseif(isset($_GET['_index']) ) 
+elseif(isGet('_index') ) 
 	exit(require_once ('../modals/dropzone.php'));	
 }
 
 
 
 
-if(isset($_GET['download']))
+if(isGet('download'))
 {
 
 //$DownloadID       = (is_numeric($_GET['download'])) ? (int)$_GET['download'] : protect(Decrypt($_GET['download']));
 //$DownloadID       =  protect(Decrypt($_GET['download']));
-$referrer = (isset($_GET['referrer']) &&  !empty($_GET['referrer'])) ? protect(Decrypt($_GET['referrer'])) : '' ;/*stripslashes*/
-$string   = (isset($_GET['unq'])) ? protect($_GET['unq']) : '' ;
+$referrer = (isGet('referrer') &&  !empty($_GET['referrer'])) ? protect(Decrypt($_GET['referrer'])) : '' ;/*stripslashes*/
+$string   = (isGet('unq')) ? protect($_GET['unq']) : '' ;
 	 
 (!isset($_SESSION['settings']['files'][$DownloadID])) ? PrintArray(array('success_msg' => $lang[90])) : '';
 
@@ -78,15 +78,15 @@ $filesize = ($info['status']) ? $info["size"] : 0 ;
 
 
 /******************************************************/
-(isset($_GET['total_stats']) )           ? PrintArray(array('downloads' => Sql_Get_Downloads_Count(true), 'users' => Sql_Get_Users_Count() ,'files' => Sql_Get_Files_Count(true) )) : '';
-(isset($_GET['getextensions']) )         ? PrintArray(array('value' => extensionsStr(false))) : '';
-(isset($_GET['totalpages']) && IsLogin ) ? PrintArray(array('value' => Sql_totalpages())) : '';
-(isset($_GET['getspace']) && IsLogin )   ? PrintArray(array('free' => PercentageFree , 'used'=> PercentageUsed)) : '';
-(isset($_GET['top_downloads']) )         ? PrintArray(Sql_Get_Top_Downloads()) : '';
+(isGet('total_stats') )           ? PrintArray(array('downloads' => Sql_Get_Downloads_Count(true), 'users' => Sql_Get_Users_Count() ,'files' => Sql_Get_Files_Count(true) )) : '';
+(isGet('getextensions') )         ? PrintArray(array('value' => extensionsStr(false))) : '';
+(isGet('totalpages') && IsLogin ) ? PrintArray(array('value' => Sql_totalpages())) : '';
+(isGet('getspace') && IsLogin )   ? PrintArray(array('free' => PercentageFree , 'used'=> PercentageUsed)) : '';
+(isGet('top_downloads') )         ? PrintArray(Sql_Get_Top_Downloads()) : '';
 /******************************************************/
 
 
-if(isset($_GET['stats']))
+if(isGet('stats'))
 {
 //AJAX_check();
     $id                    = (int)$_GET['id'];
@@ -216,7 +216,7 @@ PrintArray($data);
 
 
 
-if(isset($_GET['uploadfile']))
+if(isGet('uploadfile'))
 {
 AJAX_check();
 
@@ -232,9 +232,9 @@ $ext             = $Upload->getExtension(); // Get the extension of the uploaded
 $_UploadFileName = _Upload_name().$ext;
 $extensions      = explode(",",extensions);
 $orgfilename     = protect($Upload->getFileName()); /*(isset($_FILES["uploadfile"]["name"])) ? protect(basename($_FILES["uploadfile"]["name"])) : '';*/
-$passwordfile    = (isset($_POST['passwordfile'])) ? protect($_POST['passwordfile']) : '';
-$code            = (isset($_POST['code'])) ? protect($_POST['code']) : '' ;
-$ispublic        = (isset($_POST['ispublic']) && IsLogin ) ? (int)$_POST['ispublic'] : 1 ;
+$passwordfile    = (isPost('passwordfile')) ? protect($_POST['passwordfile']) : '';
+$code            = (isPost('code')) ? protect($_POST['code']) : '' ;
+$ispublic        = (isPost('ispublic') && IsLogin ) ? (int)$_POST['ispublic'] : 1 ;
 
 (defined('HashCode') && HashCode !== $code ) ? IePrintArray(array('success' => false, 'msg' => $lang[103].' / HashCode' ,'footerInfo'=> FooterInfo('..'.folderupload) )) : '' ;  
 (IsLogin && (UserSpaceLeft<=0))              ? IePrintArray(array('success' => false, 'msg' => $lang[173].' / '.$lang[117] ,'footerInfo'=> FooterInfo('..'.folderupload) )) : '' ;  
@@ -312,7 +312,7 @@ if (!$result)
 
 /*----------------------------------------------------------*/
 
-if(isset($_GET['ispublic']))
+if(isGet('ispublic'))
 {
 AJAX_check();	
 $file_id = (int)$_GET['ispublic'];	
@@ -324,7 +324,7 @@ PrintArray(array('icon' => glyphiconIsPublic($ispublic) ));
 }
 
 
-if(isset($_GET['deletecomment']))
+if(isGet('deletecomment'))
 {
 AJAX_check();	
 $id = (int)$_GET['deletecomment'];	
@@ -333,7 +333,7 @@ PrintArray(array('icon' => glyphiconOk(affected_rows()) ));
 }
 
 
-if(isset($_GET['report']))
+if(isGet('report'))
 {
 AJAX_check();	
 $file_id = (int)$_GET['report'];	
@@ -355,7 +355,7 @@ if(num_rows(Sql_query("SELECT 1 FROM `reports` WHERE `file_id`='$file_id' and `u
 	
 }
 /*-----------------------------------------------------------------*/
-if(isset($_GET['confirm']))
+if(isGet('confirm'))
 {
 AJAX_check();	
 $file_id = (int)$_GET['confirm'];	
@@ -379,7 +379,7 @@ PrintArray($data);
 	
 }
 /*-----------------------------------------------------------------*/
-if(isset($_GET['contact']))
+if(isGet('contact'))
 {
 AJAX_check();	
 $username = protect($_POST['name']);
@@ -412,7 +412,7 @@ PrintArray($data);
 /*-----------------------------------------------------------------*/
 
 
-if(isset($_GET['forgot']))
+if(isGet('forgot'))
 {
 AJAX_check();
 $email = protect($_POST['email']);
@@ -447,7 +447,7 @@ PrintArray($data);
 }
 
 
-if(isset($_GET['login']))
+if(isGet('login'))
 {
 AJAX_check();
 $username = protect($_POST['Email']);
@@ -498,7 +498,7 @@ PrintArray($data);
 
 /*-----------------------------------------------------------------*/
 
-if(isset($_GET['register']))
+if(isGet('register'))
 {
 AJAX_check();	
 $username = protect($_POST['Username']);
@@ -556,7 +556,7 @@ PrintArray($data);
 
 /*-----------------------------------------------------------------*/
 
-if (isset($_GET['comments'])){
+if (isGet('comments')){
 	
 $file_id = protect(Decrypt($_GET['comments']));
 // find out total pages
@@ -608,7 +608,7 @@ PrintArray($data);
 (!IsLogin)                   ? PrintArray(array('error_msg' => $lang[98])) : '';
 
 /*-----------------------------------------------------------------*/
-if (isset($_GET['addcomment'])){
+if (isGet('addcomment')){
 	if(EnableCaptcha && $_POST['captcha']!==$_SESSION['settings']['code']){$data['error_msg']=error($lang[90]);}
 	else
 	{
@@ -622,7 +622,7 @@ if (isset($_GET['addcomment'])){
 }
 /*-----------------------------------------------------------------*/
 
-if (isset($_GET['files'])){
+if (isGet('files')){
 	
 // find out total pages
 $total = Sql_Get_Files_Count();
@@ -697,7 +697,7 @@ PrintArray($data);
 
 }
 /*------------------------------------------------------------------*/
-if(isset($_GET['filepass']))
+if(isGet('filepass'))
 {
 AJAX_check(); 
 	$password = protect($_GET['filepass']);
@@ -709,7 +709,7 @@ AJAX_check();
 	PrintArray(array('icon' => $css ));
 }
 /*-----------------------------------------------------------------*/
-if(isset($_GET['delete']))
+if(isGet('delete'))
 {
 	AJAX_check(); 
 	$info = Sql_Get_info($_GET['id'],'..');
@@ -730,12 +730,12 @@ if(isset($_GET['delete']))
 }
 
 
-if(isset($_GET['delete_selected']))
+if(isGet('delete_selected'))
 {
 	
 	AJAX_check();
 	
-	if(isset($_POST['files']))
+	if(isPost('files'))
 	{
 	 $result = array();
      foreach (array_combine($_POST['files'], $_POST['deletehash'] ) as $id => $deletehash ) {
@@ -758,7 +758,7 @@ if(isset($_GET['delete_selected']))
 	}
 }
 /*-----------------------------------------------------------------*/
-if(isset($_GET['logout'])){
+if(isGet('logout')){
 AJAX_check();	
 if(isset($_SESSION['login'])) //['status']
 {
@@ -768,7 +768,7 @@ PrintArray(array('success_msg' => $lang[104]));
 } else PrintArray(array('success_msg' => $lang[14]));
 }
 
-if(isset($_GET['edituser'])){
+if(isGet('edituser')){
 AJAX_check();	
 
 $password = protect($_POST['password']);

@@ -1,6 +1,6 @@
 <?php if(!isset($conn)) die('<title>Access Denied</title><i>This page cannot be accessed directly'); ?>
 <?php 
-$currentpage = (isset($_GET['currentpage']) && is_numeric($_GET['currentpage'])) ? (int) $_GET['currentpage'] : 1;
+$currentpage = (isGet('currentpage') && is_numeric($_GET['currentpage'])) ? (int) $_GET['currentpage'] : 1;
 $totalpages = Sql_totalpages() ;
 $totalpages = ($totalpages < 1) ? 1 : $totalpages; 
 ?>

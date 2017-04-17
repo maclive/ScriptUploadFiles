@@ -105,25 +105,25 @@ echo '</pre>';
 print '<pre style="text-align: left;direction: ltr; ">' . print_r(get_defined_vars(), true) . '</pre>';
 */
 
-if(isset($_GET['download']))
+if(isGet('download'))
 	require_once ('./modals/download.php');
-elseif(isset($_GET['files']))
+elseif(isGet('files'))
     ( IsLogin ) ? require_once ('./modals/files.php') : Need_Login() ;  
-elseif(isset($_GET['about']))
+elseif(isGet('about'))
     require_once ('./modals/about.php');
-elseif(isset($_GET['profile']))	
+elseif(isGet('profile'))	
     ( IsLogin ) ? require_once ('./modals/profile.php') : Need_Login() ;
-elseif(isset($_GET['authorized']) ) 
+elseif(isGet('authorized') ) 
     ( !IsLogin && authorized ) ? require_once ('./modals/authorization.php') : Need_Logout() ;  
-elseif(isset($_GET['login'])) 
+elseif(isGet('login')) 
     ( !IsLogin  ) ? require_once ('./modals/login.php') : Need_Logout() ;  
-elseif(isset($_GET['register']) ) 
+elseif(isGet('register') ) 
     ( !IsLogin && register ) ? require_once ('./modals/register.php') : Need_Logout() ;  	
-elseif(isset($_GET['forgot'])) 
+elseif(isGet('forgot')) 
     ( !IsLogin  ) ? require_once ('./modals/forgot.php') : Need_Logout() ;  
-elseif(isset($_GET['contact']) ) 	
+elseif(isGet('contact') ) 	
 	require_once ('./modals/contact.php');
-elseif(isset($_GET['plans']) ) 	
+elseif(isGet('plans') ) 	
 	require_once ('./modals/plans.php');
 else
 	require_once ('./modals/dropzone.php');
@@ -149,7 +149,7 @@ else
 ((IsAdmin || statistics)  && (isGet('download') || isGet('files'))) ? require_once ('./modals/stats.php')  : '';
 (isGet('files')) ? require_once ('./modals/fileinfo.php')  : '';
  echo defined('SuccessfullyDeleted') ? '<div id="topalert" style="display:none;">'.SuccessfullyDeleted.'</div>' : '';
-(siteclose && ! isset($_GET['login']))  ? require_once ('./modals/siteclose.php') : '';
+(siteclose && ! isGet('login'))  ? require_once ('./modals/siteclose.php') : '';
 (IsLogin)    ? require_once ('./modals/logout.php')    : '';
 (GetIsEmpty) ? require_once ('./modals/links.php')     : '';
 /*(GetIsEmpty) ? require_once ('./modals/upload.php')    : '';*/
@@ -162,7 +162,7 @@ else
 <script type="text/javascript">
 var IsLogin     = Boolean('<?php echo (bool)IsLogin ?>'),
     IsAdmin     = Boolean('<?php echo (bool)IsAdmin ?>'),
-    IsClose     = Boolean('<?php echo (bool)(siteclose && !isset($_GET['login'])) ?>'),
+    IsClose     = Boolean('<?php echo (bool)(siteclose && !isGet('login')) ?>'),
 	IsRtL       = Boolean('<?php echo (bool)IsRtL() ?>'),
 	IsDirect    = Boolean('<?php echo (bool)directdownload ?>'),
 	IsThumbnail = Boolean('<?php echo (bool)thumbnail ?>'),

@@ -16,7 +16,7 @@ $_siteurl       = str_replace('/install','', siteURL() );
 ( !defined('siteurl')) ? define('siteurl',  $_siteurl) : '';
 ( !defined('maxsize')) ? define('maxsize',  FileSizeConvert(min($_maxFileSize,$_maxPostSize , $_memory_limit))) : '';
 
-if (isset($_GET['unlink']))
+if (isGet('unlink'))
 {
 	@unlinkRecursive('../install',true);
 	exit(header('Location: ../'));
@@ -26,7 +26,7 @@ if (isset($_GET['unlink']))
 
 require_once ('../includes/lang.php');	
 
-if (isset($_GET['settings'])){	
+if (isGet('settings')){	
 $date = timestamp();
 $ip   = iplong();
 if(Mysqli_IsConnect)
@@ -50,15 +50,15 @@ $Interval    =(int)$_POST['Interval'];
 $maxUploads  =(int)$_POST['maxUploads'];
 $days_older	 =(int)$_POST['days_older'];
 
-$closemsg  = isset($_POST['closemsg']) ?  protect($_POST['closemsg']) : closemsg ;	 
-$siteclose  = isset($_POST['siteclose']) ?  1 : 0 ;	 
-$register  = isset($_POST['register']) ?  1 : 0 ;
-$authorized  = isset($_POST['authorized']) ?  1 : 0 ;
-$directdownload  = isset($_POST['directdownload']) ?  1 : 0 ;
-$enable_userfolder =  isset($_POST['enable_userfolder']) ?  1 : 0 ;
-$statistics  = isset($_POST['statistics']) ?  1 : 0 ;
-$thumbnail =  isset($_POST['thumbnail']) ?  1 : 0 ;
-$multiple  = isset($_POST['multiple']) ?  1 : 0 ;
+$closemsg  = isPost('closemsg') ?  protect($_POST['closemsg']) : closemsg ;	 
+$siteclose  = isPost('siteclose') ?  1 : 0 ;	 
+$register  = isPost('register') ?  1 : 0 ;
+$authorized  = isPost('authorized') ?  1 : 0 ;
+$directdownload  = isPost('directdownload') ?  1 : 0 ;
+$enable_userfolder =  isPost('enable_userfolder') ?  1 : 0 ;
+$statistics  = isPost('statistics') ?  1 : 0 ;
+$thumbnail =  isPost('thumbnail') ?  1 : 0 ;
+$multiple  = isPost('multiple') ?  1 : 0 ;
 
 $folderupload = protect($_POST['folderupload']);
 $prefixname   = protect($_POST['prefixname']);
@@ -433,7 +433,7 @@ unlink('../install/index.php' );*/
 PrintArray(array('settings'=>'general','success_msg' => $lang[104] , 'admincp' => siteurl.'/admin' , 'username' => $username ));
 }
 else
-	if(isset($_POST['host']) && isset($_POST['host_user']) && isset($_POST['host_pass']) && isset($_POST['host_base']) )
+	if(isPost('host') && isPost('host_user') && isPost('host_pass') && isPost('host_base') )
 {
 $host      = protect($_POST['host']);
 $host_user = protect($_POST['host_user']);
@@ -587,6 +587,7 @@ PrintArray(array('settings'=>'server','success_msg' => $lang[178] ));
 	
 	$("#IsLoad").val('1'); 
 	$('#settings').hide();
+	$("#btn").attr("disabled", true);
 	$('#closemsg').summernote('disable');
 	$('input[maxlength]').maxlength();
 	$('textarea').maxlength({alwaysShow: true});
@@ -597,9 +598,11 @@ PrintArray(array('settings'=>'server','success_msg' => $lang[178] ));
 		$('#facebook').val('https://www.facebook.com/'+username);
 		$('#gplus').val('https://plus.google.com/+'+username);
 		if($('#sitemail').val().length && $('#username').val().length && $('#password').val().length )
-			$('#settings').show();
+		{$('#settings').show();$("#btn").attr("disabled", false);}
+			
 		else
-			$('#settings').hide();
+		{$('#settings').hide();$("#btn").attr("disabled", true);}
+			
 		});
 	
 	$('#username').bind('keyup blur',function(){ 
@@ -657,9 +660,9 @@ $.ajax({
 	 
         <div class="panel-heading" id="header">
 		<?php if( !Mysqli_IsConnect) {?>
-          <h4 class="modal-title"><?php echo $lang[29].' / '.$lang[181] ?> </h4>
+          <h4 class="modal-title"><?php echo $lang[252] .' / '.$lang[181] ?> </h4>
 		 <?php } else { ?>
-		  <h4 class="modal-title"><?php echo $lang[29]?> </h4>
+		  <h4 class="modal-title"><?php echo $lang[252] ?> </h4>
 		 <?php }  ?>
         </div>
 	 <div class="panel-body">
@@ -667,10 +670,19 @@ $.ajax({
      
  
 
-<form id="settings_form" role="form" onsubmit="return false;">	
+<form id="settings_form" role="form" onsubmit="return false;" >	
 <input id="IsLoad" value="0" type="hidden" >
 <div class="form-group" id="Results"> </div>
 
+
+	<ul class="nav nav-tabs">
+      <li class="active"><a href="#connect" data-toggle="tab"><?php echo $lang[251] ?></a></li>
+    </ul>
+
+  <div class="tab-content">
+  
+	<div class="well tab-pane fade in active" id="connect">
+	
    <?php if( !Mysqli_IsConnect) {?>
 	
 	  <div class="input-group">
@@ -711,12 +723,25 @@ $.ajax({
         <input type="text"  name="sitemail" id="sitemail"  maxlength="40" class="form-control" value="<?php echo sitemail ?>"  placeholder="<?php echo $lang[40] ?>" required>
     </div>
 	
-
- 
+	</div> <!-- tab-connect-->
+ </div> <!-- tab-content 1-->
 	
 <div id="settings">
 
 	<hr>
+	
+	<ul class="nav nav-tabs">
+      <li class="active"><a href="#setting" data-toggle="tab"><?php echo $lang[29] ?></a></li>
+	  <li><a href="#permissions" data-toggle="tab"><?php echo $lang[250] ?></a></li>
+	  <li><a href="#maxi" data-toggle="tab"><?php echo $lang[24] ?></a></li>
+      <li><a href="#terms" data-toggle="tab"><?php echo $lang[152].' ...' ?></a></li>
+	  <li><a href="#style" data-toggle="tab"><?php echo $lang[70] ?></a></li>
+	  <li><a href="#closesite" data-toggle="tab"><?php echo $lang[64] ?></a></li>
+    </ul>
+	
+<div class="tab-content">
+	
+	<div class="well tab-pane fade" id="style">
 	
 	<div class="input-group">
       <span class="input-group-addon"><?php echo $lang[191] ?> - Panel</span>
@@ -759,7 +784,125 @@ $.ajax({
         </select>
 	  </span>
 	</div>
-  <hr>
+
+</div> <!-- tab-style -->
+
+
+	<div class="well tab-pane fade" id="terms">
+	
+	<div class="input-group">
+      <span class="input-group-addon hidden-sml"><?php echo $lang[152] ?></span>
+	    <textarea maxlength="21844" class="editor form-control" rows="5" name="terms" id="editor" placeholder="<?php echo $lang[152] ?>"><?php echo terms ?></textarea>
+    </div>
+	
+  
+    <div class="input-group">
+      <span class="input-group-addon hidden-sml"><?php echo $lang[153] ?></span>
+	    <textarea maxlength="21844" class="editor form-control" rows="5" name="privacy" id="privacy" placeholder="<?php echo $lang[153] ?>"><?php echo privacy ?></textarea>
+    </div>
+	
+	</div><!-- tab terms -->
+	
+	
+    <div class="well tab-pane fade" id="closesite">
+	
+    <div class="input-group">
+      <span class="input-group-addon"><input id="siteclose" name="siteclose" type="checkbox" <?php if(siteclose) echo ' checked' ?>> <?php echo $lang[64] ?> </span>
+         <textarea maxlength="21844" class="editor form-control" rows="5" id="closemsg" name="closemsg"  placeholder="<?php echo $lang[64] ?>"><?php echo closemsg ?></textarea>
+    </div>
+	
+	</div><!-- tab closesite -->
+	
+
+	<div class="well tab-pane fade" id="maxi">
+	
+	<div class="input-group">
+      <span class="input-group-addon hidden-sml"><?php echo $lang[24] ?></span>
+        <input type="text"  name="maxsize" maxlength="255" class="form-control" value="<?php echo nbrOnly(maxsize) ?>" placeholder="<?php echo $lang[24] ?>">
+	  <?php echo OptionSizeHtml('format_maxsize',(maxsize))?>
+    </div>
+	
+	 <div class="input-group">
+      <span class="input-group-addon hidden-sml"><?php echo $lang[173] ?></span>
+        <input type="text"  name="userspacemax" maxlength="255" class="form-control" value="<?php echo nbrOnly(userspacemax) ?>" placeholder="<?php echo $lang[173] ?>">
+	  <?php echo OptionSizeHtml('format_userspacemax',(userspacemax))?>
+    </div>
+	
+	 <div class="input-group">
+      <span class="input-group-addon hidden-sml"><?php echo $lang[234] ?></span>
+        <input type="text"  name="speed" maxlength="255" class="form-control" value="<?php echo nbrOnly(speed) ?>" placeholder="<?php echo $lang[234] ?>">
+	  <?php echo OptionSizeHtml('format_speed',(speed))?>
+    </div>
+	
+	 <div class="input-group">
+      <span class="input-group-addon hidden-sml" ><?php echo $lang[236] ?></span>
+        <input type="text"  name="days_older" value="<?php echo days_older ?>" class="form-control" placeholder="<?php echo $lang[236].' 30 '.$lang[222].' ...' ?>">
+	  <span style="min-width: 65px;" class="input-group-addon hidden-sml" ><?php echo $lang[222] ?></span>
+    </div>
+	
+	 
+	 <div class="input-group">
+      <span class="input-group-addon"><?php echo $lang[78] ?></span>
+        <input type="text"  name="Interval" value="<?php echo Interval ?>" class="form-control" placeholder="<?php echo $lang[78] ?>">
+	  <span style="min-width: 65px;" class="input-group-addon"><?php echo $lang[216] ?></span>
+    </div>
+	
+	<div class="input-group">
+      <span class="input-group-addon" ><?php echo $lang[237] ?></span>
+        <input type="text" name="maxUploads" value="<?php echo maxUploads ?>" class="form-control" placeholder="<?php echo $lang[237] ?>">
+	  <span style="min-width: 65px;" class="input-group-addon" ><?php echo function_exists('ini_get') ? ini_get('max_file_uploads') : '' ?></span>
+    </div>
+	
+	 <div class="input-group">
+      <span class="input-group-addon"><?php echo $lang[69] ?></span>
+        <input type="text" maxlength="255" name="rowsperpage" value="<?php echo rowsperpage ?>" class="form-control" placeholder="<?php echo $lang[69] ?>">
+		<span style="min-width: 60px;" class="input-group-addon"><?php echo $lang[216] ?></span>
+    </div>
+	
+	</div> <!-- tab-maxi -->
+	
+	<div class="well tab-pane fade" id="permissions">
+	
+		 <div class="input-group">
+      <span class="input-group-addon hidden-sml"><input name="thumbnail" type="checkbox" <?php if(thumbnail) echo ' checked' ?>> <?php echo $lang[172] ?></span>
+        <input type="text"  class="form-control" placeholder="<?php echo $lang[172] ?>" disabled>
+    </div>
+	
+	
+	 <div class="input-group">
+      <span class="input-group-addon"><input name="register" type="checkbox" <?php if(register) echo ' checked' ?>> <?php echo $lang[55] ?></span>
+        <input type="text"  class="form-control" placeholder="<?php echo $lang[55] ?>" disabled>
+    </div>
+	
+	 <div class="input-group">
+      <span class="input-group-addon"><input name="enable_userfolder" type="checkbox" <?php if(enable_userfolder) echo ' checked' ?>> <?php echo $lang[65] ?></span>
+        <input type="text"  class="form-control" placeholder="<?php echo $lang[65] ?>" disabled>
+    </div>
+	
+	 <div class="input-group">
+      <span class="input-group-addon"><input name="authorized" type="checkbox" <?php if(authorized) echo ' checked' ?>> <?php echo $lang[149] ?></span>
+        <input type="text"  class="form-control" placeholder="<?php echo $lang[1].' / '.$lang[149] ?>" disabled>
+    </div>
+	
+	 <div class="input-group">
+      <span class="input-group-addon"><input name="directdownload" type="checkbox" <?php if(directdownload) echo ' checked' ?>> <?php echo $lang[51] ?></span>
+        <input type="text"  class="form-control" placeholder="<?php echo $lang[51] ?>" disabled>
+    </div>
+	
+    <div class="input-group">
+      <span class="input-group-addon"><input name="statistics" type="checkbox" <?php if(statistics) echo ' checked' ?>> <?php echo $lang[28] ?></span>
+        <input type="text"  class="form-control" placeholder="<?php echo $lang[28] ?>" disabled>
+    </div>
+	
+	<div class="input-group">
+      <span class="input-group-addon"><input name="multiple" type="checkbox" <?php if(multiple) echo ' checked' ?>> <?php echo $lang[248] ?></span>
+        <input type="text"  class="form-control" placeholder="<?php echo $lang[248] ?>" disabled>
+    </div>
+	
+	</div> <!-- tab-permissions -->
+	
+	
+  <div class="well tab-pane active in" id="setting">
 	 <div class="input-group">
       <span class="input-group-addon"><?php echo $lang[132] ?></span>
         <input type="text"  name="description" maxlength="255" class="form-control" value="<?php echo description ?>" placeholder="<?php echo $lang[132] ?>">
@@ -813,85 +956,6 @@ $.ajax({
     </div>
 	
 
-	<div class="input-group">
-      <span class="input-group-addon hidden-sml"><?php echo $lang[24] ?></span>
-        <input type="text"  name="maxsize" maxlength="255" class="form-control" value="<?php echo nbrOnly(maxsize) ?>" placeholder="<?php echo $lang[24] ?>">
-	  <?php echo OptionSizeHtml('format_maxsize',(maxsize))?>
-    </div>
-	
-	 <div class="input-group">
-      <span class="input-group-addon hidden-sml"><?php echo $lang[173] ?></span>
-        <input type="text"  name="userspacemax" maxlength="255" class="form-control" value="<?php echo nbrOnly(userspacemax) ?>" placeholder="<?php echo $lang[173] ?>">
-	  <?php echo OptionSizeHtml('format_userspacemax',(userspacemax))?>
-    </div>
-	
-	 <div class="input-group">
-      <span class="input-group-addon hidden-sml"><?php echo $lang[234] ?></span>
-        <input type="text"  name="speed" maxlength="255" class="form-control" value="<?php echo nbrOnly(speed) ?>" placeholder="<?php echo $lang[234] ?>">
-	  <?php echo OptionSizeHtml('format_speed',(speed))?>
-    </div>
-	
-	 <div class="input-group">
-      <span class="input-group-addon hidden-sml" ><?php echo $lang[236] ?></span>
-        <input type="text"  name="days_older" value="<?php echo days_older ?>" class="form-control" placeholder="<?php echo $lang[236].' 30 '.$lang[222].' ...' ?>">
-	  <span style="min-width: 65px;" class="input-group-addon hidden-sml" ><?php echo $lang[222] ?></span>
-    </div>
-	
-	 
-	 <div class="input-group">
-      <span class="input-group-addon"><?php echo $lang[78] ?></span>
-        <input type="text"  name="Interval" value="<?php echo Interval ?>" class="form-control" placeholder="<?php echo $lang[78] ?>">
-	  <span style="min-width: 65px;" class="input-group-addon"><?php echo $lang[216] ?></span>
-    </div>
-	
-	<div class="input-group">
-      <span class="input-group-addon" ><?php echo $lang[237] ?></span>
-        <input type="text" name="maxUploads" value="<?php echo maxUploads ?>" class="form-control" placeholder="<?php echo $lang[237] ?>">
-	  <span style="min-width: 65px;" class="input-group-addon" ><?php echo function_exists('ini_get') ? ini_get('max_file_uploads') : '' ?></span>
-    </div>
-	
-	 <div class="input-group">
-      <span class="input-group-addon hidden-sml"><input name="thumbnail" type="checkbox" <?php if(thumbnail) echo ' checked' ?>> <?php echo $lang[172] ?></span>
-        <input type="text"  class="form-control" placeholder="<?php echo $lang[172] ?>" disabled>
-    </div>
-	
-	
-	 <div class="input-group">
-      <span class="input-group-addon"><input name="register" type="checkbox" <?php if(register) echo ' checked' ?>> <?php echo $lang[55] ?></span>
-        <input type="text"  class="form-control" placeholder="<?php echo $lang[55] ?>" disabled>
-    </div>
-	
-	 <div class="input-group">
-      <span class="input-group-addon"><input name="enable_userfolder" type="checkbox" <?php if(enable_userfolder) echo ' checked' ?>> <?php echo $lang[65] ?></span>
-        <input type="text"  class="form-control" placeholder="<?php echo $lang[65] ?>" disabled>
-    </div>
-	
-	 <div class="input-group">
-      <span class="input-group-addon"><input name="authorized" type="checkbox" <?php if(authorized) echo ' checked' ?>> <?php echo $lang[149] ?></span>
-        <input type="text"  class="form-control" placeholder="<?php echo $lang[1].' / '.$lang[149] ?>" disabled>
-    </div>
-	
-	 <div class="input-group">
-      <span class="input-group-addon"><input name="directdownload" type="checkbox" <?php if(directdownload) echo ' checked' ?>> <?php echo $lang[51] ?></span>
-        <input type="text"  class="form-control" placeholder="<?php echo $lang[51] ?>" disabled>
-    </div>
-	
-    <div class="input-group">
-      <span class="input-group-addon"><input name="statistics" type="checkbox" <?php if(statistics) echo ' checked' ?>> <?php echo $lang[28] ?></span>
-        <input type="text"  class="form-control" placeholder="<?php echo $lang[28] ?>" disabled>
-    </div>
-	
-	<div class="input-group">
-      <span class="input-group-addon"><input name="multiple" type="checkbox" <?php if(multiple) echo ' checked' ?>> <?php echo $lang[248] ?></span>
-        <input type="text"  class="form-control" placeholder="<?php echo $lang[248] ?>" disabled>
-    </div>
-	
-	 <div class="input-group">
-      <span class="input-group-addon"><input id="siteclose" name="siteclose" type="checkbox" <?php if(siteclose) echo ' checked' ?>> <?php echo $lang[64] ?> </span>
-         <textarea maxlength="21844" class="editor form-control" rows="5" id="closemsg" name="closemsg"  placeholder="<?php echo $lang[64] ?>"><?php echo closemsg ?></textarea>
-    </div>
-	
-		
 	 <div class="input-group">
       <span class="input-group-addon"><?php echo $lang[66] ?></span>
 	  <select name="time_zone" class="selectpicker" data-live-search="true"  data-width="100%"  title="<?php echo $lang[66] ?>">
@@ -916,24 +980,25 @@ $.ajax({
         <input type="text" maxlength="255" name="keywords" value="<?php echo keywords ?>" class="form-control" placeholder="<?php echo $lang[131] ?>" data-role="tagsinput" >
     </div>
 	
-	 <div class="input-group">
-      <span class="input-group-addon"><?php echo $lang[69] ?></span>
-        <input type="text" maxlength="255" name="rowsperpage" value="<?php echo rowsperpage ?>" class="form-control" placeholder="<?php echo $lang[69] ?>">
-    </div>
+	
+
+	</div><!-- tab-settings -->
+	
+</div><!-- tab-content -->
+
 	
 	
-	<div class="input-group">
-      <span class="input-group-addon hidden-sml"><?php echo $lang[152] ?></span>
-	    <textarea maxlength="21844" class="editor form-control" rows="5" name="terms" id="editor" placeholder="<?php echo $lang[152] ?>"><?php echo terms ?></textarea>
-    </div>
 	
-  
-    <div class="input-group">
-      <span class="input-group-addon hidden-sml"><?php echo $lang[153] ?></span>
-	    <textarea maxlength="21844" class="editor form-control" rows="5" name="privacy" id="privacy" placeholder="<?php echo $lang[153] ?>"><?php echo privacy ?></textarea>
-    </div>
 	
-</div><!-- end div settings -->
+	
+	
+	
+	
+	
+	
+	
+	</div><!-- end div settings -->
+
 <?php }?>  
 
  </form>

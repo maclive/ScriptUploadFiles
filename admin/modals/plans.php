@@ -5,10 +5,10 @@
     <thead>
       <tr>
         <th class="active"></th>
-		<th><?php echo $lang[226]?></th>
-		<th><?php echo $lang[235]?></th>
-        <th><?php echo $lang[227]?></th>
-		<th><?php echo $lang[228]?></th>
+		<th class="success"><?php echo $lang[226]?></th>
+		<th class="info"><?php echo $lang[235]?></th>
+        <th class="warning"><?php echo $lang[227]?></th>
+		<th class="danger"><?php echo $lang[228]?></th>
       </tr>
     </thead>
     <tbody id="tbody">

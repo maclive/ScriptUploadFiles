@@ -19,7 +19,7 @@
             <!-- Message body -->
             <div class="form-group">
               <label class="control-label" for="message"><?php echo $lang[53] ?></label>
-                <textarea maxlength="10000" class="form-control" id="message" name="message" placeholder="<?php echo $lang[53] ?>..." rows="5"><?php echo (isset($_GET['plan'])) ? $lang[229] .' : '.(int)($_GET['plan']) ."\r\n" : ''; ?></textarea>
+                <textarea maxlength="10000" class="form-control" id="message" name="message" placeholder="<?php echo $lang[53] ?>..." rows="5"><?php echo (isGet('plan')) ? $lang[229] .' : '.(int)($_GET['plan']) ."\r\n" : ''; ?></textarea>
             </div>
 		
 		<?php if(EnableCaptcha){?>

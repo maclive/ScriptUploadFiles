@@ -8,7 +8,7 @@
               <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><i class="glyphicon glyphicon-tasks"></i> <?php echo $lang[47]?></a>
             </h4>
           </div>
-          <div id="collapseOne" class="panel-collapse collapse <?php if(AdminGetIsEmpty || isset($_GET['comments']) || isset($_GET['files']) || isset($_GET['users']) || isset($_GET['folders']) || isset($_GET['reports']) || isset($_GET['statistics']) ) echo ' in';?>">
+          <div id="collapseOne" class="panel-collapse collapse <?php if(AdminGetIsEmpty || isGet('comments') || isGet('files') || isGet('users') || isGet('folders') || isGet('reports') || isGet('statistics') ) echo ' in';?>">
             <div class="list-group">
 			  <a href="./" class="list-group-item<?php echo AdminGetIsEmpty ? ' active' : '';?>"><i class="glyphicon glyphicon-home"></i> <?php echo $lang[21] ?></a>
 			  <a href="?files" class="list-group-item<?php actv2('files')?>"><i class="glyphicon glyphicon-file"></i> <?php echo $lang[109]?></a>
@@ -27,7 +27,7 @@
               <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour"><i class="glyphicon glyphicon-edit"></i> <?php echo $lang[29]?> </a> 
             </h4>
           </div>
-          <div id="collapseFour" class="panel-collapse collapse <?php if( isset($_GET['publicity']) || isset($_GET['settings'])  || isset($_GET['plans'])) echo ' in';?>">
+          <div id="collapseFour" class="panel-collapse collapse <?php if( isGet('publicity') || isGet('settings')  || isGet('plans')) echo ' in';?>">
             <div class="list-group">
                <a href="?publicity" class="list-group-item<?php actv2('publicity')?>" ><i class="glyphicon glyphicon-pushpin"></i> <?php echo $lang[183]?></a>    
 			   <a href="?plans" class="list-group-item<?php actv2('plans')?>" ><i class="glyphicon glyphicon-usd"></i> <?php echo $lang[230]?></a> 
@@ -43,7 +43,7 @@
               <a data-toggle="collapse" data-parent="#accordion" href="#collapseFive"><i class="glyphicon glyphicon-globe"> </i> <?php echo $lang[193]?> </a>
             </h4>
           </div>
-          <div id="collapseFive" class="panel-collapse collapse <?php if( isset($_GET['update'])) echo ' in';?>">
+          <div id="collapseFive" class="panel-collapse collapse <?php if( isGet('update')) echo ' in';?>">
 		      <a href="?update" class="list-group-item<?php actv2('update')?>"><i class="glyphicon glyphicon-refresh"></i> <?php echo $lang[79]?></a> 
 			
           </div>

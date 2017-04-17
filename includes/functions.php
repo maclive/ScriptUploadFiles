@@ -19,6 +19,11 @@ function isGet($parameter)
 	return isset($_GET[$parameter]) ?  true : false ;
 }
 
+function isPost($parameter)
+{
+	return isset($_POST[$parameter]) ?  true : false ;
+}
+
 function Encrypt($str)
 {
 	return base64_encode($str);
@@ -394,8 +399,8 @@ function iconClass($filename)
 	    return "icon-doc";			
 }
 
-function actv($par){if(isset($_GET[$par])) echo ' class= "active" ';}
-function actv2($par){if(isset($_GET[$par])) echo ' active';}
+function actv($par){if(isGet($par)) echo ' class= "active" ';}
+function actv2($par){if(isGet($par)) echo ' active';}
 function user_level($_level){global $lang; return ($_level==1) ? $lang[57] : $lang[56];	}  
 function user_plan($_plan){global $lang; if($_plan==0) return $lang[226]; elseif($_plan==1) return $lang[227];  elseif($_plan==2) return $lang[228];	}       
 function GetDateTxt(){return date('Y-m-d H:i:s');}
@@ -478,29 +483,29 @@ function Get_Ads($ads_page) {
 function get_main_title($_param ='') {
 	global $lang;
 
-    if(isset($_GET[$_param.'download']) && (isset($_GET['confirm']) || isset($_GET['notfound'])) )
+    if(isGet($_param.'download') && (isGet('confirm') || isGet('notfound')) )
 	    return $lang[198] ;
- 	elseif(isset($_GET[$_param.'plans'])) 
+ 	elseif(isGet($_param.'plans')) 
 	    return $lang[230] ;
- 	elseif(isset($_GET[$_param.'download'])) 
+ 	elseif(isGet($_param.'download')) 
 		return $lang[31] ;
-	elseif(isset($_GET[$_param.'files']) )
+	elseif(isGet($_param.'files') )
 	    return  $lang[48] ;
-	elseif(isset($_GET[$_param.'profile']) )	
+	elseif(isGet($_param.'profile') )	
 		return (!IsLogin) ? $lang[30] : $lang[30] .' - '. UserName ;
-	elseif(isset($_GET[$_param.'register']) )		
+	elseif(isGet($_param.'register') )		
 		return $lang[39] ;
-	elseif(isset($_GET[$_param.'about']))
+	elseif(isGet($_param.'about'))
 	    return  $lang[19] ;
-	elseif(isset($_GET[$_param.'authorized'])) 
+	elseif(isGet($_param.'authorized')) 
 	    return  $lang[148] ;
-	elseif(isset($_GET[$_param.'login']) ) 
+	elseif(isGet($_param.'login') ) 
 	    return  $lang[20] ;	
-	elseif(isset($_GET[$_param.'forgot']) ) 
+	elseif(isGet($_param.'forgot') ) 
 	    return  $lang[41] ;	
-	elseif(isset($_GET[$_param.'contact']) ) 
+	elseif(isGet($_param.'contact') ) 
 	    return  $lang[52] ;	
-    elseif(isset($_GET[$_param.'index']) ) 
+    elseif(isGet($_param.'index') ) 
 	    return  $lang[4] ;			
 	elseif(defined('MainTitle')) 
 	    return MainTitle ;
@@ -516,25 +521,25 @@ function extensionsStr($split=true)
 
 function Get_Page_Title() {
 	global $lang;
-	if(isset($_GET['download']))
+	if(isGet('download'))
 	{
 		//$id   = (is_numeric($_GET['download'])) ? (int)$_GET['download'] : protect(Decrypt($_GET['download']));
 		$id        =  protect(Decrypt($_GET['download']));
-		$confirm   = (isset($_GET['confirm'])) ? true : false ;
-		$notfound  = (isset($_GET['notfound'])) ? true : false ;
+		$confirm   = (isGet('confirm')) ? true : false ;
+		$notfound  = (isGet('notfound')) ? true : false ;
 		$_Filename = Sql_Get_originalFilename($id);
 		if($_Filename=='' && $confirm ) return $lang[198] ;
 		if($_Filename=='' && $notfound ) return $lang[198] ;
 		return ($_Filename=='') ? $lang[31].' - '.$lang[46] : $lang[31].' - '.$_Filename ;
 	}
-	/*elseif(isset($_GET['view']))
+	/*elseif(isGet('view']))
 	{
 		$_Filename = Sql_Get_Filename($_GET['view']);
 		return i($_Filename=='') ? $lang[164].' - '.$lang[46] : $lang[164].' - '.$_Filename ;
 	}*/
-	elseif(isset($_GET['403']))
+	elseif(isGet('403'))
 	    return $lang[168];
-	elseif(isset($_GET['404']))
+	elseif(isGet('404'))
 	    return $lang[111];   
     else
 		return SiteName() ;//$lang[1];	
@@ -982,12 +987,14 @@ if(num_rows($qry)>0)
     {
 	$row=mysqli_fetch_assoc($qry);	
 	return array('status' => true,
+	             'name' => $name,
 	             'content' => Decrypt($row['value']) ,
 				 'title'=>$row['parameter'] 			 
 				 );
 	} 
 	else
-	return array('status' => false );
+	return array('status' => false,
+                 'name' => $name);
 mysqli_free_result($qry);
 }
 
@@ -1697,7 +1704,7 @@ $file  = ($info['status'] && ($info['password']!==''))  ?  './assets/css/images/
 
 if(!ext_is_image($file)) return ;
 
-$referrer = isset($_GET['referrer']) &&  !empty($_GET['referrer']) ? protect(Decrypt($_GET['referrer'])) : '' ;
+$referrer = isGet('referrer') &&  !empty($_GET['referrer']) ? protect(Decrypt($_GET['referrer'])) : '' ;
 
 ($info['status'] && $info['public'] && (empty($info['password'])) ) ? Sql_Update_Count_Access( $info["id"] ) : '';
 ($info['status'] && $info['public'] && (empty($info['password'])) ) ? Sql_Insert_Stat( $info["id"] , $referrer) : '';
@@ -1738,7 +1745,7 @@ function forceDownload($id)
 
 //$id  = (is_numeric($id)) ? (int)$id : protect(Decrypt($id));
 $id     = protect(Decrypt($id));
-$string = (isset($_GET['unq'])) ? protect($_GET['unq'])	: '' ;
+$string = (isGet('unq')) ? protect($_GET['unq'])	: '' ;
 	 	
 (!isset($_SESSION['settings']['files'][$id])) ? exit(header("HTTP/1.0 404 Not Found")) : '';
 

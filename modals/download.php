@@ -12,8 +12,8 @@ $Continue   = false;
 
 function isPublic($status){global $lang;  return ($status)? '<code>'.$lang[176].'</code>' : '<code>'.$lang[177].'</code>';}
 
-$confirm  = (isset($_GET['confirm'])) ? true : false ;
-$notfound = (isset($_GET['notfound'])) ? true : false ;
+$confirm  = (isGet('confirm')) ? true : false ;
+$notfound = (isGet('notfound')) ? true : false ;
 $referrer = (isset($_SERVER['HTTP_REFERER'])) ? Encrypt($_SERVER['HTTP_REFERER']) : "";
 $string   = (!isset($_SESSION['settings']['files'][$DownloadID])) ? GenerateRandomString() : $_SESSION['settings']['files'][$DownloadID];
 (!isset($_SESSION['settings']['files'][$DownloadID])) ? $_SESSION['settings']['files'][$DownloadID]	= $string : '';

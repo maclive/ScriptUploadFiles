@@ -5,10 +5,10 @@ $publicity        = Sql_Get_publicity($ads_page);
 $ads_google       = ($ads_page == 'ads_google')  ? true : false ;
 $ads_download     = ($ads_page == 'ads_download')? true : false ;
 $no_ads_title     = (empty($publicity['title'])) ? true : false ;
-$file_status      = (isset($info)) ? $info['status'] : true ;
+$file_status      = (IsGet('download')) ? $info['status'] : true;
 $is_content_empty = (empty($publicity['content']) || $publicity['content'] =='<p><br></p>' || $publicity['content'] =='<p></p>') ? true : false ;
-$is_deleteFile    = (isset($_GET['download']) && ($_GET['download'] =='deleteFile')  && $ads_download ) ? true : false ;
-if( display_ads && $publicity['status'] && !$is_content_empty && !$is_deleteFile  && $file_status )
+$is_deleteFile    = (IsGet('download') && ($_GET['download'] =='deleteFile')  && $ads_download ) ? true : false ;
+if( display_ads && $publicity['status'] && !$is_content_empty && !$is_deleteFile  && ($file_status) )
 { 
      if($ads_google)
      { 
@@ -34,4 +34,5 @@ if( display_ads && $publicity['status'] && !$is_content_empty && !$is_deleteFile
  </div> <!--div poster -->
 <?php } 
 unset($publicity);
+unset($info);
 ?>

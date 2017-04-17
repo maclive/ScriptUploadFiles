@@ -265,6 +265,9 @@ $lang[246] =  'المرفوعات';
 $lang[247] =  'الاعضاء المسجلين';  
 $lang[248] =  'متعدد';  
 $lang[249] =  'سطر';  
+$lang[250] =  'التصريحات';
+$lang[251] =  'الاتصال';
+$lang[252] =  'التركيب';
 }
 
 /*---------------------------english -------------------*/
@@ -519,7 +522,11 @@ $lang[244] =  'More';
 $lang[245] =  'Downloads';
 $lang[246] =  'Uploads';
 $lang[247] =  'Registered Users';  
-$lang[248] =  'multiple';  
+$lang[248] =  'Multiple';  
 $lang[249] =  'Lines';  
+$lang[250] =  'Permissions';
+$lang[251] =  'Connect';
+$lang[252] =  'Installation';
+
 }
 ?>

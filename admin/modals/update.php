@@ -25,7 +25,7 @@ if(isset($_SESSION['settings']['update']['version']))
      
 	       
 <?php 
-if(isset($_GET['ZipArchive']))
+if(isGet('ZipArchive'))
 {
 	$data=extractUpdate(url_zip_file,extract_dir,tmpZip_file);
 	echo $data['html'];
