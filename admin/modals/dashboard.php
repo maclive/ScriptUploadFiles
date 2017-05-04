@@ -154,6 +154,11 @@
       </tr>
 	  
 	   <tr>
+        <td><?php echo $lang[252] ?></td>
+		<td><code><?php echo installdate ?></code></td>
+      </tr>
+	  
+	   <tr>
         <td><?php echo $lang[5] ?></td>
 		<td><code><?php echo scriptversion ?></code></td>
       </tr>

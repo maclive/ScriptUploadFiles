@@ -169,7 +169,7 @@ var IsLogin     = Boolean('<?php echo (bool)IsLogin ?>'),
 	IsThumbnail = Boolean('<?php echo (bool)thumbnail ?>'),
 	IsAnimated  = Boolean('<?php echo (bool)animated ?>'),
 	IsFooterInfo= Boolean('<?php echo (bool)FooterInfo ?>'),
-	multiple    = Boolean('<?php echo (bool)multiple ?>'),
+	IsMultiple  = Boolean('<?php echo (bool)multiple ?>'),
 	IsGetEmpty  = Boolean('<?php echo (bool)GetIsEmpty ?>'),
 	IsCaptcha   = Boolean('<?php echo (bool)EnableCaptcha ?>'),
 	DirectoryChanged  = Boolean('<?php echo (bool)DirectoryChanged ?>'),
@@ -245,6 +245,7 @@ var IsLogin     = Boolean('<?php echo (bool)IsLogin ?>'),
 	LoadJsCheckbox = false,
 	myChart     = null;
 	
+//alert('<?php echo sitemail ?>');	
 	
 if (IsLogin) { 		
 var currentpage = parseInt('<?php  echo $currentpage ?>') ,

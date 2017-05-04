@@ -50,16 +50,19 @@ $Interval    =(int)$_POST['Interval'];
 $maxUploads  =(int)$_POST['maxUploads'];
 $days_older	 =(int)$_POST['days_older'];
 
-$closemsg  = isPost('closemsg') ?  protect($_POST['closemsg']) : closemsg ;	 
-$siteclose  = isPost('siteclose') ?  1 : 0 ;	 
-$register  = isPost('register') ?  1 : 0 ;
+$closemsg    = isPost('closemsg') ?  protect($_POST['closemsg']) : closemsg ;	 
+$siteclose   = isPost('siteclose') ?  1 : 0 ;	 
+$register    = isPost('register') ?  1 : 0 ;
 $authorized  = isPost('authorized') ?  1 : 0 ;
-$directdownload  = isPost('directdownload') ?  1 : 0 ;
+$directdownload    = isPost('directdownload') ?  1 : 0 ;
 $enable_userfolder =  isPost('enable_userfolder') ?  1 : 0 ;
 $statistics   = isPost('statistics') ?  1 : 0 ;
 $thumbnail    = isPost('thumbnail') ?  1 : 0 ;
 $multiple     = isPost('multiple') ?  1 : 0 ;
 $deletelink   = isPost('deletelink') ?  1 : 0 ;
+$EnableComments = isPost('EnableComments') ?  1 : 0 ;
+$EnableCaptcha  = isPost('EnableCaptcha') ?  1 : 0 ;
+$animated       = isPost('animated') ?  1 : 0 ;
 
 $folderupload = protect($_POST['folderupload']);
 $prefixname   = protect($_POST['prefixname']);
@@ -321,7 +324,11 @@ Sql_query("INSERT INTO `settings` (`name`, `value`) VALUES ('days_older', '$days
 Sql_query("INSERT INTO `settings` (`name`, `value`) VALUES ('maxUploads', '$maxUploads');");
 Sql_query("INSERT INTO `settings` (`name`, `value`) VALUES ('multiple', '$multiple');");
 Sql_query("INSERT INTO `settings` (`name`, `value`) VALUES ('deletelink', '$deletelink');");
+Sql_query("INSERT INTO `settings` (`name`, `value`) VALUES ('EnableComments', '$EnableComments');");
+Sql_query("INSERT INTO `settings` (`name`, `value`) VALUES ('EnableCaptcha', '$EnableCaptcha');");
+Sql_query("INSERT INTO `settings` (`name`, `value`) VALUES ('animated', '$animated');");
  
+
 //Sql_query("INSERT INTO `folders` (`userId`, `folderName`, `isPublic`, `accessPassword`, `date_added`) VALUES ( '0', '$folderupload', '1', '', '$date');");
 
 /*-- Dumping data for table `users`*/
@@ -455,11 +462,8 @@ define('dbpass','$host_pass');
 define('dbname','$host_base'); 
 
 define('FooterInfo',false); //false-true
-define('animated',true);
-define('EnableLogo',false);
+define('EnableLogo',false); //false-true
 define('UpdateBrowser',true); // ie8=< message
-define('EnableCaptcha',false);
-define('EnableComments',false);
 define('DirectoryChanged',false);
 
 /*define('MainTitle','اكتب هنا اسم موقعك');*/\r\n"
@@ -467,7 +471,6 @@ define('DirectoryChanged',false);
 .'$_plans          '."= array('0'=>'free','1'=>'premium','2'=>'gold','3'=>'register');\r\n"	
 .'$currentpage     '."= 1 ;\r\n"
 .'$totalpages      '."= 1 ;\r\n
-
 ?>";
 fwrite($fp,$content);
 fclose($fp);}
@@ -485,6 +488,7 @@ PrintArray(array('settings'=>'server','success_msg' => $lang[178] ));
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/styles.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/fontello.min.css">
   <link rel="stylesheet" type="text/css" href="../includes/styles.php">
   <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-tagsinput.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-select.min.css">
@@ -716,14 +720,17 @@ $.ajax({
     <div class="input-group">
       <span class="input-group-addon"><?php echo $lang[35] ?></span>
         <input name="username" id="username" maxlength="15" type="text" class="form-control"  placeholder="<?php echo $lang[35] ?>" required>
+		<span style="min-width: 60px;" class="input-group-addon"><i class="icon-user"></i></span>
     </div>
 	 <div class="input-group">
       <span class="input-group-addon"><?php echo $lang[37] ?></span>
         <input type="password" name="password" id="password" maxlength="20" class="form-control" placeholder="<?php echo $lang[37] ?>" required>
+		<span style="min-width: 60px;" class="input-group-addon"><i class="icon-lock"></i></span>
     </div>
 	 <div class="input-group">
       <span class="input-group-addon"><?php echo $lang[40] ?></span>
         <input type="text"  name="sitemail" id="sitemail"  maxlength="40" class="form-control" value="<?php echo sitemail ?>"  placeholder="<?php echo $lang[40] ?>" required>
+		<span style="min-width: 60px;" class="input-group-addon"><i class="icon-gplus"></i></span>
     </div>
 	
 	</div> <!-- tab-connect-->
@@ -787,7 +794,13 @@ $.ajax({
         </select>
 	  </span>
 	</div>
-
+	
+	
+	<div class="input-group">
+      <span class="input-group-addon"><input name="animated" type="checkbox" <?php if(animated) echo ' checked' ?>> <?php echo $lang[253] ?></span>
+        <input type="text"  class="form-control" placeholder="<?php echo $lang[253] ?>" disabled>
+    </div>
+	
 </div> <!-- tab-style -->
 
 
@@ -907,15 +920,20 @@ $.ajax({
         <input type="text"  class="form-control" placeholder="<?php echo $lang[248] ?>" disabled>
     </div>
 	
+	  <div class="input-group">
+      <span class="input-group-addon"><input name="EnableComments" type="checkbox" <?php if(EnableComments) echo ' checked' ?>> <?php echo $lang[240] ?></span>
+        <input type="text"  class="form-control" placeholder="<?php echo $lang[240] ?>" disabled>
+    </div>
+	
+	<div class="input-group">
+      <span class="input-group-addon"><input name="EnableCaptcha" type="checkbox" <?php if(EnableCaptcha) echo ' checked' ?>> <?php echo $lang[254] ?></span>
+        <input type="text"  class="form-control" placeholder="<?php echo $lang[254] ?>" disabled>
+    </div>
+	
 	</div> <!-- tab-permissions -->
 	
 	
   <div class="well tab-pane active in" id="setting">
-	 <div class="input-group">
-      <span class="input-group-addon"><?php echo $lang[132] ?></span>
-        <input type="text"  name="description" maxlength="255" class="form-control" value="<?php echo description ?>" placeholder="<?php echo $lang[132] ?>">
-    </div>
-
 	<div class="input-group">
       <span class="input-group-addon"><?php echo $lang[72] ?></span>
         <input name="sitename" type="text" maxlength="255" class="form-control" value="<?php echo sitename ?>" style="text-align: left;direction: ltr;"  placeholder="<?php echo $lang[72] ?>">
@@ -926,31 +944,40 @@ $.ajax({
         <input name="rtlsitename" maxlength="255" type="text" class="form-control" value="<?php echo rtlsitename ?>" placeholder="<?php echo $lang[112] ?>">
     </div>
 	
+	<div class="input-group">
+      <span class="input-group-addon"><?php echo $lang[132] ?></span>
+		<textarea maxlength="255" class="form-control" rows="3" name="description"  placeholder="<?php echo $lang[132] ?>"><?php echo description ?></textarea>
+    </div>
 
     <div class="input-group">
       <span class="input-group-addon"><?php echo $lang[18] ?></span>
         <input name="siteurl" type="text" maxlength="255" class="form-control" value="<?php echo siteurl ?>" style="text-align: left;direction: ltr;" placeholder="<?php echo $lang[18] ?>">
+		<span style="min-width: 60px;" class="input-group-addon"><i class="icon-link"></i></span>
     </div>
 	
 		<div class="input-group">
       <span class="input-group-addon">twitter</span>
         <input type="text" id="twitter" name="twitter" maxlength="255" class="form-control" placeholder="" style="text-align: left;direction: ltr;">
+		<span style="min-width: 60px;" class="input-group-addon"><i class="icon-twitter"></i></span>
     </div>
 
 	<div class="input-group">
       <span class="input-group-addon">facebook</span>
         <input name="facebook"  id="facebook" type="text" maxlength="255" class="form-control"  placeholder="" style="text-align: left;direction: ltr;">
+		<span style="min-width: 60px;" class="input-group-addon"><i class="icon-facebook"></i></span>
     </div>
 
 	<div class="input-group">
       <span class="input-group-addon">gplus</span>
         <input name="gplus" id="gplus" maxlength="255" type="text" class="form-control" placeholder="" style="text-align: left;direction: ltr;">
+		<span style="min-width: 60px;" class="input-group-addon"><i class="icon-gplus"></i></span>
     </div>
 	
 	
 	 <div class="input-group">
       <span class="input-group-addon"> <?php echo $lang[63] ?> </span>
         <input type="text" name="folderupload" maxlength="255" class="form-control" value="<?php echo folderupload ?>" style="text-align: left;direction: ltr;" placeholder="<?php echo $lang[63] ?>">
+		<span style="min-width: 60px;" class="input-group-addon"><i class="icon-folder-open"></i></span>
     </div>
 	
 	<div class="input-group">
