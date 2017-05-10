@@ -159,6 +159,7 @@ function isValidEmail($str) {
 
 function _Upload_name() {
 	return prefixname.date("Y-m-d_His.");
+	/*return sha1(date("Y-m-d_His.")); return md5(date("Y-m-d_His.")); return uniqid(prefixname);*/
 }
 function IePrintArray($data){
 	(!IsIeBrowser()) ? header('Content-Type: application/json') : header('Content-Type: text/html; charset=UTF-8') ;

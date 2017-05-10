@@ -25,6 +25,7 @@ echo'
 .pagination li.active a ,.pagination li.active a:hover,.pagination li.active a:focus{background-color: '.PanelColor.';border-color: '.PanelColor.';}
 .uploadIcon,.pagination li a{color: '.PanelColor.';	}
 body {background-color:'.BodyColor.';}
+/*body {background-image: url("../assets/css/images/wood.jpg") no-repeat right top;}*/
 .se-pre-con {background-color:'.BodyColor.'!important;}
 .sidenav .active,.sidenav a:hover,.sidenav a:active, .offcanvas a:focus{background-color: '.BodyColor.';border-color: '.PanelColor.';}
 .sidenav a:focus{/*border-color: '.PanelColor.';background-color: '.BodyColor.';*/}

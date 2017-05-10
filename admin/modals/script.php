@@ -57,7 +57,8 @@
 	   LoadJsCheckbox   = true,
       _maxVisible = 10,
 	   myChart    = null;
-	  
+
+	
 	  if(IsRtL) 
 		  summernoteLang = 'ar-AR';
 	  else
@@ -975,5 +976,16 @@ bootbox.confirm({
     }
 });
 }
+
+	
+$(function() {
+
+if( $('#today-reports').length  > 0 ) 
+	{
+		var timer;
+		timer = setTimeout( function(){ ringIt('today-reports'); }, 1200); // adjust it with the css ring animation at .today-reminder
+	}
+	
+});
 
  </script>

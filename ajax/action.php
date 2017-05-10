@@ -649,7 +649,8 @@ if ($result=Sql_query($sql))
 	  $_crypt_id         = "'".Encrypt($_file_id)."'";
 	  $_deleteHash       = "'".$row["deleteHash"]."'";
 	  $folder            = Sql_Get_folder($row['folderId']);
-	  $_thumbnaildir     = (ext_is_image('..'.$folder.'/'.$row["filename"])) ? ($folder.'/_thumbnail/'.get_thumbnail($row["filename"])):'';
+	  
+	  $_thumbnaildir     = (ext_is_image('..'.$folder.'/'.$row["filename"]) && file_exists('..'.$folder.'/_thumbnail/'.get_thumbnail($row["filename"]))) ? ($folder.'/_thumbnail/'.get_thumbnail($row["filename"])):'';
 	   
 	  $css    = (empty($row["accessPassword"]))                          ? ' text-muted' : '' ;
 	  $dcss   = ($row["totalDownload"]==0)                               ? ' text-muted' : '' ;

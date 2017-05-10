@@ -15,7 +15,7 @@
 			  <a href="?users" class="list-group-item<?php actv2('users')?>"><i class="glyphicon glyphicon-user"></i> <?php echo $lang[73]?></a>
 			  <a href="?folders" class="list-group-item<?php actv2('folders')?>"><i class="glyphicon glyphicon-folder-close"></i> <?php echo $lang[74]?></a>
 			  <a href="?comments" class="list-group-item<?php actv2('comments')?>"><?php echo (t_comments_o>0) ? '<span class="badge">'.t_comments_o.'</span>':''; ?><i class="glyphicon glyphicon-comment"></i> <?php echo $lang[240]?></a>
-			  <a href="?reports" class="list-group-item<?php actv2('reports')?>"><?php echo (t_reports_o>0) ? '<span class="badge">'.t_reports_o.'</span>':''; ?><i class="glyphicon glyphicon-flag"></i> <?php echo $lang[101]?></a>
+			  <a href="?reports" class="list-group-item<?php actv2('reports')?>"><?php echo (t_reports_o>0) ? '<span class="badge" id="today-reports">'.t_reports_o.'</span>':''; ?><i class="glyphicon glyphicon-flag"></i> <?php echo $lang[101]?></a>
 			  <a href="?statistics" class="list-group-item<?php actv2('statistics')?>"><i class="glyphicon glyphicon-stats"></i> <?php echo $lang[28]?></a>
 
             </div>
