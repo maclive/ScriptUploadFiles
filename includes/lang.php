@@ -270,6 +270,7 @@ $lang[251] =  'الاتصال';
 $lang[252] =  'التركيب';
 $lang[253] =  'حيوي';
 $lang[254] =  'كابتشا';
+$lang[255] =  'مفتاح';
 
 }
 
@@ -532,5 +533,7 @@ $lang[251] =  'Connect';
 $lang[252] =  'Installation';
 $lang[253] =  'Animated';
 $lang[254] =  'Captcha';
+$lang[255] =  'Key';
+
 }
 ?>

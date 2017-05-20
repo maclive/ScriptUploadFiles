@@ -26,7 +26,7 @@
       <span class="input-group-addon" style="min-width: 120px;"><?php echo $lang[37] ?></span>
         <input id="password" maxlength="20" name="password" type="password" class="form-control" value="<?php  ?>" placeholder="<?php echo $lang[37] ?>">	
     </div>
-	<!-------------data-toggle="password" ---------->
+	<!-- data-toggle="password"  -->
 	<div class="input-group">
       <span class="input-group-addon" style="min-width: 120px;"><?php echo $lang[40] ?></span>
         <input id="email" name="email" maxlength="40" type="text" class="form-control" value="<?php  ?>" placeholder="<?php echo $lang[40] ?>">

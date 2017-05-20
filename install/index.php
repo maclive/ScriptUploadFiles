@@ -350,6 +350,8 @@ $_SESSION['login']['plan_id']    = '0';
 $_SESSION['login']['user_email'] = $sitemail;
 $_SESSION['login']['user_space_used'] = 0 ;
 $_SESSION['login']['user_space_left'] = user_space_max;
+$_SESSION['login']['register_date']   = $date;
+
 }
 
 	

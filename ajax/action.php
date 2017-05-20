@@ -1,13 +1,24 @@
 <?php
+ob_get_contents();
+ob_end_clean();
+define('ApiStatus',true);
 (isset($_GET['captcha'])) ? exit(require_once ('../includes/captcha.php')) : '';
+
 require_once ( '../includes/config.php');
 require_once ( '../includes/session.php');
 require_once ( '../includes/functions.php');
+/*-----------------------------------------------------------------*/
+/*if(post_max_size_exceeded())
+	IePrintArray((array('success' => false, 'msg' => 'your file is too big!'  ,'footerInfo'=> '' ))) ;*/
+/*-----------------------------------------------------------------*/
 require_once ( '../includes/connect.php');
 require_once ( '../includes/lang.php');
 require_once ( '../includes/uploader.php'); //dirname(__FILE__) .
 (thumbnail) ? require_once ( '../includes/thumbnail.php') : '';
 
+(isGet('api') && !ApiStatus ) ?  IePrintArray(array('success' => false, 'msg' => 'ApiStatus => false' ,'footerInfo'=> FooterInfo('..'.folderupload) )) : '' ; 
+(isGet('api') && isGet('uploadfile') && !ApiLogin && (isGet('username') && (strlen($_GET['username'])>0)  ) ) ? IePrintArray(array('success' => false, 'msg' => $lang[98] ,'footerInfo'=> FooterInfo('..'.folderupload) )) : '' ; 
+(!isGet('api')) ?  AJAX_check() : '';
 /*-----------------------------------------------------------------*/
 (!Mysqli_IsConnect) ? PrintArray(array('error_msg'=> 'Mysqli '.$lang[179])) : '';
 
@@ -15,10 +26,11 @@ require_once ( '../includes/uploader.php'); //dirname(__FILE__) .
  
 $currentpage = (isGet('currentpage') && is_numeric($_GET['currentpage'])) ? (int) $_GET['currentpage'] : 1;
 
-
+/*-----------------------------------------------------------------*/
+/*
 if(isGet('load')) 
 {
-AJAX_check();	
+	
 if(isGet('title'))
 	die(get_main_title('__')) ;		
 
@@ -44,7 +56,7 @@ elseif(isGet('_index') )
 	exit(require_once ('../modals/dropzone.php'));	
 }
 
-
+*/
 
 
 if(isGet('download'))
@@ -88,7 +100,7 @@ $filesize = ($info['status']) ? $info["size"] : 0 ;
 
 if(isGet('stats'))
 {
-//AJAX_check();
+    
     $id                    = (int)$_GET['id'];
 	$nb_total              = num_rows(Sql_query("SELECT 1 FROM `stats` WHERE `file_id` = '$id'")) ;
 	$nb_country            = num_rows(Sql_query("SELECT distinct(`country_code`) FROM `stats` WHERE `file_id` = '$id'")); 
@@ -218,9 +230,10 @@ PrintArray($data);
 
 if(isGet('uploadfile'))
 {
-AJAX_check();
 
-(!IsLogin && authorized)        ? IePrintArray(array('success' => false, 'msg' => $lang[98] ,'footerInfo'=> FooterInfo('..'.folderupload) )) : '' ;   
+(!IsLogin && !ApiLogin  && authorized) ? IePrintArray(array('success' => false, 'msg' => $lang[98] ,'footerInfo'=> FooterInfo('..'.folderupload) )) : '' ; 
+	//(!ApiLogin && authorized) ? IePrintArray(array('success' => false, 'msg' => $lang[98] ,'footerInfo'=> FooterInfo('..'.folderupload) )) : '' ; 
+
 (!file_exists('..'.uploadDir )) ? @mkdir('..'.uploadDir , 0777, true) : '';
 (function_exists('ini_set'))    ? @ini_set('max_execution_time', 0) : '';
 /*
@@ -234,10 +247,10 @@ $extensions      = explode(",",extensions);
 $orgfilename     = protect($Upload->getFileName()); /*(isset($_FILES["uploadfile"]["name"])) ? protect(basename($_FILES["uploadfile"]["name"])) : '';*/
 $passwordfile    = (isPost('passwordfile')) ? protect($_POST['passwordfile']) : '';
 $code            = (isPost('code')) ? protect($_POST['code']) : '' ;
-$ispublic        = (isPost('ispublic') && IsLogin ) ? (int)$_POST['ispublic'] : 1 ;
+$ispublic        = (isPost('ispublic') && (IsLogin||ApiLogin) ) ? (int)$_POST['ispublic'] : 1 ;
 
-(defined('HashCode') && HashCode !== $code ) ? IePrintArray(array('success' => false, 'msg' => $lang[103].' / HashCode' ,'footerInfo'=> FooterInfo('..'.folderupload) )) : '' ;  
-(IsLogin && (UserSpaceLeft<=0))              ? IePrintArray(array('success' => false, 'msg' => $lang[173].' / '.$lang[117] ,'footerInfo'=> FooterInfo('..'.folderupload) )) : '' ;  
+(defined('HashCode') && HashCode !== $code && !isGet('api') ) ? IePrintArray(array('success' => false, 'msg' => $lang[103].' / HashCode' ,'footerInfo'=> FooterInfo('..'.folderupload) )) : '' ;  
+((IsLogin) && (UserSpaceLeft<=0))   ? IePrintArray(array('success' => false, 'msg' => $lang[173].' / '.$lang[117] ,'footerInfo'=> FooterInfo('..'.folderupload) )) : '' ;  
 
 
 //if(Sql_file_exsist($_UploadFileName))
@@ -245,12 +258,15 @@ $ispublic        = (isPost('ispublic') && IsLogin ) ? (int)$_POST['ispublic'] : 
 	{
 		sleep(1); // sleep for 1 second
 		$_UploadFileName = _Upload_name().$ext;
-		
 	}
 	
 $Upload->Language    = $lang;
 $Upload->sizeLimit   = MaxFileSize;
 $Upload->newFileName = $_UploadFileName ; /*_Upload_name().$ext;*/
+
+if($Upload->getFileSize()>=MaxFileSize) 
+	IePrintArray(array('success' => false, 'msg' => $lang[110] .' : '.FileSizeConvert(MaxFileSize) ,'footerInfo'=> FooterInfo('..'.folderupload) )) ; 
+ 
 $result = $Upload->handleUpload('..'.uploadDir, $extensions);
 
 
@@ -263,6 +279,8 @@ if (!$result)
 	 $ThumbnailDir = (thumbnail) ? uploadDir.'/_thumbnail/'.get_thumbnail($Upload->getFileName()) : ''; 
 	 $filename     = '..'.uploadDir.'/'.$Upload->getFileName();
 	 $filesize     = $Upload->getFileSize() ; /*file_exists($filename) ? filesize($filename) : 0;*/
+	 
+	
 	 
 	if(thumbnail)
 	{
@@ -295,6 +313,7 @@ if (!$result)
 
      IePrintArray(array('success' => true,
 	                  'FileName' => $Upload->getFileName() ,
+					  'originalFilename'=> $orgfilename ,
 					  'Icon' => iconClass($Upload->getFileName()) ,
 					  'Size' => $filesize ,
 					  'SavedFile' => $Upload->getSavedFile() ,
@@ -305,6 +324,7 @@ if (!$result)
 					  'cryptID'=> Encrypt($id ),
 					  'UploadDir'=> uploadDir ,
 					  'ThumbnailDir'=> $ThumbnailDir , 
+					  'IsLogin'=> (IsLogin || ApiLogin) ,  					  
 					  'footerInfo'=> FooterInfo('..'.folderupload) ) ) ;
 				
  }
@@ -314,7 +334,7 @@ if (!$result)
 
 if(isGet('ispublic'))
 {
-AJAX_check();	
+	
 $file_id = (int)$_GET['ispublic'];	
 $info = Sql_Get_info($file_id);
 $ispublic = !$info['public'];
@@ -326,7 +346,7 @@ PrintArray(array('icon' => glyphiconIsPublic($ispublic) ));
 
 if(isGet('deletecomment'))
 {
-AJAX_check();	
+	
 $id = (int)$_GET['deletecomment'];	
 (IsAdmin) ? Sql_query( "DELETE FROM `comments`  WHERE `id`= '$id'" ) : Sql_query( "DELETE FROM `comments`  WHERE `id`= '$id' AND `user_id` = '".UserID."'" ) ;	
 PrintArray(array('icon' => glyphiconOk(affected_rows()) ));
@@ -335,7 +355,7 @@ PrintArray(array('icon' => glyphiconOk(affected_rows()) ));
 
 if(isGet('report'))
 {
-AJAX_check();	
+	
 $file_id = (int)$_GET['report'];	
 $reason_id = (int)$_GET['reason'];	
 
@@ -357,7 +377,7 @@ if(num_rows(Sql_query("SELECT 1 FROM `reports` WHERE `file_id`='$file_id' and `u
 /*-----------------------------------------------------------------*/
 if(isGet('confirm'))
 {
-AJAX_check();	
+	
 $file_id = (int)$_GET['confirm'];	
 $password= protect($_GET['password']);
 	
@@ -381,7 +401,7 @@ PrintArray($data);
 /*-----------------------------------------------------------------*/
 if(isGet('contact'))
 {
-AJAX_check();	
+	
 $username = protect($_POST['name']);
 $message = $_POST['message'];
 $email    = protect($_POST['email']);
@@ -414,7 +434,7 @@ PrintArray($data);
 
 if(isGet('forgot'))
 {
-AJAX_check();
+
 $email = protect($_POST['email']);
 
 $sql = Sql_query("SELECT 1 FROM `users` WHERE `email`='$email'");
@@ -449,7 +469,7 @@ PrintArray($data);
 
 if(isGet('login'))
 {
-AJAX_check();
+
 $username = protect($_POST['Email']);
 $password = protect($_POST['Password']);
 $md5pass  = md5($password);
@@ -470,6 +490,8 @@ elseif(num_rows($sql)>0) {
 		$_SESSION['login']['user_level'] = $row['level']; //(bool)
 		$_SESSION['login']['user_status']= $row['status'];
 		$_SESSION['login']['user_email'] = $row['email'];
+		
+		$_SESSION['login']['register_date']   = $row['register_date'];
 		$_SESSION['login']['user_space_used'] = (int)Get_user_space_used($row['id']) ;
 		$_SESSION['login']['user_space_left'] = user_space_max-(int)$_SESSION['login']['user_space_used'];
 		if(enable_userfolder)
@@ -500,7 +522,7 @@ PrintArray($data);
 
 if(isGet('register'))
 {
-AJAX_check();	
+	
 $username = protect($_POST['Username']);
 $password = protect($_POST['Password']);
 $md5pass  = md5($password);
@@ -604,8 +626,11 @@ PrintArray($data);
 
 /*-----------------------------------------------------------------*/
 
+if(!ApiLogin)
+{	
 (!isset($_SESSION['login'])) ? PrintArray(array('error_msg' => '<'.$lang[98].'>')) : '' ;
 (!IsLogin)                   ? PrintArray(array('error_msg' => $lang[98])) : '';
+}
 
 /*-----------------------------------------------------------------*/
 if (isGet('addcomment')){
@@ -700,7 +725,7 @@ PrintArray($data);
 /*------------------------------------------------------------------*/
 if(isGet('filepass'))
 {
-AJAX_check(); 
+ 
 	$password = protect($_GET['filepass']);
 	$id       = (int)$_GET['id'];
 	Sql_query("UPDATE `files` SET `accessPassword` = '$password' WHERE `id` = '$id' AND `userId` = '".UserID."'");
@@ -712,7 +737,7 @@ AJAX_check();
 /*-----------------------------------------------------------------*/
 if(isGet('delete'))
 {
-	AJAX_check(); 
+	 
 	$info = Sql_Get_info($_GET['id'],'..');
     if( $info['status'] && $info['deleteHash'] == $_GET['delete'] )
 	{
@@ -734,7 +759,7 @@ if(isGet('delete'))
 if(isGet('delete_selected'))
 {
 	
-	AJAX_check();
+	
 	
 	if(isPost('files'))
 	{
@@ -760,7 +785,7 @@ if(isGet('delete_selected'))
 }
 /*-----------------------------------------------------------------*/
 if(isGet('logout')){
-AJAX_check();	
+	
 if(isset($_SESSION['login'])) //['status']
 {
 //@session_destroy();	
@@ -770,7 +795,7 @@ PrintArray(array('success_msg' => $lang[104]));
 }
 
 if(isGet('edituser')){
-AJAX_check();	
+	
 
 $password = protect($_POST['password']);
 $md5pass  = md5($password);

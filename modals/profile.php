@@ -26,6 +26,16 @@
     <label for="user_plan"><?php echo $lang[229] ?></label>
     <input type="text" class="form-control" value="<?php  echo user_plan(PlanId) ?>" disabled>
   </div>
+  
+   <div class="form-group">
+    <label for="key"><?php echo $lang[255] ?></label>
+	<div class="input-group" style="margin: 0px;">
+        <input type="text" id="key" name="key" class="form-control" readonly value="<?php echo base64_encode(convert(UserEmail,RegisterDate)) ?>" placeholder="<?php echo $lang[255]?>" >
+	        <span class="input-group-btn">
+			    <button class="btn btn-primary" onclick="CopyLink('key')" type="button"><?php echo $lang[146] ?></button>
+		    </span>
+	</div>
+	 </div>
 	 
    <div class="form-group"><!--.' / '.FileSizeConvert(UserSpace)."-".FileSizeConvert(user_space_max)  -->
     <label for="user_Space"><?php echo $lang[173] ?> </label>

@@ -38,6 +38,10 @@
 	   Loading     = '<?php echo $lang[45] ?>',
 	   datemsg     = '<?php echo $lang[84] ?>',
 	   SiteUrl     = '<?php echo siteurl ?>',
+	   
+	   
+	   chart_countries_labels ='<?php echo $chart_countries_labels?>',
+	   chart_countries_data   ='<?php echo $chart_countries_data?>',
 	   chart_dates_labels ='<?php echo $chart_dates_labels?>',
 	   chart_dates_data   ='<?php echo $chart_dates_data?>',
 	   chart_uploads_labels='<?php echo $chart_uploads_labels?>',
@@ -98,20 +102,33 @@
 		if(AdminGetIsEmpty)
 		{
 			
+			    
+			
 			 if(chart_dates_data!=='' && chart_dates_labels!=='' &&  (!IsIeBrowser))
 			 {
+				 
+				 countries_data   = chart_countries_data.split(",");//.map(function(item) {return parseInt(item, 10);});
+				 for (var i=0; i<countries_data.length; i++)
+					 countries_data[i] = parseInt(countries_data[i], 10);
+				 
+				 countries_labels = chart_countries_labels.split(","); 
 				 
 				 dates_data   = chart_dates_data.split(",");//.map(function(item) {return parseInt(item, 10);});
 				 for (var i=0; i<dates_data.length; i++)
 					 dates_data[i] = parseInt(dates_data[i], 10);
+				 
 				 dates_labels = chart_dates_labels.split(","); 
+				 
 				 uploads_data   = chart_uploads_data.split(",");//.map(function(item) {return parseInt(item, 10);});
 				 for (var i=0; i<uploads_data.length; i++)
 					 uploads_data[i] = parseInt(uploads_data[i], 10);
+				 
 				 uploads_labels = chart_uploads_labels.split(","); 
+				 
 				 lineChart("#ChartDates",dates_labels,dates_data,datemsg);	
 				 lineChart("#ChartUploads",uploads_labels,uploads_data,datemsg); 
 				 doughnutChart("#ChartSpace",[Lbl_total,lbl_free,''],[Disk_total,Disk_free,0]); 
+				 countriesChart("#WorldMap",countries_labels,countries_data,datemsg);	
 				 
 				 var numusers = new CountUp("t_users", 0, t_users );
 				 numusers.start();

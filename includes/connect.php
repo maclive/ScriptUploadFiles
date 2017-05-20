@@ -5,6 +5,7 @@
 $conn=mysqliconnect();
 LoadUserSettings();
 Loadconfig();
+LoadApiConfig();
 CheckConnect();
 Sql_mode();
 // Change character set to utf8
@@ -31,7 +32,7 @@ days_older_parameter
 (!isset($_SESSION['settings']["visitor"]["ip"])) ? $_SESSION['settings']["visitor"]["ip"]=ip() : '';
 
  $_SESSION['settings']['default_folder_id'] = (Mysqli_IsConnect && TableExists('folders') ) ? (int)Get_folderId_By_UserId(0) : 0 ;
- $_SESSION['login']['plan_id'] = (Mysqli_IsConnect && TableExists('users') && ColumnExists('plan_id','users') ) ? Sql_Get_User_Plan_id(UserID) : 0 ;
+ $_SESSION['login']['plan_id'] = (Mysqli_IsConnect && TableExists('users') && ColumnExists('plan_id','users') && defined('UserID') ) ? Sql_Get_User_Plan_id(UserID) : 0 ;
  
 (!isset($_SESSION['settings']['HashCode'])) ? $_SESSION['settings']['HashCode'] = GenerateRandomString(30) : '' ;
 
@@ -52,7 +53,7 @@ define('SERVER_HOST',  siteURL() );
 define('GetIsEmpty' , ( IsGet('plans') || IsGet('about') || IsGet('register') ||  IsGet('forgot') || IsGet('files') || IsGet('login') || IsGet('profile') || IsGet('authorized') || IsGet('contact') || IsGet('download') ) ? false : true );
 
 $DownloadID = IsGet('download') ? protect(Decrypt($_GET['download'])) : 0 ;
-$info       = IsGet('download') ? Sql_Get_info($DownloadID) : array('status'=>false,'public'=>'0','user_id'=>UserID);
+$info       = IsGet('download') ? Sql_Get_info($DownloadID) : array('status'=>false,'public'=>'0','user_id'=>@UserID);
 (function_exists('ini_set'))    ? @ini_set('memory_limit', '-1') : '';
 /*----------------------------------*/
 ?>

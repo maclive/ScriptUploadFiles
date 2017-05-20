@@ -74,12 +74,19 @@ echo $TitleHeader;
 (!IsLogin) ? exit(header('Location: ../' )):'';	
 (!IsAdmin) ? exit(header('Location: ../?notadmin' )):'';
 /*-----------Charts---------*/
+
 $chart_dates_labels='';
 $chart_dates_data  = '';
+
+$chart_countries_labels = '';
+$chart_countries_data = '';
+
 $chart_uploads_labels ='';
 $chart_uploads_data ='';
+
 $disk_total_space =0;
 $disk_free_space=0;	
+
 define('t_users'     ,Sql_Get_Users_Count() );
 define('t_folders'   ,num_rows(Sql_query("SELECT * FROM `folders`")) );
 define('t_reports'   ,num_rows(Sql_query("SELECT * FROM `reports`")) );
@@ -132,6 +139,7 @@ print '<pre style="text-align: left;direction: ltr; ">' . print_r(get_defined_va
   <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-toggle.min.css">  
   <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap-checkbox.min.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/mediaelementplayer.min.css">
+
   <!--
   <?php if(!IsIeBrowser()){ ?>  
   <link rel="stylesheet" type="text/css" href="../assets/css/audioplayer.min.css">
@@ -206,6 +214,7 @@ print '<pre style="text-align: left;direction: ltr; ">' . print_r(get_defined_va
   <script src="../assets/js/bootstrap-show-password.min.js" type="text/javascript"></script>
   <script src="../assets/js/bootstrap-maxlength.min.js" type="text/javascript"></script>
   <script src="../assets/js/mediaelement-and-player.min.js" type="text/javascript"></script>
+  
   <!--
   <?php if(!IsIeBrowser()){ ?>  
   <script src="../assets/js/audioplayer.min.js" type="text/javascript"></script>
@@ -219,6 +228,10 @@ print '<pre style="text-align: left;direction: ltr; ">' . print_r(get_defined_va
 
 
   <?php if(AdminGetIsEmpty && (!IsIeBrowser())){ ?>  
+  <script src="../assets/js/isocodeconverter.min.js" type="text/javascript"></script>
+  <script src="../assets/js/d3.min.js" type="text/javascript"></script>
+  <script src="../assets/js/topojson.min.js" type="text/javascript"></script>
+  <script src="../assets/js/datamaps.world.min.js" type="text/javascript"></script>
   <script src="../assets/js/chart.min.js" type="text/javascript"></script> 
   <?php } ?>
   

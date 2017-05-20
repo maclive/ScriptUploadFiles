@@ -2,13 +2,23 @@
 <?php
 
 	$nb_total              = num_rows(Sql_query("SELECT 1 FROM `stats`")) ;
-	if($nb_total==0) 
-		$nb_total = 1;
+	$nb_total = ($nb_total==0) ? 1 : $nb_total;
+	
 	$nb_dates              = num_rows(Sql_query("SELECT distinct(FROM_UNIXTIME(`date`,'%Y-%m-%d')) FROM `stats`"));	
 
 	$dates_totalpages      = ceil( $nb_dates / rowsperpage);
 	$dates       = '';
 	$uploadsdates= '';
+	
+	
+		   $result = Sql_query("SELECT distinct(`country_code`) as `_country_code_` , count(`country_code`) as `_count_` FROM `stats` GROUP BY `_country_code_` ORDER BY `_country_code_` DESC LIMIT 15");
+	while ($data = mysqli_fetch_array($result))
+	{
+		$chart_countries_labels.=$data['_country_code_'].',';
+		$chart_countries_data.=$data['_count_'].','; 
+		$dates.='<tr><td>'.$data['_country_code_'].'</td> <td><code>'.$data['_count_'].'</code></td><td>'.percent($data['_count_']/$nb_total).'</td></tr>'; 
+	}
+	
 	   $result = Sql_query("SELECT distinct(FROM_UNIXTIME(`date`,'%Y-%m-%d')) as `_date_` , count(FROM_UNIXTIME(`date`,'%Y-%m-%d')) as `_count_` FROM `stats` GROUP BY `_date_` ORDER BY `date` DESC LIMIT 15");
 	while ($data = mysqli_fetch_array($result))
 	{
@@ -16,6 +26,7 @@
 		$chart_dates_data.=$data['_count_'].','; 
 		$dates.='<tr><td>'.$data['_date_'].'</td> <td><code>'.$data['_count_'].'</code></td><td>'.percent($data['_count_']/$nb_total).'</td></tr>'; 
 	}
+	
 		$result = Sql_query("SELECT distinct(FROM_UNIXTIME(`uploadedDate`,'%Y-%m-%d')) as `_date_` , count(FROM_UNIXTIME(`uploadedDate`,'%Y-%m-%d')) as `_count_` FROM `files` GROUP BY `_date_` ORDER BY `uploadedDate` DESC LIMIT 15");
 	while ($data = mysqli_fetch_array($result))
 	{
@@ -189,6 +200,16 @@
  </div>
   <?php }?>
   
+   <div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading"><?php echo $lang[128] ;?></div>
+	       <div class="panel-body" id="DivWorldMap">
+		      <div class="col-xs-12" style="margin-top:60px;" id="WorldMap"></div>
+           </div>
+    </div>
+  </div>
+
+  
   <div class="panel-group">
     <div class="panel panel-default">
         <div class="panel-heading"><?php echo $lang[128] ;?></div>
@@ -207,3 +228,4 @@
            </div>
     </div>
  </div>
+
