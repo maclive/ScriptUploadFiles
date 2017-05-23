@@ -94,12 +94,12 @@ Sql_mode();
 //Sql_query("DROP TABLE IF EXISTS `users`");
 Sql_query("DROP TABLE IF EXISTS `settings`");
 //Sql_query("DROP TABLE IF EXISTS `files`");
-Sql_query("DROP TABLE IF EXISTS `reports`");
+//Sql_query("DROP TABLE IF EXISTS `reports`");
 //Sql_query("DROP TABLE IF EXISTS `folders`");
 //Sql_query("DROP TABLE IF EXISTS `stats`");
-Sql_query("DROP TABLE IF EXISTS `comments`");
-Sql_query("DROP TABLE IF EXISTS `plans`");
-Sql_query("DROP TABLE IF EXISTS `publicity`");
+//Sql_query("DROP TABLE IF EXISTS `comments`");
+//Sql_query("DROP TABLE IF EXISTS `plans`");
+//Sql_query("DROP TABLE IF EXISTS `publicity`");
 
 /*-- Table structure for table `files`*/
 
@@ -231,6 +231,7 @@ Sql_query("INSERT INTO `plans` (`name`, `gold`, `free`, `premium`, `register`) V
 Sql_query("TRUNCATE `settings`");
 
 /*--update 0.6--*/
+/*
 if(num_rows(Sql_query("SHOW COLUMNS FROM `files` LIKE 'last_access';"))==0) 
 	Sql_query("ALTER TABLE `files` ADD `last_access` INT NOT NULL ;");
 
@@ -244,6 +245,7 @@ if(num_rows(Sql_query("SHOW COLUMNS FROM `users` LIKE 'end_plan';"))==0)
 	Sql_query("ALTER TABLE `users` ADD `end_plan` INT NOT NULL ;");
 
 Sql_query("UPDATE `files` SET `last_access` = '$date'");
+*/
 
 
 Sql_query("ALTER DATABASE ".dbname." CHARACTER SET utf8 COLLATE utf8_bin;");
@@ -266,6 +268,7 @@ Sql_query("ALTER TABLE `reports` CHANGE `ip` `ip` BIGINT NOT NULL;");
 Sql_query("ALTER TABLE `stats` CHANGE `ip` `ip` BIGINT NOT NULL;");*/
 /*------------------------*/
 
+/*
 if(num_rows(Sql_query("SHOW COLUMNS FROM `stats` LIKE 'country_code';"))==0) 
 {
 	$result = Sql_query("SELECT `country`,`id` FROM `stats`");
@@ -277,6 +280,7 @@ if(num_rows(Sql_query("SHOW COLUMNS FROM `stats` LIKE 'country_code';"))==0)
 	Sql_query("ALTER TABLE `stats` CHANGE `country` `country_code` VARCHAR(2) CHARACTER SET utf8  COLLATE utf8 _swedish_ci NOT NULL;");
 }
 
+*/
 
 /*if(num_rows(Sql_query("SHOW COLUMNS FROM `files` LIKE 'size';"))==0) 
 	Sql_query("ALTER TABLE `files` ADD `size` INT NOT NULL ;");*/
@@ -350,8 +354,7 @@ $_SESSION['login']['plan_id']    = '0';
 $_SESSION['login']['user_email'] = $sitemail;
 $_SESSION['login']['user_space_used'] = 0 ;
 $_SESSION['login']['user_space_left'] = user_space_max;
-$_SESSION['login']['register_date']   = $date;
-
+$_SESSION['login']['register_date']   = $date;											  
 }
 
 	
