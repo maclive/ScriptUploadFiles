@@ -77,7 +77,7 @@
  
  <?php if(EnableCaptcha){?>
    <div class="form-group">
-    <img id="captcha_4" src="ajax/action.php?captcha&background=<?php echo WellColor ?>" onclick="this.src='ajax/action.php?captcha&background=<?php echo WellColor ?>&' + Math.random();" alt="captcha" style="cursor:pointer;">
+    <img id="captcha_4" src="ajax/index.php?captcha&background=<?php echo WellColor ?>" onclick="this.src='ajax/index.php?captcha&background=<?php echo WellColor ?>&' + Math.random();" alt="captcha" style="cursor:pointer;">
 	<a href="javascript:void(0)" onclick="GenerateCaptcha('<?php echo WellColor ?>');"><span class="glyphicon glyphicon-refresh"></span></a>
 	<input type="text" class="captcha form-control" maxlength="4" name="captcha" placeholder="<?php echo $lang[54] ?>">
    </div>

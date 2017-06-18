@@ -871,16 +871,39 @@ function percent($number){
 		if ( function_exists('curl_init') ) {			
 			//use cURL to fetch data
 			$ch = curl_init();
+			// HEADERS FROM FIREFOX - APPEARS TO BE A BROWSER REFERRED BY GOOGLE
+			$header[] = "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";
+			$header[] = "Upgrade-Insecure-Requests: 1";
+			$header[] = "Connection: keep-alive";
+			$header[] = "Accept-Language: ar,en-US;q=0.7,en;q=0.3";
+
 			curl_setopt($ch, CURLOPT_URL, $host);
+			curl_setopt($ch, CURLOPT_USERAGENT,      'Mozilla/5.0 (Windows NT 6.1; rv:54.0) Gecko/20100101 Firefox/54.0');
+			curl_setopt($ch, CURLOPT_HTTPHEADER,     $header);
+			curl_setopt($ch, CURLOPT_REFERER,        'https://www.google.com');
 			curl_setopt($ch, CURLOPT_HEADER, false);
+			curl_setopt($ch, CURLOPT_ENCODING,       'gzip, deflate');
+			curl_setopt($ch, CURLOPT_AUTOREFERER,    TRUE);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
             curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			//ssl
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,  2);
 			//curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT'] );
 			$response = curl_exec($ch);
+			$err = curl_errno($ch);
+			$inf = curl_getinfo($ch);
 			curl_close ($ch);
+			
+			   // ON FAILURE
+			   /*
+			if (!$response){
+				echo "CURL FAIL: $url TIMEOUT=$timeout, CURL_ERRNO=$err";
+				var_dump($inf);
+			}*/
+
+   
 			
 		} elseif ( ini_get('allow_url_fopen') ) {
 			$response = file_get_contents($host, 'r');	
@@ -888,7 +911,7 @@ function percent($number){
 			trigger_error ('Cannot retrieve data. Either compile PHP with cURL support or enable allow_url_fopen in php.ini ', E_USER_ERROR);
 			return;
 		}
-		
+		 // ON SUCCESS
 		return $response;
 	}
 

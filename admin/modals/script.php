@@ -88,7 +88,7 @@
 		} else { return ;}
 		      $('#span_select_all').hide();
 	          $('#select_all').prop('checked',false);
-			   $.get("ajax/action.php?"+table+"&currentpage="+num, function(data, status){
+			   $.get("ajax/index.php?"+table+"&currentpage="+num, function(data, status){
 				   if(status=='success'){
 					   loadTableHtml(data);
 					   $('.checkbox').checkbox();
@@ -208,7 +208,7 @@ function isInt(value) {
 
 function CommentStatus(id) {
 	  $("#Status_"+id).html('..');
-	  $.get("ajax/action.php?commentstatus=" + id , function(data, status) { if (status == 'success') $("#Status_"+id).html(data.icon);});
+	  $.get("ajax/index.php?commentstatus=" + id , function(data, status) { if (status == 'success') $("#Status_"+id).html(data.icon);});
 		
 }
 
@@ -232,7 +232,7 @@ $("#EditUserModal .modal-loader").fadeIn();*/
 $("#BtnUpdateUser").attr("disabled", true);
 $('#EditUserModal').modal('show');	
 $("#EditUserResults").html("<code> "+PleaseWait+"</code>"); 
-$.get("ajax/action.php?userinfo="+id, function(data, status){
+$.get("ajax/index.php?userinfo="+id, function(data, status){
 if(status=='success') {
 	
 $("#EditUserResults").html(""); 	
@@ -269,7 +269,7 @@ $('#plan_userspacemax').val("");
 
 $('#EditPlanModal').modal('show');	
 $("#EditUserResults").html("<code> "+PleaseWait+"</code>"); 
-$.get("ajax/action.php?planinfo="+id, function(data, status){
+$.get("ajax/index.php?planinfo="+id, function(data, status){
 if(status=='success') {
 	
 $("#EditPlanResults").html(""); 	
@@ -322,7 +322,7 @@ $("#EditFolderModal .modal-loader").fadeIn();*/
 $('#EditFolderModal').modal('show');	
 $("#BtnUpdateFolder").attr("disabled", true);
 $("#EditFolderResults").html('<code>'+PleaseWait+'</code>'); 
-$.get("ajax/action.php?folderinfo="+id, function(data, status){
+$.get("ajax/index.php?folderinfo="+id, function(data, status){
 	if(status=='success') {
 		$("#EditFolderResults").html(''); 
 		$('#folder_id').val(id);
@@ -409,7 +409,7 @@ if (typeof(FilesTotal)==='undefined') FilesTotal = 1;
 	$('#fileInfo_folder').html('--');
 	$('#fileInfo_ip').html('--');
 	$("#FileInfosResults").html('<code>'+PleaseWait+'</code>'); 
-	$.get("ajax/action.php?fileinfo="+id, function(data, status){
+	$.get("ajax/index.php?fileinfo="+id, function(data, status){
 	if(status=='success') {
 		
 		$("#FileInfosResults").html("<code>"+fileNum+" / "+FilesTotal+"</code>"); 
@@ -470,7 +470,7 @@ $('#page_name').on('change', function () {
 	 $('#publicity_title').val("");
 	 $("#PublicityResults").html("<code> "+PleaseWait+"</code>"); 
 	 
-	 $.get("ajax/action.php?getpublicity="+page_name, function(data, status){
+	 $.get("ajax/index.php?getpublicity="+page_name, function(data, status){
 		 if(status=='success')
 		 {
 			 $("#PublicityResults").html(""); 
@@ -587,7 +587,7 @@ function request(parameter,ResultsID,formID) {
 	var results  = $("#"+ResultsID);
 	$.ajax({
            type: "POST",
-           url: 'ajax/action.php?'+parameter,
+           url: 'ajax/index.php?'+parameter,
            dataType: "json",
 		   data: $("#"+formID).serialize(),
           beforeSend: function() {
@@ -668,7 +668,7 @@ function confirm_request(parameter,ResultsID,formID) {
 		if (Confirmed){   
 	$.ajax({
            type: "POST",
-           url: 'ajax/action.php?'+parameter,
+           url: 'ajax/index.php?'+parameter,
            dataType: "json",
 		   data: $("#"+formID).serialize(),
           beforeSend: function() {
@@ -715,7 +715,7 @@ function confirm_request(parameter,ResultsID,formID) {
 	
 function Logout(){ 
 $("#LogoutResults").html("<div class='alert alert-info'><i class='glyphicon glyphicon-hourglass'></i> "+PleaseWait+"</div>");
-$.get("../ajax/action.php?logout=1", function(data, status){
+$.get("../ajax/index.php?logout=1", function(data, status){
 	 if(status=='success'){
 		 $('#LogoutModal').modal('hide'); 
 		  setInterval(redirect('./'),1000); 
@@ -730,7 +730,7 @@ bootbox.confirm({
     buttons: {confirm: {label: _Yes},cancel: {label: _No}},callback: function (Confirmed) {  
 		if (Confirmed){   
 		$("#tbody").html('<tr><td colspan="9">'+Loading+' ...</td></tr>');
-		$.get("ajax/action.php?delete="+deleteid+"&delete_file_id="+id, function(data, status){
+		$.get("ajax/index.php?delete="+deleteid+"&delete_file_id="+id, function(data, status){
 			if(status=='success')
 				{
 					$('#FileInfosModal').modal('hide');	
@@ -754,7 +754,7 @@ bootbox.confirm({
    if (Confirmed)
    {   
 $("#tbody").html('<tr><td colspan="8">'+Loading+' ...</td></tr>');
- $.get("ajax/action.php?delete_comment_id="+id, function(data, status){
+ $.get("ajax/index.php?delete_comment_id="+id, function(data, status){
 	 if(status=='success')
 	   {
 		 
@@ -776,7 +776,7 @@ bootbox.confirm({
    if (Confirmed)
    {   
 $("#tbody").html('<tr><td colspan="8">'+Loading+' ...</td></tr>');
- $.get("ajax/action.php?delete_user_id="+id, function(data, status){
+ $.get("ajax/index.php?delete_user_id="+id, function(data, status){
 	 if(status=='success')
 	   {
 		 
@@ -798,7 +798,7 @@ bootbox.confirm({
    if (Confirmed)
    {   
 $("#tbody").html('<tr><td colspan="7">'+Loading+' ...</td></tr>');
- $.get("ajax/action.php?delete_report_id="+id, function(data, status){
+ $.get("ajax/index.php?delete_report_id="+id, function(data, status){
 	 if(status=='success')
 	   {
 		 
@@ -820,7 +820,7 @@ bootbox.confirm({
    if (Confirmed)
    {   
 $("#tbody").html('<tr><td colspan="3">'+Loading+' ...</td></tr>');
- $.get("ajax/action.php?delete_stat_id="+id, function(data, status){
+ $.get("ajax/index.php?delete_stat_id="+id, function(data, status){
 	 if(status=='success')
 	   {
 		 
@@ -837,7 +837,7 @@ $("#tbody").html('<tr><td colspan="3">'+Loading+' ...</td></tr>');
 
 function acceptReport(id,_page){ 
 $('#Status_'+id).html(''+Loading+' ...'); 
- $.get("ajax/action.php?accept_report_id="+id, function(data, status){
+ $.get("ajax/index.php?accept_report_id="+id, function(data, status){
 	 if(status=='success')
 	   $('#Status_'+id).html('<i class="glyphicon glyphicon-question-sign"></i>'); 	
 	 });	 
@@ -845,7 +845,7 @@ $('#Status_'+id).html(''+Loading+' ...');
 
 function orderTable(orderBy,Table){ 
 $("#tbody").html('<tr><td colspan="8">'+Loading+' ...</td></tr>');
- $.get("ajax/action.php?"+Table+"&order="+orderBy, function(data, status){
+ $.get("ajax/index.php?"+Table+"&order="+orderBy, function(data, status){
 	 if(status=='success')
 	 {
 		$("#Titleheader").html('<?php TitleHeader(); ?></a>');
@@ -894,7 +894,7 @@ var btn = document.getElementById('uploadBtn'),
   if (typeof(ss)!=='undefined')  
   var uploader = new ss.SimpleUpload({
         button: btn,
-        url: 'ajax/action.php?updatefile='+filename,
+        url: 'ajax/index.php?updatefile='+filename,
 		sessionProgressUrl: SiteUrl + '/includes/sessionprogress.php',
         name: 'uploadfile',
         multipart: true,
@@ -945,7 +945,7 @@ var btn = document.getElementById('uploadBtn'),
 	
 
 /*
- $.get("ajax/action.php?updatefile="+filename, function(data, status){
+ $.get("ajax/index.php?updatefile="+filename, function(data, status){
 	 if(status=='success') 
 	 });	*/ 
 };
@@ -957,7 +957,7 @@ bootbox.confirm({
    if (Confirmed)
    {   
 $("#tbody").html('<tr><td colspan="7">'+Loading+' ...</td></tr>');
- $.get("ajax/action.php?delete_folder="+folder+"&folder_id="+folder_id, function(data, status){
+ $.get("ajax/index.php?delete_folder="+folder+"&folder_id="+folder_id, function(data, status){
 	 if(status=='success')
 	   {
 		 

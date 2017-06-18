@@ -9,7 +9,7 @@
   </div>
   <?php if(EnableCaptcha){?>
     <div class="form-group">
-    <img id="captcha_5" src="ajax/action.php?captcha&background=<?php echo MainColor ?>" onclick="this.src='ajax/action.php?captcha&background=<?php echo MainColor ?>&' + Math.random();" alt="captcha" style="cursor:pointer;">
+    <img id="captcha_5" src="ajax/index.php?captcha&background=<?php echo MainColor ?>" onclick="this.src='ajax/index.php?captcha&background=<?php echo MainColor ?>&' + Math.random();" alt="captcha" style="cursor:pointer;">
 	<a href="javascript:void(0)" onclick="GenerateCaptcha();"><span class="glyphicon glyphicon-refresh"></span></a>
 	<input type="text" class="captcha form-control" maxlength="4"  name="captcha" placeholder="<?php echo $lang[54] ?>">
   </div>
