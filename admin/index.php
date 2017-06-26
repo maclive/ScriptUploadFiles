@@ -96,6 +96,9 @@ define('t_files'     ,num_rows(Sql_query("SELECT * FROM `files` $search_param"))
 define('t_size'      ,FileSizeConvert(folderSize( '..'.folderupload )) );
 define('t_reports_o' ,num_rows(Sql_query("SELECT * FROM `reports` WHERE `status` = '0'")) );
 define('t_comments_o',num_rows(Sql_query("SELECT * FROM `comments` WHERE `status` = '0'")) );
+define('u_encrypt_url',Encrypt('https://raw.githubusercontent.com/onexite/SuUpdate/master/update.json'));
+define('u_encrypt_author',Encrypt('<code>onexite</code>'));
+
 if(isGet('users'))  
 	$totalpages = ceil(t_users / rowsperpage);  
 elseif(isGet('folders'))  

@@ -24,14 +24,19 @@ function isPost($parameter)
 	return isset($_POST[$parameter]) ?  true : false ;
 }
 
+
 function Encrypt($str)
 {
 	return base64_encode($str);
+	//return decbin($str);
+	//return bin2hex ($str);
 }
 
 function Decrypt($str)
 {
 	return base64_decode($str);
+	//return bindec($str);
+	//return hex2bin($str); 
 }
 
 function split_text($string, $nb_caracs, $separator='...'){
@@ -204,7 +209,7 @@ if(isGet('api'))
 if($apiinfo['status'])
 {
 	define('UserID',$apiinfo['user_id']);
-	$apiKey = base64_encode(convert($apiinfo['email'],$apiinfo['register_date']));
+	$apiKey = Encrypt(TwoWayEncrypt($apiinfo['email'],$apiinfo['register_date']));
 	define('ApiLogin', ($apiKey == $GetApiKey ) ? true : false );
 			
 		
@@ -240,7 +245,7 @@ elseif(defined('folderupload'))
 //
 // Exploratory implementation using bitwise ops on strings; Weedpacket September 2006
 
-function convert($text, $key = '') {
+function TwoWayEncrypt($text, $key = '') {
     // return text unaltered if the key is blank
     if ($key == '') {
         return $text;

@@ -19,6 +19,8 @@ $_siteurl       = str_replace('/install','', siteURL() );
 if (isGet('unlink'))
 {
 	@unlinkRecursive('../install',true);
+	file_exists('../ajax/action.php') ? @unlink('../ajax/action.php') :'';
+	file_exists('../admin/ajax/action.php') ? @unlink('../admin/ajax/action.php');
 	exit(header('Location: ../'));
 }
 	

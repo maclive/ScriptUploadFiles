@@ -30,7 +30,7 @@
    <div class="form-group">
     <label for="key"><?php echo $lang[255] ?></label>
 	<div class="input-group" style="margin: 0px;">
-        <input type="text" id="key" name="key" class="form-control" readonly value="<?php echo base64_encode(convert(UserEmail,RegisterDate)) ?>" placeholder="<?php echo $lang[255]?>" >
+        <input type="text" id="key" name="key" class="form-control" readonly value="<?php echo Encrypt(TwoWayEncrypt(UserEmail,RegisterDate)) ?>" placeholder="<?php echo $lang[255]?>" >
 	        <span class="input-group-btn">
 			    <button class="btn btn-primary" onclick="CopyLink('key')" type="button"><?php echo $lang[146] ?></button>
 		    </span>

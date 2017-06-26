@@ -48,12 +48,12 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
 
 // in order to share infos with someone (on a forum, for example) an UA can be given in the URL
 if (isset($_GET['ua'])) {
-	$UA = base64_decode($_GET['ua']);
+	$UA = hex2bin($_GET['ua']);
 	$infos['ip_adress'] = $_GET['ip'];
 }
 
 $infos['full-UA'] = $UA;
-$infos['full-UA-Base64'] = base64_encode($UA);
+$infos['full-UA-Hex'] = bin2hex($UA);
 
 
 /* FIRST : BROWSER DETECTION */
