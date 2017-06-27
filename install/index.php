@@ -20,7 +20,7 @@ if (isGet('unlink'))
 {
 	@unlinkRecursive('../install',true);
 	file_exists('../ajax/action.php') ? @unlink('../ajax/action.php') :'';
-	file_exists('../admin/ajax/action.php') ? @unlink('../admin/ajax/action.php');
+	file_exists('../admin/ajax/action.php') ? @unlink('../admin/ajax/action.php'):'';
 	file_exists('../.gitattributes') ? @unlink('../.gitattributes') :'';
 	file_exists('../.gitignore') ? @unlink('../.gitignore') :'';
 	file_exists('../Android-screencapture.png') ? @unlink('../Android-screencapture.png') :'';
@@ -1056,7 +1056,7 @@ $.ajax({
         </div>
         <div class="panel-footer">
 
-		  <button type="submit" id="btn" class="btn btn-primary btn-block" onclick="httprequest();" ><?php echo $lang[71] ?></button>
+		  <button type="submit" id="btn<?php echo (!Mysqli_IsConnect) ? '_mysql' : ''?>" class="btn btn-primary btn-block" onclick="httprequest();" ><?php echo $lang[71] ?></button>
 		 
         </div>
       </div>
