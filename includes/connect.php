@@ -46,6 +46,8 @@ define('ClassAnimated', animated ? 'animated' : '' ) ;
 
 define('szParameter','sz');
 define('MainColor','ffffff');
+define('APP_DIR',dirname(__FILE__));
+define('LANG_FILE',InterfaceLanguage.'.php');
 define('SELF',isset($_SERVER['PHP_SELF'])?$_SERVER['PHP_SELF']:'');
 define('QUERY',isset($_SERVER['QUERY_STRING'])?$_SERVER['QUERY_STRING']:'');
 

@@ -3,7 +3,7 @@ require_once ('../../includes/config.php');
 require_once ('../../includes/session.php');	
 require_once ('../../includes/functions.php');
 require_once ('../../includes/connect.php');
-require_once ('../../includes/lang.php');
+require_once ('../../includes/language/'.LANG_FILE);
 require_once ('../../includes/uploader.php'); //dirname(__FILE__) .
 if(thumbnail)
 require_once ('../../includes/thumbnail.php');

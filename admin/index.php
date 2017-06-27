@@ -5,7 +5,7 @@ require_once ('../includes/session.php');
 require_once ('../includes/functions.php');
 require_once ('../includes/connect.php');
 CheckConnect();
-require_once ('../includes/lang.php');
+require_once ('../includes/language/'.LANG_FILE);
 
 if (isGet('clearfilter')) 
 {

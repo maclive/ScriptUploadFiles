@@ -12,7 +12,7 @@ require_once ( '../includes/functions.php');
 	IePrintArray((array('success' => false, 'msg' => 'your file is too big!'  ,'footerInfo'=> '' ))) ;*/
 /*-----------------------------------------------------------------*/
 require_once ( '../includes/connect.php');
-require_once ( '../includes/lang.php');
+require_once ( '../includes/language/'.LANG_FILE);
 require_once ( '../includes/uploader.php'); //dirname(__FILE__) .
 (thumbnail) ? require_once ( '../includes/thumbnail.php') : '';
 

@@ -457,6 +457,32 @@ function Auto_detect_language($default = 'en')
 	
 }
 
+function LoadLanguageFile()
+{
+global $supportedLangs;
+if(!in_array(InterfaceLanguage,$supportedLangs) && Mysqli_IsConnect && TableExists('settings') )
+{
+(num_rows(Sql_query("SELECT 1 FROM `settings` WHERE `name` = 'language';"))>0) ? Sql_query("UPDATE `settings` SET `value` = 'en' WHERE `name` = 'language';") : Sql_query("INSERT INTO `settings` (`name`, `value`) VALUES ('language','en');");
+
+define('_siteclose','1');
+define('_closemsg','Language file <code>'.InterfaceLanguage.'.php</code> not found' );
+}
+
+
+
+
+//die(dirname($_SERVER['PHP_SELF']) .'/language/'.LANG_FILE);
+if(file_exists(dirname(__FILE__).'/language/'.LANG_FILE))
+	require_once (dirname(__FILE__).'/language/'.LANG_FILE);
+else
+{
+	define('_siteclose','1');
+	define('_closemsg','Language file <code>'.InterfaceLanguage.'.php</code> not found' );
+}
+	
+
+}
+
 function icon($filename)
 {
 	return "<i class='".iconClass($filename)."'></i>";			

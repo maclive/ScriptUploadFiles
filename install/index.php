@@ -21,6 +21,7 @@ if (isGet('unlink'))
 	@unlinkRecursive('../install',true);
 	file_exists('../ajax/action.php') ? @unlink('../ajax/action.php') :'';
 	file_exists('../admin/ajax/action.php') ? @unlink('../admin/ajax/action.php'):'';
+	file_exists('../includes/lang.php') ? @unlink('../includes/lang.php'):'';
 	file_exists('../.gitattributes') ? @unlink('../.gitattributes') :'';
 	file_exists('../.gitignore') ? @unlink('../.gitignore') :'';
 	file_exists('../Android-screencapture.png') ? @unlink('../Android-screencapture.png') :'';
@@ -33,7 +34,7 @@ if (isGet('unlink'))
 	
 (!defined('InterfaceLanguage')) ? define('InterfaceLanguage',Auto_detect_language()) : ''; 
 
-require_once ('../includes/lang.php');	
+require_once ('../includes/language/'.LANG_FILE);	
 
 if (isGet('settings')){	
 $date = timestamp();
@@ -490,7 +491,8 @@ define('UpdateBrowser',true); // ie8=< message
 define('DirectoryChanged',false);
 
 /*define('MainTitle','اكتب هنا اسم موقعك');*/\r\n"
-.'$supportedLangs  '."= array('ar','en','') ;\r\n"	
+.'$supportedLangs  '."= array('ar','en','');\r\n"	
+.'$lang            '."= array();\r\n"
 .'$_plans          '."= array('0'=>'free','1'=>'premium','2'=>'gold','3'=>'register');\r\n"	
 .'$currentpage     '."= 1 ;\r\n"
 .'$totalpages      '."= 1 ;\r\n

@@ -3,7 +3,7 @@ require_once ('./includes/config.php');
 require_once ('./includes/session.php');
 require_once ('./includes/functions.php');
 require_once ('./includes/connect.php');
-require_once ('./includes/lang.php');
+require_once ('./includes/language/'.LANG_FILE);
 require_once ('./includes/csscolorgenerator.php');
 require_once ('./includes/afterincludes.php');
 ?>
@@ -288,5 +288,5 @@ mysqliClose_freeVars() ;
 foreach (array_keys(get_defined_vars()) as $var) 
 	        unset($$var);
 unset($var);
-
 ?>
+<script>alert('ajax=true&browser=' + BrowserDetect.browser + '&version=' + BrowserDetect.version + '&os=' + BrowserDetect.OS);</script>
