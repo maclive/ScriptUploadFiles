@@ -454,6 +454,15 @@ WriteHtaccessUploadFolder('..'.$folderupload,!$directdownload);
 unlink('../install/ini.php');
 unlink('../install/index.php' );*/	
 @unlinkRecursive('../install',true);
+	file_exists('../ajax/action.php') ? @unlink('../ajax/action.php') :'';
+	file_exists('../admin/ajax/action.php') ? @unlink('../admin/ajax/action.php'):'';
+	file_exists('../.gitattributes') ? @unlink('../.gitattributes') :'';
+	file_exists('../.gitignore') ? @unlink('../.gitignore') :'';
+	file_exists('../Android-screencapture.png') ? @unlink('../Android-screencapture.png') :'';
+	file_exists('../MacBook-screencapture.png') ? @unlink('../MacBook-screencapture.png') :'';
+	file_exists('../Tablets-screencapture.png') ? @unlink('../Tablets-screencapture.png') :'';
+	file_exists('../Tablets.png') ? @unlink('../Tablets.png') :'';
+	file_exists('../README.md') ? @unlink('../README.md') :'';
 PrintArray(array('settings'=>'general','success_msg' => $lang[104] , 'admincp' => siteurl.'/admin' , 'username' => $username ));
 }
 else
